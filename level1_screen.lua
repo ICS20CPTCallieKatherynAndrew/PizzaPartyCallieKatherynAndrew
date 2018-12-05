@@ -32,6 +32,14 @@ local scene = composer.newScene( sceneName )
 local bkg_image
 local backButton
 
+local heart1
+local heart2
+local heart3
+local numLives = 3
+
+local platform1
+local platform2
+
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
@@ -49,7 +57,13 @@ local function BackTransition( )
     clickSoundChannel = audio.play(clickSound)
 end
 
------------------------------------------------------------------------------------------
+-- local function for the hearts
+--local function MakeHeartsVisible()
+    --heart1.isVisible = true
+   -- heart2.isVisible = true
+    --heart3.isVisible = true
+--end
+------------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
 
