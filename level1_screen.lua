@@ -68,6 +68,10 @@ local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
 local bkgMusic = audio.loadSound( "Sounds/bkgMusicLevel1.mp3")
 local bkgMusicChannel
+local MoMusic = audio.loadSound( "Sounds/Mo.mp3")
+local MoMusicChannel
+local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
+local YouLoseMusicChannel
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel
 
@@ -166,10 +170,22 @@ end
 
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
+
+    --play you Cheer sound
+    YouLoseSoundChannel = audio.play(YouLoseSound)
+
+    --stop cartoon014 music
+    audio.stop(clickSoundChannel)
 end
 
 local function YouWinTransition()
     composer.gotoScene( "you_win")
+    
+    --play you Cheer sound
+    MoSoundChannel = audio.play(MOSound)
+
+    --stop cartoon014 music
+    audio.stop(clickSoundChannel)
 end
 
 local function onCollision( self, event )
