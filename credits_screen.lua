@@ -86,8 +86,8 @@ function scene:create( event )
         -- Setting Position
         x = display.contentWidth*1/8,
         y = display.contentHeight*2/16,
-        width = 180,
-        height = 150,
+        width = 150,
+        height = 100,
 
         -- Setting Visual Properties
         defaultFile = "Images/BackButtonUnpressed.png",
