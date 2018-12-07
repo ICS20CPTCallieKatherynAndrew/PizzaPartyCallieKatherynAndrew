@@ -41,9 +41,9 @@ local platform4
 
 local character
 
-local heart1
-local heart2
-local heart3
+local live1
+local live2
+local live3
 local numLives = 3
 
 local rArrow 
@@ -60,6 +60,12 @@ local leftW
 local rightW
 local topW
 local floor
+
+local pizza
+
+local topping1
+local topping2
+local topping3
 
 local questionsAnswered = 0
 
@@ -142,8 +148,8 @@ local function ReplaceCharacter()
     character = display.newImageRect("Images/PizzaMan.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
-    character.width = 75
-    character.height = 100
+    character.width = 125
+    character.height = 125
     character.myName = "PizzaMan"
 
     -- intialize horizontal movement of character
@@ -162,10 +168,10 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
-local function MakeHeartsVisible()
-    heart1.isVisible = true
-    heart2.isVisible = true
-    heart3.isVisible = true
+local function MakeLivesVisible()
+    live1.isVisible = true
+    live2.isVisible = true
+    live3.isVisible = true
 end
 
 local function YouLoseTransition()
@@ -362,55 +368,88 @@ function scene:create( event )
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/Platform.png", 250, 50)
-    platform1.x = display.contentWidth * 1 / 8
-    platform1.y = display.contentHeight * 1.6 / 4
+    platform1.x = display.contentWidth * 2 / 8
+    platform1.y = display.contentHeight * 3 / 4
         
     sceneGroup:insert( platform1 )
 
     platform2 = display.newImageRect("Images/Platform.png", 150, 50)
-    platform2.x = display.contentWidth /2.1
-    platform2.y = display.contentHeight * 1.2 / 4
+    platform2.x = display.contentWidth* 1.9 / 8
+    platform2.y = display.contentHeight * 1.5 / 4
         
     sceneGroup:insert( platform2 )
 
     platform3 = display.newImageRect("Images/Platform.png", 180, 50)
     platform3.x = display.contentWidth *3 / 5
-    platform3.y = display.contentHeight * 3.5 / 5
+    platform3.y = display.contentHeight * 2.7 / 5
         
     sceneGroup:insert( platform3 )
 
     platform4 = display.newImageRect("Images/Platform.png", 180, 50)
-    platform4.x = display.contentWidth *4.7 / 5
+    platform4.x = display.contentWidth *4 / 5
     platform4.y = display.contentHeight * 1.3 / 5
         
     sceneGroup:insert( platform4 )
 
-    -- Insert the Hearts
-    heart1 = display.newImageRect("Images/companyLogo.png", 80, 80)
-    heart1.x = 50
-    heart1.y = 50
-    heart1.isVisible = true
+    -- Insert the lives
+    live1 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live1.x = 50
+    live1.y = 50
+    live1.isVisible = true
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart1 )
+    sceneGroup:insert( live1 )
 
-    -- Insert the hearts
-    heart2 = display.newImageRect("Images/companyLogo.png", 80, 80)
-    heart2.x = 130
-    heart2.y = 50
-    heart2.isVisible = true
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart2 )
-
-    -- Insert the hearts
-    heart3 = display.newImageRect("Images/companyLogo.png", 80, 80)
-    heart3.x = 210
-    heart3.y = 50
-    heart3.isVisible = true
+    -- Insert the lives
+    live2 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live2.x = 130
+    live2.y = 50
+    live2.isVisible = true
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart3 )
+    sceneGroup:insert( live2 )
+
+    -- Insert the lives
+    live3 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live3.x = 210
+    live3.y = 50
+    live3.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( live3 )
+    -- Insert the pizza
+    pizza = display.newImageRect("Images/pizza.png", 175, 100)
+    pizza.x = display.contentWidth * 1.5 / 8
+    pizza.y = display.contentHeight * 3.5 / 4
+        
+    sceneGroup:insert( pizza )
+
+    -- Insert the toppings
+    topping1 = display.newImageRect("Images/Pepperoni.png", 40, 40)
+    topping1.x = 190
+    topping1.y = 690
+    topping1.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( topping1 )
+
+    -- Insert the topping
+    topping2 = display.newImageRect("Images/Pepper.png", 40, 40)
+    topping2.x = 210
+    topping2.y = 650
+    topping2.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( topping2 )
+
+    -- Insert the topping
+    topping3 = display.newImageRect("Images/Mushroom.png", 40, 40)
+    topping3.x = 160
+    topping3.y = 660
+    topping3.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( topping3 )
 
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrow.png", 100, 50)
@@ -464,6 +503,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
+
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
@@ -498,7 +538,7 @@ function scene:show( event )
         questionsAnswered = 0
         
         -- make all lives visible
-        MakeHeartsVisible()
+        MakeLivesVisible()
 
         -- add physics bodies to each object
         AddPhysicsBodies()
