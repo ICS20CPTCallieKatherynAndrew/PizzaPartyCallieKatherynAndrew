@@ -66,6 +66,7 @@ local pizza
 local topping1
 local topping2
 local topping3
+local theTopping
 
 local questionsAnswered = 0
 
@@ -199,73 +200,25 @@ local function onCollision( self, event )
 
     if ( event.phase == "began" ) then
 
-
-        --if  (event.target.myName == "spikes1") or 
-            --(event.target.myName == "spikes2") or
-            --(event.target.myName == "spikes3") then
-
-            --spike sound
-            --spikeSoundChannel = audio.play(spikeSound)
-
-            -- remove runtime listeners that move the character
-            --RemoveArrowEventListeners()
-            ---RemoveRuntimeListeners()
-
-            -- remove the character from the display
-            --display.remove(character)
-
-            -- decrease number of lives
-            --numLives = numLives - 1
-
-            --if (numLives == 3) then
-                -- update hearts
-                --heart1.isVisible = true
-                --heart2.isVisible = true
-                --heart3.isVisible = true
-                --timer.performWithDelay(200, ReplaceCharacter) 
-
-            --elseif (numLives == 2) then
-                --update hearts
-              --  heart2.isVisible = true
-                --heart1.isVisible = true
-                --heart3.isVisible = false
-                --timer.performWithDelay(200, ReplaceCharacter)
-
-            --elseif (numLives == 1) then
-                -- update hearts
-                --heart3.isVisible = false
-                --heart1.isVisible = true 
-                --heart2.isVisible = false
-               -- timer.performWithDelay(200, ReplaceCharacter) 
-
-            --else
-                -- update hearts
-                --heart1.isVisible = false
-               -- heart2.isVisible = false
-               -- heart3.isVisible = false
-                --timer.performWithDelay(200, YouLoseTransition)
-            --end
-       -- end
-
-       -- if  (event.target.myName == "ball1") or
-            --(event.target.myName == "ball2") or
-            --(event.target.myName == "ball3") then
+        if  (event.target.myName == "topping1") or
+            (event.target.myName == "topping2") or
+            (event.target.myName == "topping3") then
 
             -- get the ball that the user hit
-           -- theBall = event.target
+            theTopping = event.target
 
             -- stop the character from moving
-           -- motionx = 0
+            motionx = 0
 
             -- make the character invisible
-           -- character.isVisible = false
+            character.isVisible = false
 
             -- show overlay with math question
-            --composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-           -- questionsAnswered = questionsAnswered + 1
-        --end
+            questionsAnswered = questionsAnswered + 1
+        end
 
         --if (event.target.myName == "door") and
            -- (questionsAnswered == 3) then
@@ -274,6 +227,54 @@ local function onCollision( self, event )
 
     end
 end
+
+local function AddCollisionListeners()
+
+    -- if character collides with ball, onCollision will be called    
+    topping1.collision = onCollision
+    topping1:addEventListener( "collision" )
+    topping2.collision = onCollision
+    topping2:addEventListener( "collision" )
+    topping3.collision = onCollision
+    topping3:addEventListener( "collision" )
+end
+
+local function RemoveCollisionListeners()
+
+    topping1:removeEventListener( "collision" )
+    topping2:removeEventListener( "collision" )
+    topping3:removeEventListener( "collision" )
+
+end
+
+local function MovePizza()
+
+    -- the logo will move and rotate to the center of the screen
+    transition.to( pizza, { rotation = pizza.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( pizza, {x=900, y=50, time=2000})
+end
+
+local function MoveTopping1()
+    -- the logo will move and rotate to the center of the screen
+    transition.to( topping1, { rotation = topping1.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( topping1, {x=600, y=350, time=2000})
+    topping1:scale(2,2)
+end
+
+local function MoveTopping2()
+    -- the logo will move and rotate to the center of the screen
+    transition.to( topping2, { rotation = topping2.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( topping2, {x=800, y=135, time=2000})
+    topping2:scale(2,2)
+end
+
+local function MoveTopping3()
+    -- the logo will move and rotate to the center of the screen
+    transition.to( topping3, { rotation = topping3.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( topping3, {x=200, y=220, time=2000})
+    topping3:scale(2,2)
+end
+
 
 local function AddPhysicsBodies()
     --add to the physics engine
@@ -529,9 +530,11 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
 
-        -- Called when the scene is now on screen.
-        -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
+        MovePizza()
+        MoveTopping1()
+        MoveTopping2()
+        MoveTopping3()
+
         bkgMusicChannel = audio.play(bkgMusic)
 
         numLives = 3
@@ -542,6 +545,9 @@ function scene:show( event )
 
         -- add physics bodies to each object
         AddPhysicsBodies()
+
+        -- add collision listeners to objects
+        AddCollisionListeners()
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
