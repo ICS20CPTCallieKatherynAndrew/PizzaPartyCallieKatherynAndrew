@@ -147,8 +147,8 @@ end
 
 local function ReplaceCharacter()
     character = display.newImageRect("Images/PizzaMan.png", 100, 150)
-    character.x = display.contentWidth * 0.5 / 8
-    character.y = display.contentHeight  * 0.1 / 3
+    character.x = display.contentWidth * 0.1 / 8
+    character.y = display.contentHeight  * 3 / 3
     character.width = 125
     character.height = 125
     character.myName = "PizzaMan"
@@ -313,9 +313,9 @@ function ResumeGame()
     character.isVisible = true
     
     if (questionsAnswered > 0) then
-        if (theBall ~= nil) and (theBall.isBodyActive == true) then
+        if (theTopping ~= nil) and (theTopping.isBodyActive == true) then
             physics.removeBody(theBall)
-            theBall.isVisible = false
+            theTopping.isVisible = false
         end
     end
 
@@ -530,11 +530,10 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
 
-        MovePizza()
-        MoveTopping1()
-        MoveTopping2()
-        MoveTopping3()
-
+        timer.performWithDelay( 2000, MoveTopping1)
+        timer.performWithDelay( 2000, MoveTopping2)
+        timer.performWithDelay( 2000, MoveTopping3)
+        timer.performWithDelay( 2000, MovePizza)
         bkgMusicChannel = audio.play(bkgMusic)
 
         numLives = 3

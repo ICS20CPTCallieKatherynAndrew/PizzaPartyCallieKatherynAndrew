@@ -207,6 +207,8 @@ local function DisplayQuestion()
         wrongText3.text = wrongAnswer3
 
     else
+
+        if ( firstNumber > secondNumber ) then
         -- calculate answer
         answer = firstNumber - secondNumber
 
@@ -226,6 +228,30 @@ local function DisplayQuestion()
         wrongText1.text = wrongAnswer1
         wrongText2.text = wrongAnswer2
         wrongText3.text = wrongAnswer3
+
+        else
+
+            -- calculating the correct answer
+            answer = firstNumber - secondNumber
+
+            wrongAnswer1 = answer - math.random(1, 3)
+            wrongAnswer2 = answer + math.random(4, 6)
+            wrongAnswer3 = answer + math.random(7, 10)
+        
+            --creating the question depending on the selcetion number
+            questionText.text = secondNumber .. " - " .. firstNumber .. " ="
+
+            --creating answer text from list it corispondes with the animals list
+            answerText.text = answer
+    
+            --creating wrong answers
+            wrongText1.text = wrongAnswer1
+            wrongText2.text = wrongAnswer2
+            wrongText3.text = wrongAnswer3
+
+
+        end
+
     end
 end
 
