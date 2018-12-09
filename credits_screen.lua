@@ -35,6 +35,8 @@ local backButton
 
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel
+local creditsBkgSound = audio.loadSound("Sounds/creditsBkgSound.mp3")
+local creditsBkgSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -84,8 +86,8 @@ function scene:create( event )
         -- Setting Position
         x = display.contentWidth*1/8,
         y = display.contentHeight*2/16,
-        width = 180,
-        height = 150,
+        width = 150,
+        height = 100,
 
         -- Setting Visual Properties
         defaultFile = "Images/BackButtonUnpressed.png",
@@ -126,6 +128,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        creditsBkgSoundChannel = audio.play(creditsBkgSound)
     end
 
 end -- function scene:show( event )
@@ -153,6 +156,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        audio.pause(creditsBkgSound)
     end
 
 end --function scene:hide( event )

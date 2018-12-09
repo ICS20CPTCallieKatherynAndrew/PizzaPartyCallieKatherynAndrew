@@ -6,6 +6,7 @@
 -- Description: This is the instructions page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
 
+
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -34,7 +35,8 @@ local backButton
 
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel
-
+local instructionsBkgSound = audio.loadSound("Sounds/instructionsBkgSound.mp3")
+local instructionsBkgSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -61,7 +63,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/Instructions Screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/InstructionsKatheryn.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -125,6 +127,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        instructionsBkgSoundChannel = audio.play( instructionsBkgSound)
     end
 
 end -- function scene:show( event )
@@ -147,11 +150,13 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
+        audio.pause(instructionsBkgSound)
 
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+
     end
 
 end --function scene:hide( event )

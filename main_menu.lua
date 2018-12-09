@@ -45,6 +45,7 @@ local bkgMusic = audio.loadSound( "Sounds/bkgMusicMainMenu.mp3")
 local bkgMusicChannel
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
