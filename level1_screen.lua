@@ -175,6 +175,12 @@ local function MakeLivesVisible()
     live3.isVisible = true
 end
 
+local function MakeToppingsVisible()
+    topping1.isVisible = true
+    topping2.isVisible = true
+    topping3.isVisible = true
+end
+
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
 
@@ -287,6 +293,10 @@ local function AddPhysicsBodies()
     physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
+
+    physics.addBody(topping1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(topping2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(topping3, "static",  {density=0, friction=0, bounce=0} )
 
 end
 
@@ -542,6 +552,8 @@ function scene:show( event )
         -- make all lives visible
         MakeLivesVisible()
 
+        MakeToppingsVisible()
+
         -- add physics bodies to each object
         AddPhysicsBodies()
 
@@ -578,6 +590,7 @@ function scene:hide( event )
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
+        
     end
 
 end --function scene:hide( event )
