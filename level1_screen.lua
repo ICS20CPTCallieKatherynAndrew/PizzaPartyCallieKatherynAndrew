@@ -201,6 +201,10 @@ local function YouWinTransition()
     audio.stop(clickSoundChannel)
 end
 
+local function Level1QuestionTransition()
+    composer.gotoScene( "level1_question")
+    --composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+end
 local function onCollision( self, event )
 
 
@@ -219,8 +223,7 @@ local function onCollision( self, event )
             -- make the character invisible
             character.isVisible = false
 
-            -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            Level1QuestionTransition()
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
@@ -242,7 +245,7 @@ local function AddCollisionListeners()
     topping2:addEventListener( "collision" )
     topping3.collision = onCollision
     topping3:addEventListener( "collision" )
-end
+end 
 
 local function RemoveCollisionListeners()
 
@@ -251,6 +254,9 @@ local function RemoveCollisionListeners()
     topping3:removeEventListener( "collision" )
 
 end
+
+
+
 
 local function MovePizza()
 
