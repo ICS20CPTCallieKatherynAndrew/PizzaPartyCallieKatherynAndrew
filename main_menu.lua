@@ -104,7 +104,7 @@ function scene:create( event )
     -- create the company name text
     appName = display.newText( " Pizza Party! ", 530, 300, nil, 100 )
 
-    appName:setTextColor(147/255, 89/255, 55/255)
+    appName:setTextColor(0/255, 128/255, 255/255)
 
     sceneGroup:insert(appName)
     -----------------------------------------------------------------------------------------
