@@ -224,13 +224,12 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
+        
+
+            if (questionsAnswered == "3") then
+                YouWinTransition()
+            end        
         end
-
-        --if (event.target.myName == "door") and
-           -- (questionsAnswered == 3) then
-            --YouWinTransition()
-        --end        
-
     end
 end
 
@@ -324,7 +323,7 @@ function ResumeGame()
     
     if (questionsAnswered > 0) then
         if (theTopping ~= nil) and (theTopping.isBodyActive == true) then
-            physics.removeBody(theBall)
+            physics.removeBody(theTopping)
             theTopping.isVisible = false
         end
     end
@@ -585,6 +584,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemovePhysicsBodies()
+        RemoveCollisionListeners()
 
         physics.stop()
         RemoveArrowEventListeners()
