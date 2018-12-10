@@ -31,7 +31,7 @@ local spinSoundChannel
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
--- The function that moves the beetleship across the screen
+-- The function that moves the logo across the screen
 local function MoveLogo()
 
     -- the logo will move and rotate to the center of the screen

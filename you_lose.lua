@@ -1,56 +1,35 @@
------------------------------------------------------------------------------------------
--- instructions_screen.lua
--- Created by: Callie McWaters
--- Special thanks to Wal Wal for helping in the design of this framework.
--- Date: 11/29/2018
--- Description: This is the instructions page, displaying a back button to the main menu.
------------------------------------------------------------------------------------------
 
+--
+-- credits_screen.lua
+-- Created by: Daniel Lopez-Carreon
+-- Date: Nov. 24th, 2014
+-- Description: This is the you win screen
+-----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
 
--- Use Composer Libraries
+-- Use Composer Library
 local composer = require( "composer" )
+
+-----------------------------------------------------------------------------------------
+
+-- Use Widget Library
 local widget = require( "widget" )
 
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "credits_screen"
+sceneName = "you_lose"
 
 -- Creating Scene Object
-scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
+local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
 
 -----------------------------------------------------------------------------------------
--- LOCAL VARIABLES
+-- DISPLAY OBJECTS
 -----------------------------------------------------------------------------------------
 local bkg_image
-local backButton
-
------------------------------------------------------------------------------------------
--- SOUND VARIABLES
------------------------------------------------------------------------------------------
-
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
-local clickSoundChannel
-local instructionsBkgSound = audio.loadSound("Sounds/instructionsBkgSound.mp3")
-local instructionsBkgSoundChannel
------------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
------------------------------------------------------------------------------------------
-
--- Creating Transitioning Function back to main menu
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
-    clickSoundChannel = audio.play(clickSound)
-end
-
-
------------------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
------------------------------------------------------------------------------------------
 
 -- The function called when the screen doesn't exist
 function scene:create( event )
@@ -63,7 +42,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/Instructions Screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImage("Images/Losescreen.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -71,39 +50,7 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
-
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
-
-    -----------------------------------------------------------------------------------------
-    -- BUTTON WIDGETS
-    -----------------------------------------------------------------------------------------
-
-    -- Creating Back Button
-    backButton = widget.newButton( 
-    {
-        -- Setting Position
-        x = display.contentWidth*7/8,
-        y = display.contentHeight*2/16,
-        width = 180,
-        height = 150,
-
-        -- Setting Visual Properties
-        defaultFile = "Images/BackButtonUnpressed.png",
-        overFile = "Images/BackButtonPressed.png",
-
-        -- Setting Functional Properties
-        onRelease = BackTransition
-
-    } )
-
-    -----------------------------------------------------------------------------------------
-
-    -- Associating Buttons with this scene
-    sceneGroup:insert( backButton )
-    
-end --function scene:create( event )
-
+end
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
@@ -127,7 +74,6 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        instructionsBkgSoundChannel = audio.play( instructionsBkgSound)
     end
 
 end -- function scene:show( event )
@@ -150,13 +96,11 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        audio.pause(instructionsBkgSound)
 
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-
     end
 
 end --function scene:hide( event )
@@ -191,5 +135,3 @@ scene:addEventListener( "destroy", scene )
 -----------------------------------------------------------------------------------------
 
 return scene
-
-
