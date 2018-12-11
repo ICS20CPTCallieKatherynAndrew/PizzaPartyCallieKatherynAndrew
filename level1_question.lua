@@ -79,6 +79,11 @@ local amountCorrect = 0
 
 local randomOperator
 
+local totalSeconds = 10
+local secondsLeft = 10
+local clockText
+local countDownTimer
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -279,13 +284,6 @@ local function BackToLevel1()
     ResumeGame()
 end 
 
--- Function to Check User Input
---local function CheckUserAnswerInput()
-
-    --timer.performWithDelay(1000, BackToLevel1)
-
---end
-
 function CorrectAnswer()
     if (userAnswer == correctAnswer)then
         timer.performWithDelay(1000, BackToLevel1) 
@@ -300,6 +298,20 @@ local function IncorrectAnswer()
     end
 end
 
+local function UpdateTime()
+
+    -- decrement the number of seconds
+    secondsLeft = secondsLeft - 1
+
+    -- display the number of seconds left in the clock object
+    clockText.text = "Time: ".. secondsLeft  
+
+    if (secondsLeft == 0 ) then
+        -- reset the number of seconds left
+        secondsLeft = totalSeconds
+        IncorrectAnswer()
+    end
+end
 
 
 local function TouchListenerAnswerbox(touch)
@@ -490,6 +502,12 @@ local function RemoveAnswerBoxEventListeners()
     alternateAnswerBox3:removeEventListener("touch", TouchListenerAnswerBox3)
 end 
 
+-- function that calls the timer
+local function StartTimer()
+    -- create a countdown timer that loops infinitely
+    countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
+end
+
 ----------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 ----------------------------------------------------------------------------------
@@ -550,6 +568,8 @@ function scene:create( event )
     alternateAnswerBox2PreviousX = display.contentWidth * 0.9
     alternateAnswerBox3PreviousX = display.contentWidth * 0.9
 
+    -- display the timer on the screen
+    clockText = display.newText ("", display.contentWidth/3, display.contentHeight*2.5/3, nil, 75)
 
 
 
@@ -597,6 +617,8 @@ function scene:show( event )
         PositionAnswers()
         DisplayQuestion()
         DetermineAlternateAnswers()
+        StartTimer()
+        UpdateTime()
 
     end
 end --function scene:show( event )

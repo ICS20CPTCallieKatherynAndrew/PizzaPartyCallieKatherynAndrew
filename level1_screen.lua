@@ -363,7 +363,9 @@ function ResumeGame()
     if (questionsAnswered > 0) then
         if (theTopping ~= nil) and (theTopping.isBodyActive == true) then
             physics.removeBody(theTopping)
-            theTopping.isVisible = false
+            transition.to( theTopping, { rotation = theTopping.rotation-360, time=2000, onComplete=spinImage})
+            transition.to( theTopping, {x=900, y=50, time=2000})
+            theTopping:scale(0.5, 0.5)
         end
     end
 
