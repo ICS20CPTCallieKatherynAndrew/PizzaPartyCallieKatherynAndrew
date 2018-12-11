@@ -38,6 +38,7 @@ local creditsButton
 local instructionsbutton
 local appName
 local muteButton
+local unMuteButton
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
