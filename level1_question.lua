@@ -545,7 +545,7 @@ function scene:create( event )
 
 
 
-    userAnswerBoxPlaceholder = display.newImageRect("Images/Answerbox.png",  130, 130, 0, 0)
+    userAnswerBoxPlaceholder = display.newImageRect("Images/answerBox.png",  130, 130, 0, 0)
     userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
     userAnswerBoxPlaceholder.y = display.contentHeight * 0.8
 
