@@ -32,52 +32,6 @@ local scene = composer.newScene( sceneName )
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-        --f  (userAnswer == answer)
-
-            --spike sound
-            --spikeSoundChannel = audio.play(spikeSound)
-
-            -- remove runtime listeners that move the character
-            --RemoveArrowEventListeners()
-            --RemoveRuntimeListeners()
-
-            -- remove the character from the display
-            ---display.remove(character)
-
-            -- decrease number of lives
-            --numLives = numLives - 1
-
-            --if (numLives == 3) then
-                -- update hearts
-                --live1.isVisible = true
-                --live2.isVisible = true
-                --live3.isVisible = true
-                --timer.performWithDelay(200, ReplaceCharacter) 
-
-            --elseif (numLives == 2) then
-                --update hearts
-                --live2.isVisible = true
-                --live1.isVisible = true
-                --live3.isVisible = false
-                --timer.performWithDelay(200, ReplaceCharacter)
-
-            --elseif (numLives == 1) then
-                -- update hearts
-                --live3.isVisible = false
-                --live1.isVisible = true 
-                --live2.isVisible = false
-                ---timer.performWithDelay(200, ReplaceCharacter) 
-
-            --else
-                -- update hearts
-                --live1.isVisible = false
-                --live2.isVisible = false
-                --live3.isVisible = false
-                --timer.performWithDelay(200, YouLoseTransition)
-            --end
-        --end
--- The local variables for this scene
-
 
 --the text that displays the question
 local questionText 
@@ -103,6 +57,9 @@ local alternateAnswerBox1
 local alternateAnswerBox2
 local alternateAnswerBox3
 
+local cover
+local bkg
+
 -- create variables that will hold the previous x- and y-positions so that 
 -- each answer will return back to its previous position after it is moved
 local answerboxPreviousY
@@ -120,17 +77,11 @@ local userAnswerBoxPlaceholder
 
 local amountCorrect = 0
 
+local randomOperator
 
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-
---making transition to next scene
-local function BackToLevel1() 
-    composer.hideOverlay("crossFade", 400 )
-  
-    ResumeGame()
-end 
 
 -----------------------------------------------------------------------------------------
 local function DisplayQuestion()
@@ -138,39 +89,80 @@ local function DisplayQuestion()
     local randomNumber2
 
     --set random numbers
-    randomNumber1 = math.random(2, 15)
-    randomNumber2 = math.random(2, 15)
+    randomOperator = math.random(1,2)
+    randomNumber1 = math.random(1, 30)
+    randomNumber2 = math.random(1, 30)
 
-    --calculate answer
-    correctAnswer = randomNumber1 + randomNumber2
+    if ( randomOperator == 1) then
 
-    --change question text in relation to answer
-    questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
+        --  calculate answer
+        correctAnswer = randomNumber1 + randomNumber2
 
-    -- put the correct answer into the answerbox
-    answerbox.text = correctAnswer
+        --change question text in relation to answer
+        questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
 
-    -- make it possible to click on the answers again
-    answerboxAlreadyTouched = false
-    alternateAnswerBox1AlreadyTouched = false
-    alternateAnswerBox2AlreadyTouched = false
-    alternateAnswerBox3AlreadyTouched = false
+        -- put the correct answer into the answerbox
+        answerbox.text = correctAnswer
 
+        -- make it possible to click on the answers again
+        answerboxAlreadyTouched = false
+        alternateAnswerBox1AlreadyTouched = false
+        alternateAnswerBox2AlreadyTouched = false
+        alternateAnswerBox3AlreadyTouched = false
+
+    elseif  ( randomOperator == 2 ) then
+
+        if ( randomNumber1 > randomNumber2 ) then
+
+            -- calculating the correct answer
+            correctAnswer = randomNumber1 - randomNumber2
+        
+            questionText.text = randomNumber1  .. " - " .. randomNumber2.. " = "
+
+            -- put the correct answer into the answerbox
+            answerbox.text = correctAnswer 
+
+            -- make it possible to click on the answers again
+            answerboxAlreadyTouched = false
+            alternateAnswerBox1AlreadyTouched = false
+            alternateAnswerBox2AlreadyTouched = false
+            alternateAnswerBox3AlreadyTouched = false
+
+        else
+
+            -- calculating the correct answer
+            correctAnswer = randomNumber2 - randomNumber1
+        
+            -- create question in text object
+            questionText.text = randomNumber2  .. " - " .. randomNumber1 .. " = "
+            
+            -- put the correct answer into the answerbox
+            answerbox.text = correctAnswer 
+            -- make it possible to click on the answers again
+            answerboxAlreadyTouched = false
+            alternateAnswerBox1AlreadyTouched = false
+            alternateAnswerBox2AlreadyTouched = false
+            alternateAnswerBox3AlreadyTouched = false
+        end
+
+
+
+    end
 end
 
 local function DetermineAlternateAnswers()    
 
         
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer1 = correctAnswer + math.random(3, 5)
+    alternateAnswer1 = correctAnswer + math.random(3, 9)
     alternateAnswerBox1.text = alternateAnswer1
 
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer2 = correctAnswer - math.random(1, 2)
+    alternateAnswer2 = correctAnswer - math.random(1, 5)
     alternateAnswerBox2.text = alternateAnswer2
 
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer3 = correctAnswer + math.random(6, 9)
+    alternateAnswer3 = correctAnswer + math.random(9, 15)
     alternateAnswerBox3.text = alternateAnswer3
 -------------------------------------------------------------------------------------------
 -- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
@@ -281,12 +273,34 @@ local function PositionAnswers()
     end
 end
 
+--making transition to next scene
+local function BackToLevel1() 
+    composer.hideOverlay("crossFade", 400 )
+    ResumeGame()
+end 
 
 -- Function to Check User Input
-local function CheckUserAnswerInput()
-          
-    timer.performWithDelay(1600, RestartLevel1) 
+--local function CheckUserAnswerInput()
+
+    --timer.performWithDelay(1000, BackToLevel1)
+
+--end
+
+function CorrectAnswer()
+    if (userAnswer == correctAnswer)then
+        timer.performWithDelay(1000, BackToLevel1) 
+    end       
 end
+
+local function IncorrectAnswer()
+    if (userAnswer == alternateAnswer1) or
+        (userAnswer == alternateAnswer2) or
+        (userAnswer == alternateAnswer3) then
+        timer.performWithDelay(1000, BackToLevel1) 
+    end
+end
+
+
 
 local function TouchListenerAnswerbox(touch)
     --only work if none of the other boxes have been touched
@@ -322,7 +336,8 @@ local function TouchListenerAnswerbox(touch)
                 userAnswer = correctAnswer
 
                 -- call the function to check if the user's input is correct or not
-                CheckUserAnswerInput()
+                CorrectAnswer()
+                IncorrectAnswer()
 
                 amountCorrect = amountCorrect + 1
             --else make box go back to where it was
@@ -334,11 +349,6 @@ local function TouchListenerAnswerbox(touch)
     end                
 end 
 
-local function YouWin()
-    if (amountCorrect == 3) then
-        composer.gotoScene("you_win", {effect = "fade", time = 500})
-    end
-end
 
 
 local function TouchListenerAnswerBox1(touch)
@@ -370,7 +380,8 @@ local function TouchListenerAnswerBox1(touch)
                 userAnswer = alternateAnswer1
 
                 -- call the function to check if the user's input is correct or not
-                CheckUserAnswerInput()
+                CorrectAnswer()
+                IncorrectAnswer()
 
             --else make box go back to where it was
             else
@@ -410,7 +421,8 @@ local function TouchListenerAnswerBox2(touch)
                 userAnswer = alternateAnswer2
 
                 -- call the function to check if the user's input is correct or not
-                CheckUserAnswerInput()
+                CorrectAnswer()
+                IncorrectAnswer()
 
             --else make box go back to where it was
             else
@@ -450,7 +462,8 @@ local function TouchListenerAnswerBox3(touch)
                 userAnswer = alternateAnswer3
 
                 -- call the function to check if the user's input is correct or not
-                CheckUserAnswerInput()
+                CorrectAnswer()
+                IncorrectAnswer()
 
             --else make box go back to where it was
             else
@@ -497,20 +510,24 @@ function scene:create( event )
     --Inserting backgroud image and lives
     ----------------------------------------------------------------------------------
     -- the black box where the user will drag the answer
-    userAnswerBoxPlaceholder = display.newRect(display.contentCenterX, display.contentCenterY * 1.7, display.contentWidth*0.2, display.contentHeight*0.1, 89 )
-
+    
     bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
     --setting to a semi black colour
     bkg:setFillColor(0,0,0,0.5)
-    bkg:toBack()
+
+
 
     -----------------------------------------------------------------------------------------
     --making a cover rectangle to have the background fully bolcked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50 )
     --setting its colour
     cover:setFillColor(96/255, 96/255, 96/255)
-    cover:toBack()
 
+
+
+    userAnswerBoxPlaceholder = display.newImageRect("Images/userAnswerBoxPlaceholder.png",  130, 130, 0, 0)
+    userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
+    userAnswerBoxPlaceholder.y = display.contentHeight * 0.9
 
     --the text that displays the question
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
@@ -543,14 +560,15 @@ function scene:create( event )
     ----------------------------------------------------------------------------------
     --adding objects to the scene group
     ----------------------------------------------------------------------------------
-
-    sceneGroup:insert( bkg ) 
+    sceneGroup:insert( bkg )
+    sceneGroup:insert( cover )
     sceneGroup:insert( questionText ) 
     sceneGroup:insert( userAnswerBoxPlaceholder )
     sceneGroup:insert( answerbox )
     sceneGroup:insert( alternateAnswerBox1 )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( alternateAnswerBox3)
+
 
 
 end --function scene:create( event )
@@ -579,8 +597,8 @@ function scene:show( event )
         PositionAnswers()
         DisplayQuestion()
         DetermineAlternateAnswers()
-    end
 
+    end
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -603,6 +621,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        RemoveAnswerBoxEventListeners()
        
     end
 

@@ -201,10 +201,6 @@ local function YouWinTransition()
     audio.stop(clickSoundChannel)
 end
 
-local function Level1QuestionTransition()
-    composer.gotoScene( "level1_question")
-    --composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-end
 local function onCollision( self, event )
 
 
@@ -222,8 +218,8 @@ local function onCollision( self, event )
 
             -- make the character invisible
             character.isVisible = false
-
-            Level1QuestionTransition()
+            -- show overlay with math question
+            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
@@ -318,6 +314,43 @@ local function RemovePhysicsBodies()
  
 end
 
+local function loseLives()
+    if ( event.phase == "began" ) then
+
+        if (CorrectAnswer() == true) then
+            numLives = numLives - 1
+
+            if (numLives == 3) then
+                --update hearts
+                live1.isVisible = true
+                live2.isVisible = true
+                live3.isVisible = true
+                timer.performWithDelay(200, ReplaceCharacter) 
+
+            elseif (numLives == 2) then
+                --update hearts
+                live2.isVisible = true
+                live1.isVisible = true
+                live3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter)
+
+            elseif (numLives == 1) then
+                --update hearts
+                live3.isVisible = false
+                live1.isVisible = true 
+                live2.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter) 
+
+            else
+                --update hearts
+                live1.isVisible = false
+                live2.isVisible = false
+                live3.isVisible = false
+                timer.performWithDelay(200, YouLoseTransition)
+            end
+        end
+    end
+end
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -347,33 +380,6 @@ function scene:create( event )
     
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
-
-      -----------------------------------------------------------------------------------------
-    -- BUTTON WIDGETS
-    -----------------------------------------------------------------------------------------
-
-    -- Creating Back Button
-    backButton = widget.newButton( 
-    {
-        -- Setting Position
-        x = display.contentWidth*1/8,
-        y = display.contentHeight*2/16,
-        width = 180,
-        height = 150,
-
-        -- Setting Visual Properties
-        defaultFile = "Images/BackButtonUnpressed.png",
-        overFile = "Images/BackButtonPressed.png",
-
-        -- Setting Functional Properties
-        onRelease = BackTransition
-
-    } )
-
-    -----------------------------------------------------------------------------------------
-
-    -- Associating Buttons with this scene
-    sceneGroup:insert( backButton )
     -- Insert the background image
     bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
@@ -411,7 +417,7 @@ function scene:create( event )
     live1 = display.newImageRect("Images/companyLogo.png", 80, 80)
     live1.x = 50
     live1.y = 50
-    live1.isVisible = true
+
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live1 )
@@ -420,7 +426,7 @@ function scene:create( event )
     live2 = display.newImageRect("Images/companyLogo.png", 80, 80)
     live2.x = 130
     live2.y = 50
-    live2.isVisible = true
+
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live2 )
@@ -429,7 +435,7 @@ function scene:create( event )
     live3 = display.newImageRect("Images/companyLogo.png", 80, 80)
     live3.x = 210
     live3.y = 50
-    live3.isVisible = true
+
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live3 )
@@ -444,7 +450,9 @@ function scene:create( event )
     topping1 = display.newImageRect("Images/Pepperoni.png", 40, 40)
     topping1.x = 190
     topping1.y = 690
-    topping1.isVisible = true
+    topping1.myName = "topping1"
+    
+
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( topping1 )
@@ -453,8 +461,7 @@ function scene:create( event )
     topping2 = display.newImageRect("Images/Pepper.png", 40, 40)
     topping2.x = 210
     topping2.y = 650
-    topping2.isVisible = true
-
+    topping2.myName = "topping2"
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( topping2 )
 
@@ -462,8 +469,7 @@ function scene:create( event )
     topping3 = display.newImageRect("Images/Mushroom.png", 40, 40)
     topping3.x = 160
     topping3.y = 660
-    topping3.isVisible = true
-
+    topping3.myName = "topping3"
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( topping3 )
 
@@ -542,7 +548,7 @@ function scene:show( event )
 
         -- set gravity
         physics.setGravity( 0, GRAVITY )
-
+        
     elseif ( phase == "did" ) then
 
         timer.performWithDelay( 2000, MoveTopping1)
@@ -563,7 +569,7 @@ function scene:show( event )
         AddPhysicsBodies()
 
         -- add collision listeners to objects
-        AddCollisionListeners()
+       AddCollisionListeners()
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
