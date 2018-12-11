@@ -291,6 +291,8 @@ function CorrectAnswer()
 end
 
 local function IncorrectAnswer()
+        timer.performWithDelay(1000, BackToLevel1) 
+
     if (userAnswer == alternateAnswer1) or
         (userAnswer == alternateAnswer2) or
         (userAnswer == alternateAnswer3) then
@@ -543,9 +545,9 @@ function scene:create( event )
 
 
 
-    userAnswerBoxPlaceholder = display.newImageRect("Images/userAnswerBoxPlaceholder.png",  130, 130, 0, 0)
+    userAnswerBoxPlaceholder = display.newImageRect("Images/answerBox.png",  130, 130, 0, 0)
     userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
-    userAnswerBoxPlaceholder.y = display.contentHeight * 0.9
+    userAnswerBoxPlaceholder.y = display.contentHeight * 0.8
 
     --the text that displays the question
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
@@ -588,6 +590,7 @@ function scene:create( event )
     sceneGroup:insert( alternateAnswerBox1 )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( alternateAnswerBox3)
+    sceneGroup:insert( clockText )
 
 
 
