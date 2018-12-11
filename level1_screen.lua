@@ -571,7 +571,7 @@ function scene:show( event )
         AddPhysicsBodies()
 
         -- add collision listeners to objects
-       AddCollisionListeners()
+        AddCollisionListeners()
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
