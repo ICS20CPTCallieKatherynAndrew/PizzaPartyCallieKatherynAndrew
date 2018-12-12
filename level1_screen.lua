@@ -223,12 +223,13 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
-        
-
-            if (questionsAnswered == "3") then
-                YouWinTransition()
-            end        
         end
+    end
+end
+
+local function YouWin()
+    if (questionsAnswered == 3) then
+        YouWinTransition()
     end
 end
 
@@ -315,39 +316,35 @@ local function RemovePhysicsBodies()
 end
 
 local function loseLives()
-    if ( event.phase == "began" ) then
 
-        if (CorrectAnswer() == true) then
-            numLives = numLives - 1
+    if (CorrectAnswer )then
+        numLives = numLives - 1
 
-            if (numLives == 3) then
-                --update hearts
-                live1.isVisible = true
-                live2.isVisible = true
-                live3.isVisible = true
-                timer.performWithDelay(200, ReplaceCharacter) 
+        if (numLives == 3) then
+             --update hearts
+            live1.isVisible = true
+            live2.isVisible = true
+            live3.isVisible = true
 
-            elseif (numLives == 2) then
-                --update hearts
-                live2.isVisible = true
-                live1.isVisible = true
-                live3.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter)
+        elseif (numLives == 2) then
+            --update hearts
+            live2.isVisible = true
+            live1.isVisible = true           
+            live3.isVisible = false
 
-            elseif (numLives == 1) then
-                --update hearts
-                live3.isVisible = false
-                live1.isVisible = true 
-                live2.isVisible = false
-                timer.performWithDelay(200, ReplaceCharacter) 
+        elseif (numLives == 1) then
+            --update hearts
+            live3.isVisible = false
+            live1.isVisible = true 
+            live2.isVisible = false
+            timer.performWithDelay(200, ReplaceCharacter) 
 
-            else
-                --update hearts
-                live1.isVisible = false
-                live2.isVisible = false
-                live3.isVisible = false
-                timer.performWithDelay(200, YouLoseTransition)
-            end
+        else
+            --update hearts
+            live1.isVisible = false
+            live2.isVisible = false
+            live3.isVisible = false
+            timer.performWithDelay(200, YouLoseTransition)
         end
     end
 end
@@ -416,7 +413,7 @@ function scene:create( event )
     sceneGroup:insert( platform4 )
 
     -- Insert the lives
-    live1 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live1 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live1.x = 50
     live1.y = 50
 
@@ -425,7 +422,7 @@ function scene:create( event )
     sceneGroup:insert( live1 )
 
     -- Insert the lives
-    live2 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live2 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live2.x = 130
     live2.y = 50
 
@@ -434,7 +431,7 @@ function scene:create( event )
     sceneGroup:insert( live2 )
 
     -- Insert the lives
-    live3 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live3 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live3.x = 210
     live3.y = 50
 
@@ -575,6 +572,8 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+
+        loseLives()
 
     end
 

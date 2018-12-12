@@ -161,7 +161,6 @@ function scene:create( event )
             -- When the button is released, call the Credits transition function
             onRelease = InstructionsTransition
         } ) 
-    
     -----------------------------------------------------------------------------------------
 
     -- Associating button widgets with this scene
