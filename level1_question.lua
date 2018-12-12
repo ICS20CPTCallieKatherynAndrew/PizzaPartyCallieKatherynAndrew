@@ -79,11 +79,13 @@ local amountCorrect = 0
 
 local randomOperator
 
-local totalSeconds = 10
-local secondsLeft = 10
+local totalSeconds = 15
+local secondsLeft = 15
 local clockText
 local countDownTimer
 
+local correctText
+local incorrectText
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -284,21 +286,7 @@ local function BackToLevel1()
     ResumeGame()
 end 
 
-function CorrectAnswer()
-    if (userAnswer == correctAnswer)then
-        timer.performWithDelay(1000, BackToLevel1) 
-    end       
-end
 
-local function IncorrectAnswer()
-        timer.performWithDelay(1000, BackToLevel1) 
-
-    if (userAnswer == alternateAnswer1) or
-        (userAnswer == alternateAnswer2) or
-        (userAnswer == alternateAnswer3) then
-        timer.performWithDelay(1000, BackToLevel1) 
-    end
-end
 
 local function UpdateTime()
 
@@ -311,7 +299,8 @@ local function UpdateTime()
     if (secondsLeft == 0 ) then
         -- reset the number of seconds left
         secondsLeft = totalSeconds
-        IncorrectAnswer()
+
+        timer.performWithDelay(1000, BackToLevel1) 
     end
 end
 
@@ -348,12 +337,13 @@ local function TouchListenerAnswerbox(touch)
                 answerbox.x = userAnswerBoxPlaceholder.x
                 answerbox.y = userAnswerBoxPlaceholder.y
                 userAnswer = correctAnswer
-
-                -- call the function to check if the user's input is correct or not
-                CorrectAnswer()
-                IncorrectAnswer()
+            
+                        
+                correctText.isVisible = true
 
                 amountCorrect = amountCorrect + 1
+
+                timer.performWithDelay(1000, BackToLevel1)  
             --else make box go back to where it was
             else
                 answerbox.x = answerboxPreviousX
@@ -394,8 +384,12 @@ local function TouchListenerAnswerBox1(touch)
                 userAnswer = alternateAnswer1
 
                 -- call the function to check if the user's input is correct or not
-                CorrectAnswer()
-                IncorrectAnswer()
+        
+                numLives = numLives - 1
+
+                incorrectText.isVisible = true
+
+                timer.performWithDelay(1000, BackToLevel1) 
 
             --else make box go back to where it was
             else
@@ -435,8 +429,12 @@ local function TouchListenerAnswerBox2(touch)
                 userAnswer = alternateAnswer2
 
                 -- call the function to check if the user's input is correct or not
-                CorrectAnswer()
-                IncorrectAnswer()
+            
+                numLives = numLives - 1
+
+                incorrectText.isVisible = true
+
+                timer.performWithDelay(1000, BackToLevel1) 
 
             --else make box go back to where it was
             else
@@ -476,8 +474,12 @@ local function TouchListenerAnswerBox3(touch)
                 userAnswer = alternateAnswer3
 
                 -- call the function to check if the user's input is correct or not
-                CorrectAnswer()
-                IncorrectAnswer()
+             
+                numLives = numLives - 1
+
+                incorrectText.isVisible = true
+
+                timer.performWithDelay(1000, BackToLevel1) 
 
             --else make box go back to where it was
             else
@@ -552,6 +554,7 @@ function scene:create( event )
     --the text that displays the question
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
     questionText:setTextColor(11/255, 255/255, 7/255)
+
     -- boolean variables stating whether or not the answer was touched
     answerboxAlreadyTouched = false
     alternateAnswerBox1AlreadyTouched = false
@@ -575,9 +578,13 @@ function scene:create( event )
 
 
 
-    correctText = display.newText("Correct!", display.contentWidth/2, display.contentHeight*1.3/3, nil, 50 )
-    correctText:setTextColor(100/255, 47/255, 210/255)
+    correctText = display.newText("Correct!", display.contentWidth/2, display.contentHeight*0.3/3, nil, 75 )
+    correctText:setTextColor(100/255, 200/255, 210/255)
     correctText.isVisible = false
+
+    incorrectText = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*0.3/3, nil, 75 )
+    incorrectText:setTextColor(100/255, 200/255, 210/255)
+    incorrectText.isVisible = false
 
     ----------------------------------------------------------------------------------
     --adding objects to the scene group
@@ -591,6 +598,8 @@ function scene:create( event )
     sceneGroup:insert( alternateAnswerBox2 )
     sceneGroup:insert( alternateAnswerBox3)
     sceneGroup:insert( clockText )
+    sceneGroup:insert( correctText )
+    sceneGroup:insert( incorrectText )
 
 
 

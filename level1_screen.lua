@@ -28,6 +28,12 @@ sceneName = "level1_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+-- GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+numLives = 2
+
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -43,8 +49,7 @@ local character
 
 local live1
 local live2
-local live3
-local numLives = 3
+
 
 local rArrow 
 local uArrow
@@ -54,8 +59,7 @@ local motionx = 0
 local SPEED = 7
 local speed = -7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 5
-
+local GRAVITY = 10
 local leftW 
 local rightW
 local topW
@@ -172,7 +176,6 @@ end
 local function MakeLivesVisible()
     live1.isVisible = true
     live2.isVisible = true
-    live3.isVisible = true
 end
 
 local function MakeToppingsVisible()
@@ -199,6 +202,27 @@ local function YouWinTransition()
 
     --stop cartoon014 music
     audio.stop(clickSoundChannel)
+end
+
+local function UpdateLives()
+
+    if (numLives == 2) then
+        --update hearts
+        live2.isVisible = true
+        live1.isVisible = true
+
+    elseif (numLives == 1) then
+        -- update hearts
+        
+        live1.isVisible = true 
+        live2.isVisible = false
+
+    else
+        -- update hearts
+        live1.isVisible = false
+        live2.isVisible = false
+        timer.performWithDelay(200, YouLoseTransition)
+    end
 end
 
 local function onCollision( self, event )
@@ -315,44 +339,14 @@ local function RemovePhysicsBodies()
  
 end
 
-local function loseLives()
-
-    if (CorrectAnswer )then
-        numLives = numLives - 1
-
-        if (numLives == 3) then
-             --update hearts
-            live1.isVisible = true
-            live2.isVisible = true
-            live3.isVisible = true
-
-        elseif (numLives == 2) then
-            --update hearts
-            live2.isVisible = true
-            live1.isVisible = true           
-            live3.isVisible = false
-
-        elseif (numLives == 1) then
-            --update hearts
-            live3.isVisible = false
-            live1.isVisible = true 
-            live2.isVisible = false
-            timer.performWithDelay(200, ReplaceCharacter) 
-
-        else
-            --update hearts
-            live1.isVisible = false
-            live2.isVisible = false
-            live3.isVisible = false
-            timer.performWithDelay(200, YouLoseTransition)
-        end
-    end
-end
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
 function ResumeGame()
+
+    -- call a function that updates the hearts
+    UpdateLives()
 
     -- make character visible again
     character.isVisible = true
@@ -430,14 +424,6 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live2 )
 
-    -- Insert the lives
-    live3 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
-    live3.x = 210
-    live3.y = 50
-
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( live3 )
     -- Insert the pizza
     pizza = display.newImageRect("Images/pizza.png", 175, 100)
     pizza.x = display.contentWidth * 1.5 / 8
@@ -573,7 +559,6 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
-        loseLives()
 
     end
 
