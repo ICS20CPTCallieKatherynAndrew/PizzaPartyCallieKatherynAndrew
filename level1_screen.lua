@@ -542,7 +542,7 @@ function scene:show( event )
         timer.performWithDelay( 2000, MovePizza)
         bkgMusicChannel = audio.play(bkgMusic)
 
-        numLives = 3
+        numLives = 2
         questionsAnswered = 0
         
         -- make all lives visible
@@ -558,6 +558,8 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+
+
 
 
     end

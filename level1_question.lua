@@ -341,8 +341,6 @@ local function TouchListenerAnswerbox(touch)
                         
                 correctText.isVisible = true
 
-                amountCorrect = amountCorrect + 1
-
                 timer.performWithDelay(1000, BackToLevel1)  
             --else make box go back to where it was
             else
