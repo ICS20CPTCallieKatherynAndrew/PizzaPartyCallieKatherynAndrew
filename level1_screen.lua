@@ -223,12 +223,13 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
-        
-
-            if (questionsAnswered == "3") then
-                YouWinTransition()
-            end        
         end
+    end
+end
+
+local function YouWin()
+    if (questionsAnswered == 3) then
+        YouWinTransition()
     end
 end
 
@@ -412,7 +413,7 @@ function scene:create( event )
     sceneGroup:insert( platform4 )
 
     -- Insert the lives
-    live1 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live1 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live1.x = 50
     live1.y = 50
 
@@ -421,7 +422,7 @@ function scene:create( event )
     sceneGroup:insert( live1 )
 
     -- Insert the lives
-    live2 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live2 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live2.x = 130
     live2.y = 50
 
@@ -430,7 +431,7 @@ function scene:create( event )
     sceneGroup:insert( live2 )
 
     -- Insert the lives
-    live3 = display.newImageRect("Images/companyLogo.png", 80, 80)
+    live3 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live3.x = 210
     live3.y = 50
 
