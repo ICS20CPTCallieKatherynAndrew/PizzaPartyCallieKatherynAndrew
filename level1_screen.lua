@@ -194,15 +194,7 @@ local function YouLoseTransition()
     audio.stop(clickSoundChannel)
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "you_win")
-    
-    --play you Cheer sound
-    MoSoundChannel = audio.play(MOSound)
 
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
-end
 
 local function UpdateLives()
 
@@ -253,7 +245,13 @@ end
 
 local function YouWin()
     if (questionsAnswered == 3) then
-        YouWinTransition()
+        composer.gotoScene( "you_win")
+    
+        --play you Cheer sound
+        MoSoundChannel = audio.play(MOSound)
+
+        --stop cartoon014 music
+        audio.stop(clickSoundChannel)
     end
 end
 
@@ -558,9 +556,6 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
-
-
-
 
     end
 
