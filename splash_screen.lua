@@ -24,7 +24,7 @@ local scene = composer.newScene( sceneName )
 
 local companyName1
 local companyName2
-local spinSound = audio.loadSound( "Sounds/spinSound.WAV")
+local spinSound = audio.loadSound( "Sounds/spinSound.wav")
 local spinSoundChannel
 
 --------------------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         
         -- stop the jungle sounds channel for this screen
-        audio.stop(spinSound)
+        audio.stop(spinSoundChannel)
     end
 
 end --function scene:hide( event )
