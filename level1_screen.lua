@@ -194,15 +194,7 @@ local function YouLoseTransition()
     audio.stop(clickSoundChannel)
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "you_win")
-    
-    --play you Cheer sound
-    MoSoundChannel = audio.play(MOSound)
 
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
-end
 
 local function UpdateLives()
 
@@ -253,7 +245,13 @@ end
 
 local function YouWin()
     if (questionsAnswered == 3) then
-        YouWinTransition()
+        composer.gotoScene( "you_win")
+    
+        --play you Cheer sound
+        MoSoundChannel = audio.play(MOSound)
+
+        --stop cartoon014 music
+        audio.stop(clickSoundChannel)
     end
 end
 
@@ -425,7 +423,7 @@ function scene:create( event )
     sceneGroup:insert( live2 )
 
     -- Insert the pizza
-    pizza = display.newImageRect("Images/pizza.png", 175, 100)
+    pizza = display.newImageRect("Images/Pizza.png", 175, 100)
     pizza.x = display.contentWidth * 1.5 / 8
     pizza.y = display.contentHeight * 3.5 / 4
         
@@ -558,9 +556,6 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
-
-
-
 
     end
 
