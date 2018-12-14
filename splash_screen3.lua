@@ -1,17 +1,9 @@
------------------------------------------------------------------------------------------
---
--- splash_screen.lua
--- Created by: Your Name
--- Date: Month Day, Year
--- Description: This is the splash screen of the game. It displays the 
--- company logo that...
------------------------------------------------------------------------------------------
 
 -- Use Composer Library
 local composer = require( "composer" )
 
 -- Name the Scene
-sceneName = "splash_screen"
+sceneName = "splash_screen3"
 
 -----------------------------------------------------------------------------------------
 
@@ -21,11 +13,8 @@ local scene = composer.newScene( sceneName )
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-
-local companyName1
-local companyName2
-local spinSound = audio.loadSound( "Sounds/spinSound.wav")
-local spinSoundChannel
+local text
+scrollspeed = 3
 
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -33,19 +22,27 @@ local spinSoundChannel
 
 -- The function that moves the logo across the screen
 local function MoveLogo()
-
-    -- the logo will move and rotate to the center of the screen
-    transition.to( logo, { rotation = logo.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( logo, {x=512, y=384, time=2000})
+    -- scroll speed
+    logo.x = logo.x + scrollspeed
+    --change the transparency
+    logo.alpha = logo.alpha + 0.01
 end
 
 local function MoveText()
+    --scroll speed
+    text.x = text.x - scrollspeed
+    --change the transparency
+    text.alpha = text.alpha - 0.001
+end
 
-    -- the text will move and rotate to the center of the screen
-    transition.to( companyName1, { rotation = companyName1.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( companyName1, {x=710, y=490, time=2000})
-    transition.to( companyName2, { rotation = companyName2.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( companyName2, {x=710, y=580, time=2000})
+local function RotatePizzaMan(event)
+    --rotate pizza man
+    logo.rotation = logo.rotation + 3
+end
+
+local function ScaleText(event)
+    --scale the text
+    text:scale(1.002, 1.002)
 end
 
 -- The function that will go to the main menu 
@@ -64,26 +61,25 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- set the background colour
-    display.setDefault("background", 86/255, 249/255, 113/255)
+    display.setDefault("background",  0/255, 160/255, 0/255)
 
     -- display the logo
-    logo = display.newImageRect("Images/CompanyLogo.png", 500, 500)
+    logo = display.newImageRect("Images/CompanyLogoKatheryn@2x.png", 500, 500)
     logo.x = 0
     logo.y = display.contentHeight/2
+    logo.alpha = 1
 
     -- display the company name
-    companyName1 = display.newText( " Jumping ", 1000, 500, nil, 70 )
-    companyName2 = display.newText( " Animations ", 1000, 600, nil, 70 )
-
+    text = display.newText( " Jumping Animations ", 400, 400, nil, 70 )
+    text.x = 1048
+    text.y = display.contentHeight/3
+        text.alpha = 1
     -- set the colour of the text
-    companyName1:setTextColor(44/255, 55/255, 167/255)
-    companyName2:setTextColor(44/255, 55/255, 167/255)
+    text:setTextColor(216/255, 19/255, 19/255)
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( logo )
-    sceneGroup:insert( companyName1 )
-    sceneGroup:insert( companyName2 )
-
+    sceneGroup:insert( text )
 end -- function scene:create( event )
 
 --------------------------------------------------------------------------------------------
@@ -109,10 +105,10 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        spinSoundChannel = audio.play(spinSound)
-
-        MoveLogo()
-        MoveText()
+        Runtime:addEventListener("enterFrame", MoveLogo)
+        Runtime:addEventListener("enterFrame", MoveText)
+        Runtime:addEventListener("enterFrame", RotatePizzaMan)
+        Runtime:addEventListener("enterFrame", ScaleText)
 
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
@@ -125,8 +121,7 @@ end --function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-I LOVE THOMAS POTVIN
-CALLIE LOVES FINNO101
+
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
@@ -144,7 +139,6 @@ CALLIE LOVES FINNO101
     elseif ( phase == "did" ) then
         
         -- stop the jungle sounds channel for this screen
-        audio.stop(spinSoundChannel)
     end
 
 end --function scene:hide( event )
@@ -159,7 +153,7 @@ function scene:destroy( event )
 
     -----------------------------------------------------------------------------------------
 
-
+        
     -- Called prior to the removal of scene's view ("sceneGroup").
     -- Insert code here to clean up the scene.
     -- Example: remove display objects, save state, etc.
