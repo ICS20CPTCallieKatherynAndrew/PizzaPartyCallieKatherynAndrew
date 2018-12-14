@@ -65,7 +65,7 @@ local rightW
 local topW
 local floor
 
-local pizza
+local pizza1
 
 local topping1
 local topping2
@@ -423,7 +423,7 @@ function scene:create( event )
     sceneGroup:insert( live2 )
 
     -- Insert the pizza
-    pizza = display.newImageRect("Images/Pizza.png", 175, 100)
+    pizza = display.newImageRect("Images/Pizza 1.png", 175, 100)
     pizza.x = display.contentWidth * 1.5 / 8
     pizza.y = display.contentHeight * 3.5 / 4
         

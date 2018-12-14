@@ -21,7 +21,7 @@ local physics = require( "physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_question"
+sceneName = "level2_question"
 
 -----------------------------------------------------------------------------------------
 
@@ -86,6 +86,7 @@ local countDownTimer
 
 local correctText
 local incorrectText
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -171,6 +172,7 @@ local function DetermineAlternateAnswers()
     -- generate incorrect answer and set it in the textbox
     alternateAnswer3 = correctAnswer + math.random(9, 15)
     alternateAnswerBox3.text = alternateAnswer3
+    
 -------------------------------------------------------------------------------------------
 -- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
 -- placed into the black box)
@@ -281,7 +283,7 @@ local function PositionAnswers()
 end
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevel2() 
     composer.hideOverlay("crossFade", 400 )
     ResumeGame()
 end 

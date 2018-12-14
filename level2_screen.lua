@@ -20,7 +20,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level1_screen"
+sceneName = "level2_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -44,6 +44,7 @@ local platform1
 local platform2
 local platform3
 local platform4
+local platform5
 
 local character
 
@@ -150,12 +151,12 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/PizzaMan.png", 100, 150)
+    character = display.newImageRect("Images/Puzzel man.png", 100, 150)
     character.x = display.contentWidth * 0.1 / 8
     character.y = display.contentHeight  * 3 / 3
     character.width = 125
     character.height = 125
-    character.myName = "PizzaMan"
+    character.myName = "Puzzel man"
 
     -- intialize horizontal movement of character
     motionx = 0
@@ -235,7 +236,7 @@ local function onCollision( self, event )
             -- make the character invisible
             character.isVisible = false
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
@@ -372,7 +373,7 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level2ScreenKatheryn@2x.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -404,6 +405,13 @@ function scene:create( event )
         
     sceneGroup:insert( platform4 )
 
+
+    platform5 = display.newImageRect("Images/Platform.png", 180, 50)
+    platform5.x = display.contentWidth *5 / 5
+    platform5.y = display.contentHeight * 1.5 / 5
+        
+    sceneGroup:insert( platform5 )
+    
     -- Insert the lives
     live1 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live1.x = 50
@@ -435,7 +443,6 @@ function scene:create( event )
     topping1.y = 690
     topping1.myName = "topping1"
     
-
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( topping1 )

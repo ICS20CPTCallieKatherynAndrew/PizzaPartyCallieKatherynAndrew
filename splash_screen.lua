@@ -49,8 +49,8 @@ local function MoveText()
 end
 
 -- The function that will go to the main menu 
-local function gotoMainMenu()
-    composer.gotoScene( "main_menu" )
+local function gotosplash_screen2()
+    composer.gotoScene( "splash_screen2" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ function scene:show( event )
         MoveText()
 
         -- Go to the main menu screen after the given time.
-        timer.performWithDelay ( 3000, gotoMainMenu)          
+        timer.performWithDelay ( 3000, gotosplash_screen2)          
         
     end
 
