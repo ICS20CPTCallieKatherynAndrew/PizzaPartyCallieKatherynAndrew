@@ -7,14 +7,18 @@
 -- company logo that...
 -----------------------------------------------------------------------------------------
 
+
+-- hide the status dar  
+display.setStatusBar(display.HiddenStatusBar)
+
 -- Use Composer Library
 local composer = require( "composer" )
 
 -- Name the Scene
 sceneName = "splash_screen2"
 
--- hide the status dar  
-display.setStatusBar(display.HiddenStatusBar)
+-- Create Scene Object
+local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
@@ -22,12 +26,7 @@ display.setStatusBar(display.HiddenStatusBar)
 -----------------------------------------------------------------------------------------
 
 local goinghigherSound = audio.loadSound("Sounds/goinghigher.mp3")--Setting a variable to an mp3 file
-local goinghigherChannel 
-local goinghigherSoundChannel = audio.play(goinghigherSound)
-
-
--- Create Scene Object
-local scene = composer.newScene( sceneName )
+local goinghigherSoundChannel 
 
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -80,7 +79,7 @@ function scene:create( event )
     AndrewLogo = display.newImageRect("Images/AndrewLogo.png", 800, 800)
 
     -- character image with width and height 
-    pizza = display.newImageRect("Images/pizza.png", 320, 320)
+    pizza = display.newImageRect("Images/Pizza.png", 320, 320)
 
     --set the initial x and y position of AndrewLogo
     pizza.x = 500
@@ -124,6 +123,8 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        goinghigherSoundChannel = audio.play(goinghigherSound)
+
         -- MoveShip will be called over and over again
         Runtime:addEventListener("enterFrame", MoveAndrewLogo) 
         Runtime:addEventListener("enterFrame", Movepizza) 
@@ -155,7 +156,7 @@ function scene:hide( event )
     --called immediately 
     elseif( phase == "did" )then
 
-        audio.stop()
+        audio.stop(goinghigherSoundChannel)
     end
 
     -----------------------------------------------------------------------------------------
