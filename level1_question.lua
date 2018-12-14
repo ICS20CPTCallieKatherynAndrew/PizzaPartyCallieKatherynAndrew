@@ -560,16 +560,16 @@ function scene:create( event )
     alternateAnswerBox3AlreadyTouched = false
 
     --create answerbox alternate answers and the boxes to show them
-    answerbox = display.newText("", display.contentWidth * 0.1, 0, nil, 100)
-    alternateAnswerBox1 = display.newText("", display.contentWidth * 0.1, 0, nil, 100)
-    alternateAnswerBox2 = display.newText("", display.contentWidth * 0.1, 0, nil, 100)
-    alternateAnswerBox3 = display.newText("", display.contentWidth * 0.1, 0, nil, 100)
+    answerbox = display.newText("", display.contentWidth * 0.6, 0.4, nil, 100)
+    alternateAnswerBox1 = display.newText("", display.contentWidth * 0.4, 0.4, nil, 100)
+    alternateAnswerBox2 = display.newText("", display.contentWidth * 0.6, 0.6, nil, 100)
+    alternateAnswerBox3 = display.newText("", display.contentWidth * 0.4, 0.6, nil, 100)
 
     -- set the x positions of each of the answer boxes
-    answerboxPreviousX = display.contentWidth * 0.9
-    alternateAnswerBox1PreviousX = display.contentWidth * 0.9
-    alternateAnswerBox2PreviousX = display.contentWidth * 0.9
-    alternateAnswerBox3PreviousX = display.contentWidth * 0.9
+    answerboxPreviousX = display.contentWidth * 0.6
+    alternateAnswerBox1PreviousX = display.contentWidth * 0.4
+    alternateAnswerBox2PreviousX = display.contentWidth * 0.6
+    alternateAnswerBox3PreviousX = display.contentWidth * 0.4
 
     -- display the timer on the screen
     clockText = display.newText ("", display.contentWidth/3, display.contentHeight*2.5/3, nil, 75)
