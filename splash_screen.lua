@@ -125,8 +125,7 @@ end --function scene:show( event )
 
 -- The function called when the scene is issued to leave the screen
 function scene:hide( event )
-I LOVE THOMAS POTVIN
-CALLIE LOVES FINNO101
+
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
