@@ -58,8 +58,8 @@ local function Movepizza(event)
 end
 
 -- The function that will go to the main menu 
-local function gotoMainMenu()
-    composer.gotoScene( "main_menu" )
+local function gotoSplashScreen3()
+    composer.gotoScene( "splash_screen3" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ function scene:show( event )
            
 
         -- Go to the main menu screen after the given time.
-        timer.performWithDelay ( 3000, gotoMainMenu)          
+        timer.performWithDelay ( 3000, gotoSplashScreen3)          
         
     end
 
