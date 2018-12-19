@@ -13,9 +13,14 @@ local scene = composer.newScene( sceneName )
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
+
 local text
 scrollspeed = 3
-
+----------------------------------------------------------------------------------------
+--SOUNDS 
+-----------------------------------------------------------------------------------------
+local soundEffectSound = audio.loadSound("Sounds/splash_screen3.mp3")
+local soundEffectSoundChannel
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
@@ -105,6 +110,8 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
+        soundEffectSoundChannel = audio.play( soundEffectSound)
+        
         Runtime:addEventListener("enterFrame", MoveLogo)
         Runtime:addEventListener("enterFrame", MoveText)
         Runtime:addEventListener("enterFrame", RotatePizzaMan)
