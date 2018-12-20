@@ -239,13 +239,14 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
+            level2_screen()
         end
     end
 end
 
-local function YouWin()
+function level2_screen()
     if (questionsAnswered == 3) then
-        composer.gotoScene( "you_win")
+        composer.gotoScene( "level2_screen")
     
         --play you Cheer sound
         MoSoundChannel = audio.play(MOSound)
