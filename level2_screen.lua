@@ -40,52 +40,19 @@ numLives = 2
 -- The local variables for this scene
 local bkg_image
 
-local platform1
-local platform2
-local platform3
-local platform4
-local platform5
-
 local character
-
+local Pizza
 local live1
 local live2
-
-
-local rArrow 
-local uArrow
-local lArrow
-
-local motionx = 0
-local SPEED = 7
-local speed = -7
-local LINEAR_VELOCITY = -100
-local GRAVITY = 10
-local leftW 
-local rightW
-local topW
-local floor
-
-local pizza
-
-local topping1
-local topping2
-local topping3
-local theTopping
+local scoreObject
+local scoreNumber = 0
 
 local questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
-local bkgMusic = audio.loadSound( "Sounds/bkgMusicLevel1.mp3")
-local bkgMusicChannel
-local MoMusic = audio.loadSound( "Sounds/Mo.mp3")
-local MoMusicChannel
-local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
-local YouLoseMusicChannel
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
-local clickSoundChannel
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -96,104 +63,12 @@ local function BackTransition( )
     clickSoundChannel = audio.play(clickSound)
 end
 
--- When right arrow is touched, move character right
-local function right (touch)
-    motionx = SPEED
-    character.xScale = 1
-end
-
-local function left (touch)
-    motionx = speed
-    character.xScale = -1
-end
-
--- When up arrow is touched, add vertical so it can jump
-local function up (touch)
-    if (character ~= nil) then
-        character:setLinearVelocity( 0, LINEAR_VELOCITY )
-    end
-end
-
--- Move character horizontally
-local function movePlayer (event)
-    character.x = character.x + motionx
-end
- 
--- Stop character movement when no arrow is pushed
-local function stop (event)
-    if (event.phase =="ended") then
-        motionx = 0
-    end
-end
-
-
-local function AddArrowEventListeners()
-    rArrow:addEventListener("touch", right)
-    uArrow:addEventListener("touch", up)
-    lArrow:addEventListener("touch", left)
-end
-
-local function RemoveArrowEventListeners()
-    rArrow:removeEventListener("touch", right)
-    uArrow:removeEventListener("touch", up)
-    lArrow:removeEventListener("touch", left)
-end
-
-local function AddRuntimeListeners()
-    Runtime:addEventListener("enterFrame", movePlayer)
-    Runtime:addEventListener("touch", stop )
-end
-
-local function RemoveRuntimeListeners()
-    Runtime:removeEventListener("enterFrame", movePlayer)
-    Runtime:removeEventListener("touch", stop )
-end
-
-
-local function ReplaceCharacter()
-    character = display.newImageRect("Images/Puzzel man.png", 100, 150)
-    character.x = display.contentWidth * 0.1 / 8
-    character.y = display.contentHeight  * 3 / 3
-    character.width = 125
-    character.height = 125
-    character.myName = "Puzzel man"
-
-    -- intialize horizontal movement of character
-    motionx = 0
-
-    -- add physics body
-    physics.addBody( character, "dynamic", { density=0, friction=0.5, bounce=0, rotation=0 } )
-
-    -- prevent character from being able to tip over
-    character.isFixedRotation = true
-
-    -- add back arrow listeners
-    AddArrowEventListeners()
-
-    -- add back runtime listeners
-    AddRuntimeListeners()
-end
 
 local function MakeLivesVisible()
     live1.isVisible = true
     live2.isVisible = true
 end
 
-local function MakeToppingsVisible()
-    topping1.isVisible = true
-    topping2.isVisible = true
-    topping3.isVisible = true
-end
-
-local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
-
-    --play you Cheer sound
-    YouLoseSoundChannel = audio.play(YouLoseSound)
-
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
-end
 
 
 
@@ -218,125 +93,15 @@ local function UpdateLives()
     end
 end
 
-local function onCollision( self, event )
-
-
-    if ( event.phase == "began" ) then
-
-        if  (event.target.myName == "topping1") or
-            (event.target.myName == "topping2") or
-            (event.target.myName == "topping3") then
-
-            -- get the ball that the user hit
-            theTopping = event.target
-
-            -- stop the character from moving
-            motionx = 0
-
-            -- make the character invisible
-            character.isVisible = false
-            -- show overlay with math question
-            composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
-        end
-    end
-end
 
 local function YouWin()
     if (questionsAnswered == 3) then
         composer.gotoScene( "you_win")
-    
-        --play you Cheer sound
-        MoSoundChannel = audio.play(MOSound)
 
-        --stop cartoon014 music
-        audio.stop(clickSoundChannel)
     end
 end
 
-local function AddCollisionListeners()
 
-    -- if character collides with ball, onCollision will be called    
-    topping1.collision = onCollision
-    topping1:addEventListener( "collision" )
-    topping2.collision = onCollision
-    topping2:addEventListener( "collision" )
-    topping3.collision = onCollision
-    topping3:addEventListener( "collision" )
-end 
-
-local function RemoveCollisionListeners()
-
-    topping1:removeEventListener( "collision" )
-    topping2:removeEventListener( "collision" )
-    topping3:removeEventListener( "collision" )
-
-end
-
-
-
-
-local function MovePizza()
-
-    -- the logo will move and rotate to the center of the screen
-    transition.to( pizza, { rotation = pizza.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( pizza, {x=900, y=50, time=2000})
-end
-
-local function MoveTopping1()
-    -- the logo will move and rotate to the center of the screen
-    transition.to( topping1, { rotation = topping1.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( topping1, {x=600, y=350, time=2000})
-    topping1:scale(2,2)
-end
-
-local function MoveTopping2()
-    -- the logo will move and rotate to the center of the screen
-    transition.to( topping2, { rotation = topping2.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( topping2, {x=800, y=135, time=2000})
-    topping2:scale(2,2)
-end
-
-local function MoveTopping3()
-    -- the logo will move and rotate to the center of the screen
-    transition.to( topping3, { rotation = topping3.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( topping3, {x=200, y=220, time=2000})
-    topping3:scale(2,2)
-end
-
-
-local function AddPhysicsBodies()
-    --add to the physics engine
-    physics.addBody( platform1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-
-    physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
-    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
-    physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
-    physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
-
-    physics.addBody(topping1, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(topping2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(topping3, "static",  {density=0, friction=0, bounce=0} )
-
-end
-
-local function RemovePhysicsBodies()
-    physics.removeBody(platform1)
-    physics.removeBody(platform2)
-    physics.removeBody(platform3)
-    physics.removeBody(platform4)
-
-    physics.removeBody(leftW)
-    physics.removeBody(rightW)
-    physics.removeBody(topW)
-    physics.removeBody(floor)
- 
-end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
@@ -361,6 +126,71 @@ function ResumeGame()
 
 end
 
+--create the Pizza and siplay it on the screen
+local Pizza= display.newImage("Images/Pizza 1.png", 0 , 0 )
+
+--set the position of the Pizza and rescale the size of the Pizza to  one third of its original size
+Pizza.x = display.contentCenterX
+Pizza.y = display.contentCenterY
+Pizza:scale(1*1/2, 1*1/2)
+
+--set the Pizza to invisible
+Pizza.isVisible = false
+
+--create the score text and display it on the screen
+local scoreObject = display.newText( "Score = ".. scoreNumber, 160, 700, nil, 50)
+scoreObject:setTextColor(11/255, 18/255, 232/255)
+
+
+--FUNCTIONS--
+--Creating a function that makes the Pizza appears in random (x,y) positions on the screen  
+function PopUp()
+ --Choosing random Position on the screen between 0 and the size of the screen
+ Pizza.x = math.random( 0, display.contentWidth)
+ Pizza.y = math.random( 0, display.contentHeight)
+
+ Pizza.xscale = 20
+ Pizza.yscale = 20
+
+ --make the Pizza visible
+ Pizza.isVisible = true
+
+ --make the Pizza disapear after 1000 miliseconds
+ timer.performWithDelay( 5000, Hide)
+end
+
+--This function calls the PopUp function after 1 seconds
+function PopUpDelay( )
+ timer.performWithDelay( 1000, PopUp)
+end
+
+--This function makes the Pizza invisible and then calls the PopUpDelay function
+function Hide( )
+ --Changing visibility
+  Pizza.isVisible = false
+  PopUpDelay()
+end
+
+--this function starts the game
+function GameStart( )
+ PopUpDelay()
+end
+
+--this function increments the score only if the Pizza is clicked.It then displays the new score.
+function Whacked( event )
+     -- If touch phase just started
+    if (event.phase == "began") then
+        whackSoundChannel = audio.play(whackSound)
+        scoreNumber = scoreNumber + 1
+        scoreObject.isVisible = true
+        Hide()
+        scoreObject.text = ( "Score = "..scoreNumber)
+    end
+end
+--EVENT LISTENERS
+--Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
+Pizza:addEventListener( "touch", Whacked)
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -379,39 +209,7 @@ function scene:create( event )
 
     -- Insert background image into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( bkg_image )    
-    
-    -- Insert the platforms
-    platform1 = display.newImageRect("Images/Platform.png", 250, 50)
-    platform1.x = display.contentWidth * 2 / 8
-    platform1.y = display.contentHeight * 3 / 4
-        
-    sceneGroup:insert( platform1 )
-
-    platform2 = display.newImageRect("Images/Platform.png", 150, 50)
-    platform2.x = display.contentWidth* 1.9 / 8
-    platform2.y = display.contentHeight * 1.5 / 4
-        
-    sceneGroup:insert( platform2 )
-
-    platform3 = display.newImageRect("Images/Platform.png", 180, 50)
-    platform3.x = display.contentWidth *3 / 5
-    platform3.y = display.contentHeight * 2.7 / 5
-        
-    sceneGroup:insert( platform3 )
-
-    platform4 = display.newImageRect("Images/Platform.png", 180, 50)
-    platform4.x = display.contentWidth *4 / 5
-    platform4.y = display.contentHeight * 1.3 / 5
-        
-    sceneGroup:insert( platform4 )
-
-
-    platform5 = display.newImageRect("Images/Platform.png", 180, 50)
-    platform5.x = display.contentWidth *5 / 5
-    platform5.y = display.contentHeight * 1.5 / 5
-        
-    sceneGroup:insert( platform5 )
-    
+   
     -- Insert the lives
     live1 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
     live1.x = 50
@@ -429,94 +227,7 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live2 )
-
-    -- Insert the pizza
-    pizza = display.newImageRect("Images/pizza.png", 175, 100)
-    pizza.x = display.contentWidth * 1.5 / 8
-    pizza.y = display.contentHeight * 3.5 / 4
-        
-    sceneGroup:insert( pizza )
-
-    -- Insert the toppings
-    topping1 = display.newImageRect("Images/Pepperoni.png", 40, 40)
-    topping1.x = 190
-    topping1.y = 690
-    topping1.myName = "topping1"
-    
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topping1 )
-
-    -- Insert the topping
-    topping2 = display.newImageRect("Images/Pepper.png", 40, 40)
-    topping2.x = 210
-    topping2.y = 650
-    topping2.myName = "topping2"
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topping2 )
-
-    -- Insert the topping
-    topping3 = display.newImageRect("Images/Mushroom.png", 40, 40)
-    topping3.x = 160
-    topping3.y = 660
-    topping3.myName = "topping3"
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topping3 )
-
-    --Insert the right arrow
-    rArrow = display.newImageRect("Images/RightArrow.png", 100, 50)
-    rArrow.x = display.contentWidth * 9.2 / 10
-    rArrow.y = display.contentHeight * 9.5 / 10
-   
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( rArrow)
-   
-    --Insert the left arrow
-    lArrow = display.newImageRect("Images/LeftArrow.png", 100, 50)
-    lArrow.x = display.contentWidth *7.2 / 10
-    lArrow.y = display.contentHeight * 9.5 / 10
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( lArrow)
-
-    --Insert the left arrow
-    uArrow = display.newImageRect("Images/UpArrow.png", 50, 100)
-    uArrow.x = display.contentWidth * 8.2 / 10
-    uArrow.y = display.contentHeight * 8.5 / 10
-
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( uArrow)
-
-    --WALLS--
-    leftW = display.newLine( 0, 0, 0, display.contentHeight)
-    leftW.isVisible = true
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( leftW )
-
-    rightW = display.newLine( 0, 0, 0, display.contentHeight)
-    rightW.x = display.contentCenterX * 2
-    rightW.isVisible = true
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( rightW )
-
-    topW = display.newLine( 0, 0, display.contentWidth, 0)
-    topW.isVisible = true
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topW )
-
-    floor = display.newImageRect("Images/Platform.png", 1024, 100)
-    floor.x = display.contentCenterX
-    floor.y = display.contentHeight * 1.06
-    
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( floor )
-
-
-end --function scene:create( event )
+end
 
 -----------------------------------------------------------------------------------------
 
@@ -532,40 +243,7 @@ function scene:show( event )
     if ( phase == "will" ) then
 
         -- Called when the scene is still off screen (but is about to come on screen).
-    -----------------------------------------------------------------------------------------
-        -- start physics
-        physics.start()
-
-        -- set gravity
-        physics.setGravity( 0, GRAVITY )
-        
-    elseif ( phase == "did" ) then
-
-        timer.performWithDelay( 2000, MoveTopping1)
-        timer.performWithDelay( 2000, MoveTopping2)
-        timer.performWithDelay( 2000, MoveTopping3)
-        timer.performWithDelay( 2000, MovePizza)
-        bkgMusicChannel = audio.play(bkgMusic)
-
-        numLives = 2
-        questionsAnswered = 0
-        
-        -- make all lives visible
-        MakeLivesVisible()
-
-        MakeToppingsVisible()
-
-        -- add physics bodies to each object
-        AddPhysicsBodies()
-
-        -- add collision listeners to objects
-        AddCollisionListeners()
-
-        -- create the character, add physics bodies and runtime listeners
-        ReplaceCharacter()
-
-    end
-
+    end-----------------------------------------------------------------------------------------
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -580,19 +258,11 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        audio.pause(bkgMusic)
+
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
-        RemovePhysicsBodies()
-        RemoveCollisionListeners()
 
-        physics.stop()
-        RemoveArrowEventListeners()
-        RemoveRuntimeListeners()
-        display.remove(character)
-        
     end
 
 end --function scene:hide( event )
@@ -624,5 +294,5 @@ scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 
 -----------------------------------------------------------------------------------------
-
+GameStart( )
 return scene
