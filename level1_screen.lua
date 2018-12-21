@@ -373,7 +373,7 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/level1ScreenCallie.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -381,25 +381,25 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/Platform.png", 250, 50)
+    platform1 = display.newImageRect("Images/Platforms.png", 250, 50)
     platform1.x = display.contentWidth * 2 / 8
     platform1.y = display.contentHeight * 3 / 4
         
     sceneGroup:insert( platform1 )
 
-    platform2 = display.newImageRect("Images/Platform.png", 150, 50)
+    platform2 = display.newImageRect("Images/Platforms.png", 150, 50)
     platform2.x = display.contentWidth* 1.9 / 8
     platform2.y = display.contentHeight * 1.5 / 4
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/Platform.png", 180, 50)
+    platform3 = display.newImageRect("Images/Platforms.png", 180, 50)
     platform3.x = display.contentWidth *3 / 5
     platform3.y = display.contentHeight * 2.7 / 5
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Platform.png", 180, 50)
+    platform4 = display.newImageRect("Images/Platforms.png", 180, 50)
     platform4.x = display.contentWidth *4 / 5
     platform4.y = display.contentHeight * 1.3 / 5
         
@@ -502,7 +502,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( topW )
 
-    floor = display.newImageRect("Images/Platform.png", 1024, 100)
+    floor = display.newImageRect("Images/Platforms.png", 1024, 100)
     floor.x = display.contentCenterX
     floor.y = display.contentHeight * 1.06
     

@@ -67,7 +67,7 @@ function scene:create( event )
     display.setDefault("background", 86/255, 249/255, 113/255)
 
     -- display the logo
-    logo = display.newImageRect("Images/CompanyLogo.png", 500, 500)
+    logo = display.newImageRect("Images/CompanyLogoCallie.png", 500, 500)
     logo.x = 0
     logo.y = display.contentHeight/2
 

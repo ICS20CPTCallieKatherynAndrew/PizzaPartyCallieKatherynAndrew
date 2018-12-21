@@ -13,9 +13,14 @@ local scene = composer.newScene( sceneName )
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
+
 local text
 scrollspeed = 3
-
+----------------------------------------------------------------------------------------
+--SOUNDS 
+-----------------------------------------------------------------------------------------
+local soundEffectSound = audio.loadSound("Sounds/splash_screen3.mp3")
+local soundEffectSoundChannel
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
@@ -64,7 +69,7 @@ function scene:create( event )
     display.setDefault("background",  0/255, 160/255, 0/255)
 
     -- display the logo
-    logo = display.newImageRect("Images/CompanyLogoKatheryn@2x.png", 500, 500)
+    logo = display.newImageRect("Images/CompanyLogoKatheryn.png", 500, 500)
     logo.x = 0
     logo.y = display.contentHeight/2
     logo.alpha = 1
@@ -105,6 +110,8 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
+        soundEffectSoundChannel = audio.play( soundEffectSound)
+        
         Runtime:addEventListener("enterFrame", MoveLogo)
         Runtime:addEventListener("enterFrame", MoveText)
         Runtime:addEventListener("enterFrame", RotatePizzaMan)
