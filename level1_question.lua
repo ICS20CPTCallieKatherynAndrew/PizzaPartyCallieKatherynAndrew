@@ -102,8 +102,6 @@ local Y2 = display.contentHeight * 0.6
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
-
------------------------------------------------------------------------------------------
 local function DisplayQuestion()
 
     --set random numbers
@@ -114,10 +112,10 @@ local function DisplayQuestion()
     -- addition
     if ( randomOperator == 1) then
 
-        --  calculate answer
+        -- calculate correct answer
         correctAnswer = randomNumber1 + randomNumber2
 
-        --change question text in relation to answer
+        -- display the question
         questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
         
     -- subtraction
@@ -125,17 +123,18 @@ local function DisplayQuestion()
 
         if ( randomNumber1 > randomNumber2 ) then
 
-            -- calculating the correct answer
+            -- calculate correct answer
             correctAnswer = randomNumber1 - randomNumber2
         
+            -- display the question
             questionText.text = randomNumber1  .. " - " .. randomNumber2.. " = "
 
         else
 
-            -- calculating the correct answer
+            -- calculate correct answer
             correctAnswer = randomNumber2 - randomNumber1
         
-            -- create question in text object
+            -- display the question
             questionText.text = randomNumber2  .. " - " .. randomNumber1 .. " = "
             
             
@@ -156,29 +155,22 @@ end
 local function DetermineAlternateAnswers()    
 
         
-    -- generate incorrect answer and set it in the textbox
+    -- create incorrect answers
     alternateAnswer1 = correctAnswer + math.random(3, 9)
     alternateAnswerBox1.text = alternateAnswer1
 
-    -- generate incorrect answer and set it in the textbox
+    -- create incorrect answers
     alternateAnswer2 = correctAnswer - math.random(1, 5)
     alternateAnswerBox2.text = alternateAnswer2
 
-    -- generate incorrect answer and set it in the textbox
+    -- create incorrect answers
     alternateAnswer3 = correctAnswer + math.random(9, 15)
-    alternateAnswerBox3.text = alternateAnswer3
--------------------------------------------------------------------------------------------
--- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
--- placed into the black box)
------------------------------------------------------------------------------------------
-    
+    alternateAnswerBox3.text = alternateAnswer3   
 end
 
 
 local function PositionAnswers()
-    -------------------------------------------------------------------------------------------
-    --ROMDOMLY SELECT ANSWER BOX POSITIONS
-    -----------------------------------------------------------------------------------------
+    -- determine random answer positions
     randomPosition = math.random(1,4)
 
     -- random position 1
@@ -186,71 +178,56 @@ local function PositionAnswers()
         -- set the new y-positions of each of the answers
         answerbox.x = X1
         answerbox.y = Y1        
-    
-        --alternateAnswerBox1
+
         alternateAnswerBox1.x = X2
         alternateAnswerBox1.y = Y1
-        
-        --alternateAnswerBox2
+
         alternateAnswerBox2.x = X1
         alternateAnswerBox2.y = Y2
         
-        --alternateAnswerBox3
         alternateAnswerBox3.x = X2
         alternateAnswerBox3.y = Y2
         
-    -- random position 2
     elseif (randomPosition == 2) then
 
         -- set the new y-positions of each of the answers
         answerbox.x = X2
         answerbox.y = Y1        
-    
-        --alternateAnswerBox1
+
         alternateAnswerBox1.x = X1
         alternateAnswerBox1.y = Y2
-        
-        --alternateAnswerBox2
+
         alternateAnswerBox2.x = X2
         alternateAnswerBox2.y = Y2
-        
-        --alternateAnswerBox3
+
         alternateAnswerBox3.x = X1
         alternateAnswerBox3.y = Y1
 
-
-    -- random position 3
-     elseif (randomPosition == 3) then
+    elseif (randomPosition == 3) then
        -- set the new y-positions of each of the answers
         answerbox.x = X1
         answerbox.y = Y2        
-    
-        --alternateAnswerBox1
+
         alternateAnswerBox1.x = X2
         alternateAnswerBox1.y = Y2
         
-        --alternateAnswerBox2
         alternateAnswerBox2.x = X1
         alternateAnswerBox2.y = Y1
-        
-        --alternateAnswerBox3
+
         alternateAnswerBox3.x = X2
         alternateAnswerBox3.y = Y1
 
-     elseif (randomPosition == 4) then
+    elseif (randomPosition == 4) then
         -- set the new y-positions of each of the answers
         answerbox.x = X2
         answerbox.y = Y2        
-    
-        --alternateAnswerBox1
+
         alternateAnswerBox1.x = X1
         alternateAnswerBox1.y = Y1
-        
-        --alternateAnswerBox2
+
         alternateAnswerBox2.x = X2
         alternateAnswerBox2.y = Y1
-        
-        --alternateAnswerBox3
+
         alternateAnswerBox3.x = X1
         alternateAnswerBox3.y = Y2
 
@@ -271,7 +248,7 @@ local function PositionAnswers()
         
 end
 
---making transition to next scene
+-- transition back to level 1
 local function BackToLevel1() 
     composer.hideOverlay("crossFade", 400 )
     ResumeGame()
@@ -281,14 +258,14 @@ end
 
 local function UpdateTime()
 
-    -- decrement the number of seconds
+    -- decrease the number of seconds
     secondsLeft = secondsLeft - 1
 
     -- display the number of seconds left in the clock object
     clockText.text = "Time: ".. secondsLeft  
 
     if (secondsLeft == 0 ) then
-        -- reset the number of seconds left
+
         secondsLeft = totalSeconds
 
         timer.performWithDelay(1000, BackToLevel1) 
@@ -297,7 +274,7 @@ end
 
 
 local function TouchListenerAnswerbox(touch)
-    --only work if none of the other boxes have been touched
+    -- when the correct answer is chosen
     if (alternateAnswerBox1AlreadyTouched == false) and 
         (alternateAnswerBox2AlreadyTouched == false) and
         (alternateAnswerBox3AlreadyTouched == false) then
@@ -501,41 +478,23 @@ local function StartTimer()
     countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
 end
 
-----------------------------------------------------------------------------------
--- GLOBAL FUNCTIONS
-----------------------------------------------------------------------------------
-
-
-----------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
-----------------------------------------------------------------------------------
 
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
-
-    ----------------------------------------------------------------------------------
-    ----------------------------------------------------------------------------------
-    --Inserting backgroud image and lives
-    ----------------------------------------------------------------------------------
-    -- the black box where the user will drag the answer
     
     bkg = display.newRect(display.contentCenterX, display.contentCenterY, display.contentWidth, display.contentHeight)
     --setting to a semi black colour
     bkg:setFillColor(0,0,0,0.5)
 
-
-
-    -----------------------------------------------------------------------------------------
     --making a cover rectangle to have the background fully bolcked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50 )
     --setting its colour
     cover:setFillColor(96/255, 96/255, 96/255)
 
-
-
+    -- the box where the user places the answer
     userAnswerBoxPlaceholder = display.newImageRect("Images/answerBox.png",  130, 130, 0, 0)
     userAnswerBoxPlaceholder.x = display.contentWidth * 0.6
     userAnswerBoxPlaceholder.y = display.contentHeight * 0.8

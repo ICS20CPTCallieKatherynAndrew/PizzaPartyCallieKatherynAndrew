@@ -6,6 +6,9 @@
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
 
+-- hiding the status bar
+display.setStatusBar(display.HiddenStatusBar)
+
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
