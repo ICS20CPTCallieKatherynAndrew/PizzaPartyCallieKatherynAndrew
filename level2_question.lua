@@ -105,21 +105,33 @@ local Y2 = display.contentHeight * 0.6
 local function DisplayQuestion()
 
     --set random numbers
-    randomOperator = math.random(1,2)
-    randomNumber1 = math.random(1, 30)
-    randomNumber2 = math.random(1, 30)
+    randomOperator = math.random(1,3)
+
 
     -- addition
     if ( randomOperator == 1) then
-
+        randomNumber1 = math.random(1, 30)
+        randomNumber2 = math.random(1, 30)
         -- calculate correct answer
         correctAnswer = randomNumber1 + randomNumber2
 
         -- display the question
         questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
-        
+    
+    -- multiplication
+    elseif ( randomOperator == 2) then
+        randomNumber1 = math.random(1, 5)
+        randomNumber2 = math.random(1, 5)
+        -- calculate correct answer
+        correctAnswer = randomNumber1 * randomNumber2
+
+        -- display the question
+        questionText.text = randomNumber1 .. " * " .. randomNumber2 .. " = " 
+
     -- subtraction
-    elseif  ( randomOperator == 2 ) then
+    elseif  ( randomOperator == 3 ) then
+        randomNumber1 = math.random(1, 30)
+        randomNumber2 = math.random(1, 30)
 
         if ( randomNumber1 > randomNumber2 ) then
 
@@ -248,10 +260,10 @@ local function PositionAnswers()
         
 end
 
--- transition back to level 1
-local function BackToLevel1() 
+-- transition back to level 2
+local function BackToLevel2() 
     composer.hideOverlay("crossFade", 400 )
-    ResumeGame()
+    BackToGame()
 end 
 
 
@@ -305,11 +317,10 @@ local function TouchListenerAnswerbox(touch)
                 answerbox.x = userAnswerBoxPlaceholder.x
                 answerbox.y = userAnswerBoxPlaceholder.y
                 userAnswer = correctAnswer
-            
                         
                 correctText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1)  
+                timer.performWithDelay(1000, BackToLevel2)  
             --else make box go back to where it was
             else
                 answerbox.x = answerboxPreviousX
@@ -324,7 +335,8 @@ end
 local function TouchListenerAnswerBox1(touch)
     --only work if none of the other boxes have been touched
     if (answerboxAlreadyTouched == false) and 
-        (alternateAnswerBox2AlreadyTouched == false) then
+        (alternateAnswerBox2AlreadyTouched == false) and
+        (alternateAnswerBox3AlreadyTouched == false) then
 
         if (touch.phase == "began") then
             --let other boxes know it has been clicked
@@ -355,7 +367,7 @@ local function TouchListenerAnswerBox1(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel2) 
 
             --else make box go back to where it was
             else
@@ -400,7 +412,7 @@ local function TouchListenerAnswerBox2(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel2) 
 
             --else make box go back to where it was
             else
@@ -445,7 +457,7 @@ local function TouchListenerAnswerBox3(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel2) 
 
             --else make box go back to where it was
             else
@@ -516,15 +528,13 @@ function scene:create( event )
     alternateAnswerBox3 = display.newText("", display.contentWidth * 0.4, 0.6, nil, 100)
 
     -- set the x positions of each of the answer boxes
-    answerboxPreviousX = display.contentWidth * 0.6
-    alternateAnswerBox1PreviousX = display.contentWidth * 0.4
-    alternateAnswerBox2PreviousX = display.contentWidth * 0.6
-    alternateAnswerBox3PreviousX = display.contentWidth * 0.4
+    --answerboxPreviousX = display.contentWidth * 0.6
+    --alternateAnswerBox1PreviousX = display.contentWidth * 0.4
+    --alternateAnswerBox2PreviousX = display.contentWidth * 0.6
+    --alternateAnswerBox3PreviousX = display.contentWidth * 0.4
 
     -- display the timer on the screen
     clockText = display.newText ("", display.contentWidth/3, display.contentHeight*2.5/3, nil, 75)
-
-
 
     correctText = display.newText("Correct!", display.contentWidth/2, display.contentHeight*0.3/3, nil, 75 )
     correctText:setTextColor(100/255, 200/255, 210/255)

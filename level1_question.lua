@@ -45,17 +45,17 @@ local alternateAnswer3
 -- Variables containing the user answer and the actual answer
 local userAnswer
 
--- boolean variables telling me which answer box was touched
-local answerboxAlreadyTouched = false
-local alternateAnswerBox1AlreadyTouched = false
-local alternateAnswerBox2AlreadyTouched = false
-local alternateAnswerBox3AlreadyTouched = false
-
 --create textboxes holding answer and alternate answers 
 local answerbox
 local alternateAnswerBox1
 local alternateAnswerBox2
 local alternateAnswerBox3
+
+-- boolean variables telling me which answer box was touched
+local answerboxAlreadyTouched = false
+local alternateAnswerBox1AlreadyTouched = false
+local alternateAnswerBox2AlreadyTouched = false
+local alternateAnswerBox3AlreadyTouched = false
 
 local cover
 local bkg
@@ -71,8 +71,6 @@ local answerboxPreviousY
 local alternateAnswerBox1PreviousY
 local alternateAnswerBox2PreviousY
 local alternateAnswerBox3PreviousY
-
-
 
 -- the black box where the user will drag the answer
 local userAnswerBoxPlaceholder
@@ -164,7 +162,7 @@ local function DetermineAlternateAnswers()
     alternateAnswerBox2.text = alternateAnswer2
 
     -- create incorrect answers
-    alternateAnswer3 = correctAnswer + math.random(9, 15)
+    alternateAnswer3 = correctAnswer + math.random(10, 15)
     alternateAnswerBox3.text = alternateAnswer3   
 end
 
@@ -324,7 +322,8 @@ end
 local function TouchListenerAnswerBox1(touch)
     --only work if none of the other boxes have been touched
     if (answerboxAlreadyTouched == false) and 
-        (alternateAnswerBox2AlreadyTouched == false) then
+        (alternateAnswerBox2AlreadyTouched == false) and
+        (alternateAnswerBox3AlreadyTouched == false) then
 
         if (touch.phase == "began") then
             --let other boxes know it has been clicked
@@ -516,10 +515,15 @@ function scene:create( event )
     alternateAnswerBox3 = display.newText("", display.contentWidth * 0.4, 0.6, nil, 100)
 
     -- set the x positions of each of the answer boxes
-    answerboxPreviousX = display.contentWidth * 0.6
-    alternateAnswerBox1PreviousX = display.contentWidth * 0.4
-    alternateAnswerBox2PreviousX = display.contentWidth * 0.6
-    alternateAnswerBox3PreviousX = display.contentWidth * 0.4
+   -- answerboxPreviousX = display.contentWidth * 0.4
+   -- alternateAnswerBox1PreviousX = display.contentWidth * 0.4
+    --alternateAnswerBox2PreviousX = display.contentWidth * 0.6
+    --alternateAnswerBox3PreviousX = display.contentWidth * 0.6
+
+    --answerboxPreviousY = display.contentHeight * 0.6
+    --alternateAnswerBox1PreviousY = display.contentHeight * 0.4
+    --alternateAnswerBox2PreviousY = display.contentHeight * 0.6
+    --alternateAnswerBox3PreviousY = display.contentHeight * 0.4
 
     -- display the timer on the screen
     clockText = display.newText ("", display.contentWidth/3, display.contentHeight*2.5/3, nil, 75)

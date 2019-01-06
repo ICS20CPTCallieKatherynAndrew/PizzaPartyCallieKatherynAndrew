@@ -558,6 +558,8 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
+        level2_screen()
+
     end
 
 end --function scene:show( event )
