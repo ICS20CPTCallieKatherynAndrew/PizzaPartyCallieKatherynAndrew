@@ -571,8 +571,7 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- Called when the scene is now on screen.
-        -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
+
         secondsLeft = 15
         clockText.text = secondsLeft .. ""
 
@@ -594,19 +593,12 @@ function scene:hide( event )
     local sceneGroup = self.view
     local phase = event.phase
 
-    -----------------------------------------------------------------------------------------
-
     if ( phase == "will" ) then
-        -- Called when the scene is on screen (but is about to go off screen).
-        -- Insert code here to "pause" the scene.
-        -- Example: stop timers, stop animation, stop audio, etc.
-        --parent:resumeGame()
-    -----------------------------------------------------------------------------------------
-
+        -- Called when the scene is on screen (but is about to go off screen
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemoveAnswerBoxEventListeners()
-        timer.cancel(countDownTimer)
+        --timer.cancel(countDownTimer)
        
     end
 
@@ -626,7 +618,7 @@ function scene:destroy( event )
     -- Insert code here to clean up the scene.
     -- Example: remove display objects, save state, etc.
 
-end -- function scene:destroy( event )
+end 
 
 -----------------------------------------------------------------------------------------
 -- EVENT LISTENERS

@@ -242,7 +242,6 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
-            level2_screen()
         end
     end
 end
