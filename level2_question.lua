@@ -616,10 +616,8 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemoveAnswerBoxEventListeners()
-        timer.cancel(countDownTimer)
-       
+        timer.cancel(countDownTimer)   
     end
-
 end --function scene:hide( event )
 
 -----------------------------------------------------------------------------------------

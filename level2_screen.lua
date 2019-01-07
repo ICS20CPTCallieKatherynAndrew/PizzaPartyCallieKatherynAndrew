@@ -52,7 +52,8 @@ local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
-
+local bkgMusicLevel2 = audio.loadSound( "Sounds/bkgMusicLevel2.mp3")
+local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
