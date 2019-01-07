@@ -122,16 +122,11 @@ function PopUp()
  Pizza.x = math.random( 0, display.contentWidth)
  Pizza.y = math.random( 0, display.contentHeight)
 
- --set the position of the Pizza and rescale the size of the Pizza to  one third of its original size
- Pizza.x = display.contentCenterX
- Pizza.y = display.contentCenterY
- Pizza:scale(1*1/2, 1*1/2)
-
  --make the Pizza visible
  Pizza.isVisible = true
 
  --make the Pizza disapear after 1000 miliseconds
- timer.performWithDelay( 7000, Hide)
+ timer.performWithDelay( 1000, Hide)
 end
 
 --This function calls the PopUp function after 1 seconds
@@ -199,19 +194,20 @@ function scene:create( event )
     sceneGroup:insert( live2 )
 
     --create the Pizza and siplay it on the screen
-    Pizza = display.newImage("Images/Pizza 1.png", 0 , 0 )
+    Pizza = display.newImage("Images/Pizza.png", 0 , 0 )
     --set the position of the Pizza and rescale the size of the Pizza to  one third of its original size
     Pizza.x = display.contentCenterX
     Pizza.y = display.contentCenterY
-    Pizza:scale(1*1/2, 1*1/2)
+    Pizza:scale(1*2, 1*2)
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( Pizza )
 
     --create the score text and display it on the screen
     scoreObject = display.newText( "Score = ".. scoreNumber, 160, 700, nil, 50)
-    scoreObject:setTextColor(11/255, 18/255, 232/255)
+    scoreObject:setTextColor(200/255, 220/255, 220/255)
 
+    scoreObject.y = 450
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert(scoreObject)
 
