@@ -131,7 +131,7 @@ function PopUp()
  Pizza.isVisible = true
 
  --make the Pizza disapear after 1000 miliseconds
- timer.performWithDelay( 5000, Hide)
+ timer.performWithDelay( 7000, Hide)
 end
 
 --This function calls the PopUp function after 1 seconds

@@ -36,6 +36,7 @@ local scene = composer.newScene( sceneName )
 
 numLives = 2
 
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -242,6 +243,7 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
+
         end
     end
 end
@@ -359,6 +361,8 @@ function ResumeGame()
             transition.to( theTopping, {x=900, y=50, time=2000})
             theTopping:scale(0.5, 0.5)
         end
+        
+        level2_screen()
     end
 
 end
