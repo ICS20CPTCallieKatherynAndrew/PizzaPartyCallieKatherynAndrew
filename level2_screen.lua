@@ -149,8 +149,10 @@ function PopUp()
  Pizza.x = math.random( 0, display.contentWidth)
  Pizza.y = math.random( 0, display.contentHeight)
 
- Pizza.xscale = 20
- Pizza.yscale = 20
+ --set the position of the Pizza and rescale the size of the Pizza to  one third of its original size
+ Pizza.x = display.contentCenterX
+ Pizza.y = display.contentCenterY
+ Pizza:scale(1*1/2, 1*1/2)
 
  --make the Pizza visible
  Pizza.isVisible = true
