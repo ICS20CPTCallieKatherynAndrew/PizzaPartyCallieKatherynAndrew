@@ -1,11 +1,15 @@
 -----------------------------------------------------------------------------------------
 --
 -- splash_screen.lua
--- Created by: Your Name
--- Date: Month Day, Year
+-- Created by: Andrew Jr
+-- Date: 2018-11-22
 -- Description: This is the splash screen of the game. It displays the 
 -- company logo that...
 -----------------------------------------------------------------------------------------
+
+
+-- hide the status dar  
+display.setStatusBar(display.HiddenStatusBar)
 
 -- Use Composer Library
 local composer = require( "composer" )
@@ -13,44 +17,49 @@ local composer = require( "composer" )
 -- Name the Scene
 sceneName = "splash_screen"
 
------------------------------------------------------------------------------------------
-
 -- Create Scene Object
 local scene = composer.newScene( sceneName )
+
+-----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+--SOUNDS 
+-----------------------------------------------------------------------------------------
+
+local goinghigherSound = audio.loadSound("Sounds/goinghigher.mp3")--Setting a variable to an mp3 file
+local goinghigherSoundChannel 
 
 ----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-
-local companyName1
-local companyName2
-local spinSound = audio.loadSound( "Sounds/spinSound.wav")
-local spinSoundChannel
-
+ 
+-- The local variables for this scene
+local AndrewLogo
+local scrollSpeed = 5
+local pizza
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
--- The function that moves the logo across the screen
-local function MoveLogo()
-
-    -- the logo will move and rotate to the center of the screen
-    transition.to( logo, { rotation = logo.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( logo, {x=512, y=384, time=2000})
+-- Description:This function adds the scroll speed to the x-value of the ship
+local function MoveAndrewLogo(event) 
+    -- add the scroll speed to the x-value of the ship
+    AndrewLogo.x = AndrewLogo.x + scrollSpeed  
+    AndrewLogo.alpha = AndrewLogo.alpha - 0.003
+  
+    -- change the transparency of the ship every time it moves so that it fades out   
 end
 
-local function MoveText()
-
-    -- the text will move and rotate to the center of the screen
-    transition.to( companyName1, { rotation = companyName1.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( companyName1, {x=710, y=490, time=2000})
-    transition.to( companyName2, { rotation = companyName2.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( companyName2, {x=710, y=580, time=2000})
+local function Movepizza(event) 
+    -- add the scroll speed to the x-value of the ship
+    pizza.x = pizza.x + scrollSpeed  
+    pizza.alpha = pizza.alpha - 0.003
+  
+    -- change the transparency of the ship every time it moves so that it fades out
 end
 
 -- The function that will go to the main menu 
-local function gotosplash_screen2()
-    composer.gotoScene( "splash_screen2" )
+local function gotoMainMenu()
+    composer.gotoScene( "main_menu" )
 end
 
 -----------------------------------------------------------------------------------------
@@ -63,26 +72,34 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -- set the background colour
-    display.setDefault("background", 86/255, 249/255, 113/255)
+    -- set the background to be black
+    display.setDefault("background", 70/255, 54/255, 90/255)
 
-    -- display the logo
-    logo = display.newImageRect("Images/CompanyLogoCallie.png", 500, 500)
-    logo.x = 0
-    logo.y = display.contentHeight/2
+    -- Insert the AndrewLogo image
+    AndrewLogo = display.newImageRect("Images/AndrewLogo.png", 800, 800)
 
-    -- display the company name
-    companyName1 = display.newText( " Jumping ", 1000, 500, nil, 70 )
-    companyName2 = display.newText( " Animations ", 1000, 600, nil, 70 )
+    -- character image with width and height 
+    pizza = display.newImageRect("Images/Pizza.png", 320, 320)
 
-    -- set the colour of the text
-    companyName1:setTextColor(44/255, 55/255, 167/255)
-    companyName2:setTextColor(44/255, 55/255, 167/255)
+    --set the initial x and y position of AndrewLogo
+    pizza.x = 500
+    pizza.y = 600
+
+    --set the initial x and y position of pizza
+    AndrewLogo.x = 0
+    AndrewLogo.y = display.contentHeight/3
+
+    --set the initial x and y position of AndrewLogo
+    AndrewLogo.x = 0
+    AndrewLogo.y = 400
+   
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( logo )
-    sceneGroup:insert( companyName1 )
-    sceneGroup:insert( companyName2 )
+    sceneGroup:insert( AndrewLogo )
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( pizza )
+
 
 end -- function scene:create( event )
 
@@ -103,19 +120,18 @@ function scene:show( event )
     -- Called when the scene is still off screen (but is about to come on screen).
     if ( phase == "will" ) then
        
-        -- Call the moveBeetleship function as soon as we enter the frame.
-        --Runtime:addEventListener("enterFrame", MoveLogo)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-        -- start the splash screen music
-        spinSoundChannel = audio.play(spinSound)
+        goinghigherSoundChannel = audio.play(goinghigherSound)
 
-        MoveLogo()
-        MoveText()
+        -- MoveShip will be called over and over again
+        Runtime:addEventListener("enterFrame", MoveAndrewLogo) 
+        Runtime:addEventListener("enterFrame", Movepizza) 
+           
 
         -- Go to the main menu screen after the given time.
-        timer.performWithDelay ( 3000, gotosplash_screen2)          
+        timer.performWithDelay ( 3000, gotoMainMenu)          
         
     end
 
@@ -136,17 +152,15 @@ function scene:hide( event )
     -- Insert code here to "pause" the scene.
     -- Example: stop timers, stop animation, stop audio, etc.
     if ( phase == "will" ) then  
+    ----------------------------------------------------------------------------
+    --called immediately 
+    elseif( phase == "did" )then
 
-    -----------------------------------------------------------------------------------------
-
-    -- Called immediately after scene goes off screen.
-    elseif ( phase == "did" ) then
-        
-        -- stop the jungle sounds channel for this screen
-        audio.stop(spinSoundChannel)
+        audio.stop(goinghigherSoundChannel)
     end
 
-end --function scene:hide( event )
+    -----------------------------------------------------------------------------------------
+end
 
 -----------------------------------------------------------------------------------------
 

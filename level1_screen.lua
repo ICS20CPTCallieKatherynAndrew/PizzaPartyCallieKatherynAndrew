@@ -6,6 +6,9 @@
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 
+-- hiding the status bar
+
+display.setStatusBar(display.HiddenStatusBar)
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
@@ -239,7 +242,6 @@ local function onCollision( self, event )
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
-            level2_screen()
         end
     end
 end
@@ -368,12 +370,10 @@ end
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
-
-    
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1ScreenCallie.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level1ScreenCallie.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -557,6 +557,8 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+
+        level2_screen()
 
     end
 

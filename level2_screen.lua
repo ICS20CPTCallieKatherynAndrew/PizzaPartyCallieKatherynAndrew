@@ -107,39 +107,12 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function BackToGame()
 
     -- call a function that updates the hearts
     UpdateLives()
-
-    -- make character visible again
-    character.isVisible = true
-    
-    if (questionsAnswered > 0) then
-        if (theTopping ~= nil) and (theTopping.isBodyActive == true) then
-            physics.removeBody(theTopping)
-            transition.to( theTopping, { rotation = theTopping.rotation-360, time=2000, onComplete=spinImage})
-            transition.to( theTopping, {x=900, y=50, time=2000})
-            theTopping:scale(0.5, 0.5)
-        end
-    end
-
 end
 
---create the Pizza and siplay it on the screen
-local Pizza= display.newImage("Images/Pizza 1.png", 0 , 0 )
-
---set the position of the Pizza and rescale the size of the Pizza to  one third of its original size
-Pizza.x = display.contentCenterX
-Pizza.y = display.contentCenterY
-Pizza:scale(1*1/2, 1*1/2)
-
---set the Pizza to invisible
-Pizza.isVisible = false
-
---create the score text and display it on the screen
-local scoreObject = display.newText( "Score = ".. scoreNumber, 160, 700, nil, 50)
-scoreObject:setTextColor(11/255, 18/255, 232/255)
 
 
 --FUNCTIONS--
@@ -187,11 +160,10 @@ function Whacked( event )
         scoreObject.isVisible = true
         Hide()
         scoreObject.text = ( "Score = "..scoreNumber)
+        composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
     end
 end
---EVENT LISTENERS
---Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
-Pizza:addEventListener( "touch", Whacked)
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -200,12 +172,10 @@ Pizza:addEventListener( "touch", Whacked)
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
-
-    
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level2ScreenKatheryn@2x.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level2ScreenCallie.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -217,7 +187,6 @@ function scene:create( event )
     live1.x = 50
     live1.y = 50
 
-
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live1 )
 
@@ -226,9 +195,26 @@ function scene:create( event )
     live2.x = 130
     live2.y = 50
 
-
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live2 )
+
+    --create the Pizza and siplay it on the screen
+    Pizza = display.newImage("Images/Pizza 1.png", 0 , 0 )
+    --set the position of the Pizza and rescale the size of the Pizza to  one third of its original size
+    Pizza.x = display.contentCenterX
+    Pizza.y = display.contentCenterY
+    Pizza:scale(1*1/2, 1*1/2)
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( Pizza )
+
+    --create the score text and display it on the screen
+    scoreObject = display.newText( "Score = ".. scoreNumber, 160, 700, nil, 50)
+    scoreObject:setTextColor(11/255, 18/255, 232/255)
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert(scoreObject)
+
 end
 
 -----------------------------------------------------------------------------------------
@@ -244,7 +230,9 @@ function scene:show( event )
 
     if ( phase == "will" ) then
 
-        -- Called when the scene is still off screen (but is about to come on screen).
+    --Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
+    Pizza:addEventListener( "touch", Whacked)
+
     end-----------------------------------------------------------------------------------------
 end --function scene:show( event )
 
