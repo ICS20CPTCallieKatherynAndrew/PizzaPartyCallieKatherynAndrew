@@ -117,7 +117,7 @@ local function DisplayQuestion()
         questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
         
     -- subtraction
-    elseif  ( randomOperator == 2 ) then
+    else
 
         if ( randomNumber1 > randomNumber2 ) then
 
@@ -137,17 +137,17 @@ local function DisplayQuestion()
             
             
         end
-
-        -- put the correct answer into the answerbox
-        answerbox.text = correctAnswer 
-
-        -- make it possible to click on the answers again
-        answerboxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false
-        alternateAnswerBox3AlreadyTouched = false
-
     end
+
+    -- put the correct answer into the answerbox
+    answerbox.text = correctAnswer 
+
+    -- make it possible to click on the answers again
+    answerboxAlreadyTouched = false
+    alternateAnswerBox1AlreadyTouched = false
+    alternateAnswerBox2AlreadyTouched = false
+    alternateAnswerBox3AlreadyTouched = false
+
 end
 
 local function DetermineAlternateAnswers()    
