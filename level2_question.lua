@@ -358,7 +358,6 @@ local function TouchListenerAnswerBox1(touch)
 
                 alternateAnswerBox1.x = userAnswerBoxPlaceholder.x
                 alternateAnswerBox1.y = userAnswerBoxPlaceholder.y
-
                 userAnswer = alternateAnswer1
 
                 -- call the function to check if the user's input is correct or not
@@ -414,7 +413,7 @@ local function TouchListenerAnswerBox2(touch)
 
                 timer.performWithDelay(1000, BackToLevel2) 
 
-            --else make box go back to where it was
+                --else make box go back to where it was
             else
                 alternateAnswerBox2.x = alternateAnswerBox2PreviousX
                 alternateAnswerBox2.y = alternateAnswerBox2PreviousY
@@ -615,8 +614,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveAnswerBoxEventListeners()
-        timer.cancel(countDownTimer)   
+        RemoveAnswerBoxEventListeners()   
     end
 end --function scene:hide( event )
 
