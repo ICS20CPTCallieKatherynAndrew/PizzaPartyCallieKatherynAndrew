@@ -65,12 +65,11 @@ local rightW
 local topW
 local floor
 
-local pizza
 
-local topping1
-local topping2
-local topping3
-local theTopping
+local house1
+local house2
+local house3
+local theHouse
 
 local questionsAnswered = 0
 
@@ -150,12 +149,12 @@ end
 
 
 local function ReplaceCharacter()
-    character = display.newImageRect("Images/PizzaMan.png", 100, 150)
+    character = display.newImageRect("Images/PizzaCar.png", 100, 150)
     character.x = display.contentWidth * 0.1 / 8
     character.y = display.contentHeight  * 3 / 3
     character.width = 125
     character.height = 125
-    character.myName = "PizzaMan"
+    character.myName = "PizzaCar"
 
     -- intialize horizontal movement of character
     motionx = 0
@@ -178,10 +177,10 @@ local function MakeLivesVisible()
     live2.isVisible = true
 end
 
-local function MakeToppingsVisible()
-    topping1.isVisible = true
-    topping2.isVisible = true
-    topping3.isVisible = true
+local function MakeHouseVisible()
+    house1.isVisible = true
+    house2.isVisible = true
+    house3.isVisible = true
 end
 
 local function YouLoseTransition()
@@ -230,12 +229,12 @@ local function onCollision( self, event )
 
     if ( event.phase == "began" ) then
 
-        if  (event.target.myName == "topping1") or
-            (event.target.myName == "topping2") or
-            (event.target.myName == "topping3") then
+        if  (event.target.myName == "house1") or
+            (event.target.myName == "house2") or
+            (event.target.myName == "house3") then
 
             -- get the ball that the user hit
-            theTopping = event.target
+            theHouse = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -252,7 +251,7 @@ local function onCollision( self, event )
 end
 
 local function YouWin()
-    if (questionsAnswered == 3) then
+    if (questionsAnswered == 5) then
         YouWinTransition()
     end
 end
@@ -260,52 +259,22 @@ end
 local function AddCollisionListeners()
 
     -- if character collides with ball, onCollision will be called    
-    topping1.collision = onCollision
-    topping1:addEventListener( "collision" )
-    topping2.collision = onCollision
-    topping2:addEventListener( "collision" )
-    topping3.collision = onCollision
-    topping3:addEventListener( "collision" )
+    house1.collision = onCollision
+    house1:addEventListener( "collision" )
+    house2.collision = onCollision
+    house2:addEventListener( "collision" )
+    house3.collision = onCollision
+    house3:addEventListener( "collision" )
 end 
 
 local function RemoveCollisionListeners()
 
-    topping1:removeEventListener( "collision" )
-    topping2:removeEventListener( "collision" )
-    topping3:removeEventListener( "collision" )
+    house1:removeEventListener( "collision" )
+    house2:removeEventListener( "collision" )
+    house3:removeEventListener( "collision" )
 
 end
 
-
-
-
-local function MovePizza()
-
-    -- the logo will move and rotate to the center of the screen
-    transition.to( pizza, { rotation = pizza.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( pizza, {x=900, y=50, time=2000})
-end
-
-local function MoveTopping1()
-    -- the logo will move and rotate to the center of the screen
-    transition.to( topping1, { rotation = topping1.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( topping1, {x=600, y=350, time=2000})
-    topping1:scale(2,2)
-end
-
-local function MoveTopping2()
-    -- the logo will move and rotate to the center of the screen
-    transition.to( topping2, { rotation = topping2.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( topping2, {x=800, y=135, time=2000})
-    topping2:scale(2,2)
-end
-
-local function MoveTopping3()
-    -- the logo will move and rotate to the center of the screen
-    transition.to( topping3, { rotation = topping3.rotation-360, time=2000, onComplete=spinImage})
-    transition.to( topping3, {x=200, y=220, time=2000})
-    topping3:scale(2,2)
-end
 
 
 local function AddPhysicsBodies()
@@ -320,9 +289,9 @@ local function AddPhysicsBodies()
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
-    physics.addBody(topping1, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(topping2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(topping3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(house1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(house2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(house3, "static",  {density=0, friction=0, bounce=0} )
 
 end
 
@@ -352,11 +321,11 @@ function ResumeGame()
     character.isVisible = true
     
     if (questionsAnswered > 0) then
-        if (theTopping ~= nil) and (theTopping.isBodyActive == true) then
-            physics.removeBody(theTopping)
-            transition.to( theTopping, { rotation = theTopping.rotation-360, time=2000, onComplete=spinImage})
-            transition.to( theTopping, {x=900, y=50, time=2000})
-            theTopping:scale(0.5, 0.5)
+        if (theHouse ~= nil) and (theHouse.isBodyActive == true) then
+            physics.removeBody(theHouse)
+            transition.to( theHouse, { rotation = theHouse.rotation-360, time=2000, onComplete=spinImage})
+            transition.to( theHouse, {x=900, y=50, time=2000})
+            theHouse:scale(0.5, 0.5)
         end
     end
 
@@ -374,7 +343,7 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/level3_screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -424,39 +393,33 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( live2 )
 
-    -- Insert the pizza
-    pizza = display.newImageRect("Images/pizza.png", 175, 100)
-    pizza.x = display.contentWidth * 1.5 / 8
-    pizza.y = display.contentHeight * 3.5 / 4
-        
-    sceneGroup:insert( pizza )
 
     -- Insert the toppings
-    topping1 = display.newImageRect("Images/Pepperoni.png", 40, 40)
-    topping1.x = 190
-    topping1.y = 690
-    topping1.myName = "topping1"
+    house1 = display.newImageRect("Images/house.png", 40, 40)
+    house1.x = 190
+    house1.y = 690
+    house1.myName = "house1"
     
 
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topping1 )
+    sceneGroup:insert( house1 )
 
     -- Insert the topping
-    topping2 = display.newImageRect("Images/Pepper.png", 40, 40)
-    topping2.x = 210
-    topping2.y = 650
-    topping2.myName = "topping2"
+    house2 = display.newImageRect("Images/house.png", 40, 40)
+    house2.x = 210
+    house2.y = 650
+    house2.myName = "house2"
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topping2 )
+    sceneGroup:insert( house2 )
 
     -- Insert the topping
-    topping3 = display.newImageRect("Images/Mushroom.png", 40, 40)
-    topping3.x = 160
-    topping3.y = 660
-    topping3.myName = "topping3"
+    house3 = display.newImageRect("Images/house.png", 40, 40)
+    house3.x = 160
+    house3.y = 660
+    house3.myName = "house3"
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( topping3 )
+    sceneGroup:insert( house3 )
 
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrow.png", 100, 50)
@@ -536,10 +499,9 @@ function scene:show( event )
         
     elseif ( phase == "did" ) then
 
-        timer.performWithDelay( 2000, MoveTopping1)
-        timer.performWithDelay( 2000, MoveTopping2)
-        timer.performWithDelay( 2000, MoveTopping3)
-        timer.performWithDelay( 2000, MovePizza)
+        timer.performWithDelay( 2000, MoveHouse1)
+        timer.performWithDelay( 2000, MoveHouse2)
+        timer.performWithDelay( 2000, MoveHouse3)
         bkgMusicChannel = audio.play(bkgMusic)
 
         numLives = 2
@@ -548,7 +510,7 @@ function scene:show( event )
         -- make all lives visible
         MakeLivesVisible()
 
-        MakeToppingsVisible()
+        MakeHouseVisible()
 
         -- add physics bodies to each object
         AddPhysicsBodies()
