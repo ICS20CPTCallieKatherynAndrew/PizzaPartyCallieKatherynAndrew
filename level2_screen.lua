@@ -54,8 +54,7 @@ local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
 local bkgMusicLevel2 = audio.loadSound( "Sounds/bkgMusicLevel2.mp3")
 local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
-
-local whackSound = audio.loadSound( "Sounds/whack.mp3")
+local whackSound = audio.loadSound( "Sounds/whackSound.mp3")
 local whackSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
