@@ -151,7 +151,7 @@ local function DisplayQuestion()
             
             
         end
-
+    end
         -- put the correct answer into the answerbox
         answerbox.text = correctAnswer 
 
@@ -161,7 +161,7 @@ local function DisplayQuestion()
         alternateAnswerBox2AlreadyTouched = false
         alternateAnswerBox3AlreadyTouched = false
 
-    end
+
 end
 
 local function DetermineAlternateAnswers()    
