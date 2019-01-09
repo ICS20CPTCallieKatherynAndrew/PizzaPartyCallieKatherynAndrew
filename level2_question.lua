@@ -321,6 +321,7 @@ local function TouchListenerAnswerBox(touch)
                 correctText.isVisible = true
 
                 scoreNumber = scoreNumber + 1
+                scoreObject.text = ( "Score = "..scoreNumber)
 
                 timer.performWithDelay(1000, BackToLevel2)  
             --else make box go back to where it was
