@@ -40,11 +40,6 @@ numLives = 2
 -- The local variables for this scene
 local bkg_image
 
-local platform1
-local platform2
-local platform3
-local platform4
-
 local character
 
 local live1
@@ -69,6 +64,8 @@ local floor
 local house1
 local house2
 local house3
+local house4
+local house5
 local theHouse
 
 local questionsAnswered = 0
@@ -181,6 +178,8 @@ local function MakeHouseVisible()
     house1.isVisible = true
     house2.isVisible = true
     house3.isVisible = true
+    house4.isVisible = true
+    house5.isVisible = true
 end
 
 local function YouLoseTransition()
@@ -231,7 +230,9 @@ local function onCollision( self, event )
 
         if  (event.target.myName == "house1") or
             (event.target.myName == "house2") or
-            (event.target.myName == "house3") then
+            (event.target.myName == "house3") or
+            (event.target.myName == "house4") or
+            (event.target.myName == "house5") then
 
             -- get the ball that the user hit
             theHouse = event.target
@@ -242,7 +243,7 @@ local function onCollision( self, event )
             -- make the character invisible
             character.isVisible = false
             -- show overlay with math question
-            composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
@@ -261,10 +262,18 @@ local function AddCollisionListeners()
     -- if character collides with ball, onCollision will be called    
     house1.collision = onCollision
     house1:addEventListener( "collision" )
+
     house2.collision = onCollision
     house2:addEventListener( "collision" )
+
     house3.collision = onCollision
     house3:addEventListener( "collision" )
+
+    house4.collision = onCollision
+    house4:addEventListener( "collision" )
+
+    house5.collision = onCollision
+    house5:addEventListener( "collision" )
 end 
 
 local function RemoveCollisionListeners()
@@ -272,6 +281,8 @@ local function RemoveCollisionListeners()
     house1:removeEventListener( "collision" )
     house2:removeEventListener( "collision" )
     house3:removeEventListener( "collision" )
+    house4:removeEventListener( "collision")
+    house5:removeEventListener( "collision")
 
 end
 
@@ -279,10 +290,6 @@ end
 
 local function AddPhysicsBodies()
     --add to the physics engine
-    physics.addBody( platform1, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
-    physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
@@ -292,14 +299,12 @@ local function AddPhysicsBodies()
     physics.addBody(house1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(house2, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(house3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(house4, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(house5, "static",  {density=0, friction=0, bounce=0} )
 
 end
 
 local function RemovePhysicsBodies()
-    physics.removeBody(platform1)
-    physics.removeBody(platform2)
-    physics.removeBody(platform3)
-    physics.removeBody(platform4)
 
     physics.removeBody(leftW)
     physics.removeBody(rightW)
@@ -323,9 +328,8 @@ function ResumeGame()
     if (questionsAnswered > 0) then
         if (theHouse ~= nil) and (theHouse.isBodyActive == true) then
             physics.removeBody(theHouse)
-            transition.to( theHouse, { rotation = theHouse.rotation-360, time=2000, onComplete=spinImage})
-            transition.to( theHouse, {x=900, y=50, time=2000})
-            theHouse:scale(0.5, 0.5)
+            theHouse.isVisible = false
+
         end
     end
 
@@ -350,30 +354,6 @@ function scene:create( event )
     -- Insert background image into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( bkg_image )    
     
-    -- Insert the platforms
-    platform1 = display.newImageRect("Images/Platform.png", 250, 50)
-    platform1.x = display.contentWidth * 2 / 8
-    platform1.y = display.contentHeight * 3 / 4
-        
-    sceneGroup:insert( platform1 )
-
-    platform2 = display.newImageRect("Images/Platform.png", 150, 50)
-    platform2.x = display.contentWidth* 1.9 / 8
-    platform2.y = display.contentHeight * 1.5 / 4
-        
-    sceneGroup:insert( platform2 )
-
-    platform3 = display.newImageRect("Images/Platform.png", 180, 50)
-    platform3.x = display.contentWidth *3 / 5
-    platform3.y = display.contentHeight * 2.7 / 5
-        
-    sceneGroup:insert( platform3 )
-
-    platform4 = display.newImageRect("Images/Platform.png", 180, 50)
-    platform4.x = display.contentWidth *4 / 5
-    platform4.y = display.contentHeight * 1.3 / 5
-        
-    sceneGroup:insert( platform4 )
 
     -- Insert the lives
     live1 = display.newImageRect("Images/PizzaSlice.png", 80, 80)
@@ -396,8 +376,9 @@ function scene:create( event )
 
     -- Insert the toppings
     house1 = display.newImageRect("Images/house.png", 40, 40)
-    house1.x = 190
-    house1.y = 690
+    house1.x = display.contentWidth * 2 / 8
+    house1.y = display.contentHeight * 3 / 4
+    house1:scale(3.0 , 3.0)
     house1.myName = "house1"
     
 
@@ -407,19 +388,41 @@ function scene:create( event )
 
     -- Insert the topping
     house2 = display.newImageRect("Images/house.png", 40, 40)
-    house2.x = 210
-    house2.y = 650
+    house2.x = display.contentWidth* 1.9 / 8
+    house2.y = display.contentHeight * 1.5 / 4
+    house2:scale(3.0 , 3.0)
     house2.myName = "house2"
+
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( house2 )
 
     -- Insert the topping
     house3 = display.newImageRect("Images/house.png", 40, 40)
-    house3.x = 160
-    house3.y = 660
+    house3.x = display.contentWidth *3 / 5
+    house3.y = display.contentHeight * 2.7 / 5
+    house3:scale(3.0 , 3.0)
     house3.myName = "house3"
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( house3 )
+
+    --insert the house
+    house4 = display.newImageRect("Images/house.png", 40, 40)
+    house4.x = display.contentWidth *4 / 5
+    house4.y = display.contentHeight * 1.3 / 5
+    house4:scale(3.0 , 3.0)
+    house4.myName = "house4"
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( house4 )
+
+    --insert the house
+    house5 = display.newImageRect("Images/house.png", 40, 40)
+    house5.x = 500
+    house5.y = 160
+    house5:scale(3.0 , 3.0)
+    house5.myName = "house5"
+   -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( house5 )
+
 
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrow.png", 100, 50)
@@ -466,7 +469,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( topW )
 
-    floor = display.newImageRect("Images/Platform.png", 1024, 100)
+    floor = display.newImageRect("Images/Platforms.png", 1024, 100)
     floor.x = display.contentCenterX
     floor.y = display.contentHeight * 1.06
     
@@ -502,6 +505,9 @@ function scene:show( event )
         timer.performWithDelay( 2000, MoveHouse1)
         timer.performWithDelay( 2000, MoveHouse2)
         timer.performWithDelay( 2000, MoveHouse3)
+        timer.performWithDelay( 2000, MoveHouse4)
+        timer.performWithDelay( 2000, MoveHouse5)
+
         bkgMusicChannel = audio.play(bkgMusic)
 
         numLives = 2
