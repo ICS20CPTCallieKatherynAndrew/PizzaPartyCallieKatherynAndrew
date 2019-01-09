@@ -285,7 +285,7 @@ local function UpdateTime()
 end
 
 
-local function TouchListenerAnswerbox(touch)
+local function TouchListenerAnswerBox(touch)
     -- when the correct answer is chosen
     if (alternateAnswerBox1AlreadyTouched == false) and 
         (alternateAnswerBox2AlreadyTouched == false) and
@@ -319,6 +319,8 @@ local function TouchListenerAnswerbox(touch)
                 userAnswer = correctAnswer
                         
                 correctText.isVisible = true
+
+                scoreNumber = scoreNumber + 1
 
                 timer.performWithDelay(1000, BackToLevel2)  
             --else make box go back to where it was
@@ -469,7 +471,7 @@ end
 
 -- Function that Adds Listeners to each answer box
 local function AddAnswerBoxEventListeners()
-    answerbox:addEventListener("touch", TouchListenerAnswerbox)
+    answerbox:addEventListener("touch", TouchListenerAnswerBox)
     alternateAnswerBox1:addEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:addEventListener("touch", TouchListenerAnswerBox2)
     alternateAnswerBox3:addEventListener("touch", TouchListenerAnswerBox3)
@@ -477,7 +479,7 @@ end
 
 -- Function that Removes Listeners to each answer box
 local function RemoveAnswerBoxEventListeners()
-    answerbox:removeEventListener("touch", TouchListenerAnswerbox)
+    answerbox:removeEventListener("touch", TouchListenerAnswerBox)
     alternateAnswerBox1:removeEventListener("touch", TouchListenerAnswerBox1)
     alternateAnswerBox2:removeEventListener("touch", TouchListenerAnswerBox2)
     alternateAnswerBox3:removeEventListener("touch", TouchListenerAnswerBox3)
@@ -525,12 +527,6 @@ function scene:create( event )
     alternateAnswerBox1 = display.newText("", display.contentWidth * 0.4, 0.4, nil, 100)
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.6, 0.6, nil, 100)
     alternateAnswerBox3 = display.newText("", display.contentWidth * 0.4, 0.6, nil, 100)
-
-    -- set the x positions of each of the answer boxes
-    --answerboxPreviousX = display.contentWidth * 0.6
-    --alternateAnswerBox1PreviousX = display.contentWidth * 0.4
-    --alternateAnswerBox2PreviousX = display.contentWidth * 0.6
-    --alternateAnswerBox3PreviousX = display.contentWidth * 0.4
 
     -- display the timer on the screen
     clockText = display.newText ("", display.contentWidth/3, display.contentHeight*2.5/3, nil, 75)
