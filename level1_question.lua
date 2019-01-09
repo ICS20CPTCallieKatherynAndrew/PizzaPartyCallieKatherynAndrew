@@ -514,21 +514,8 @@ function scene:create( event )
     alternateAnswerBox2 = display.newText("", display.contentWidth * 0.6, 0.6, nil, 100)
     alternateAnswerBox3 = display.newText("", display.contentWidth * 0.4, 0.6, nil, 100)
 
-    -- set the x positions of each of the answer boxes
-   -- answerboxPreviousX = display.contentWidth * 0.4
-   -- alternateAnswerBox1PreviousX = display.contentWidth * 0.4
-    --alternateAnswerBox2PreviousX = display.contentWidth * 0.6
-    --alternateAnswerBox3PreviousX = display.contentWidth * 0.6
-
-    --answerboxPreviousY = display.contentHeight * 0.6
-    --alternateAnswerBox1PreviousY = display.contentHeight * 0.4
-    --alternateAnswerBox2PreviousY = display.contentHeight * 0.6
-    --alternateAnswerBox3PreviousY = display.contentHeight * 0.4
-
     -- display the timer on the screen
     clockText = display.newText ("", display.contentWidth/3, display.contentHeight*2.5/3, nil, 75)
-
-
 
     correctText = display.newText("Correct!", display.contentWidth/2, display.contentHeight*0.3/3, nil, 75 )
     correctText:setTextColor(100/255, 200/255, 210/255)
@@ -538,6 +525,9 @@ function scene:create( event )
     incorrectText:setTextColor(100/255, 200/255, 210/255)
     incorrectText.isVisible = false
 
+
+
+   
     ----------------------------------------------------------------------------------
     --adding objects to the scene group
     ----------------------------------------------------------------------------------
@@ -615,12 +605,6 @@ function scene:destroy( event )
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
-
-    -----------------------------------------------------------------------------------------
-
-    -- Called prior to the removal of scene's view ("sceneGroup"). 
-    -- Insert code here to clean up the scene.
-    -- Example: remove display objects, save state, etc.
 
 end 
 

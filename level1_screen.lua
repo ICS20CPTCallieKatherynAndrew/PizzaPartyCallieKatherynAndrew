@@ -36,7 +36,6 @@ local scene = composer.newScene( sceneName )
 
 numLives = 2
 
-
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -93,11 +92,6 @@ local clickSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
- 
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
-    clickSoundChannel = audio.play(clickSound)
-end
 
 -- When right arrow is touched, move character right
 local function right (touch)
@@ -514,6 +508,7 @@ function scene:create( event )
     sceneGroup:insert( floor )
 
 
+
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
@@ -605,11 +600,6 @@ function scene:destroy( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
-
-    -- Called prior to the removal of scene's view ("sceneGroup").
-    -- Insert code here to clean up the scene.
-    -- Example: remove display objects, save state, etc.
 
 end -- function scene:destroy( event )
 
