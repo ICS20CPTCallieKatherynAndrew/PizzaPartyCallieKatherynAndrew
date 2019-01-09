@@ -12,7 +12,14 @@ local composer = require( "composer" )
 
 -----------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 composer.gotoScene( "splash_screen" )
+=======
+composer.gotoScene( "level3_screen" )
+
+composer.gotoScene( "level2_screen" )
+
+>>>>>>> 2a9869379e8e6d67dfdb3549d52a4f702d17e848
 
 
 
