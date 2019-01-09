@@ -110,7 +110,6 @@ end
 -----------------------------------------------------------------------------------------
 
 function BackToGame()
-
     -- call a function that updates the hearts
     UpdateLives()
 end
