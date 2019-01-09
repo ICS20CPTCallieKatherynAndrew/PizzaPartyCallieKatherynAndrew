@@ -108,14 +108,6 @@ local function DisplayQuestion()
         --change question text in relation to answer
         questionText.text = randomNumber1 .. " + " .. randomNumber2 .. " = " 
 
-        -- put the correct answer into the answerbox
-        answerbox.text = correctAnswer
-
-        -- make it possible to click on the answers again
-        answerboxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false
-        alternateAnswerBox3AlreadyTouched = false
 
     elseif  ( randomOperator == 2 ) then
 
@@ -126,14 +118,6 @@ local function DisplayQuestion()
         
             questionText.text = randomNumber1  .. " - " .. randomNumber2.. " = "
 
-            -- put the correct answer into the answerbox
-            answerbox.text = correctAnswer 
-
-            -- make it possible to click on the answers again
-            answerboxAlreadyTouched = false
-            alternateAnswerBox1AlreadyTouched = false
-            alternateAnswerBox2AlreadyTouched = false
-            alternateAnswerBox3AlreadyTouched = false
 
         else
 
@@ -142,19 +126,17 @@ local function DisplayQuestion()
         
             -- create question in text object
             questionText.text = randomNumber2  .. " - " .. randomNumber1 .. " = "
-            
-            -- put the correct answer into the answerbox
-            answerbox.text = correctAnswer 
-            -- make it possible to click on the answers again
-            answerboxAlreadyTouched = false
-            alternateAnswerBox1AlreadyTouched = false
-            alternateAnswerBox2AlreadyTouched = false
-            alternateAnswerBox3AlreadyTouched = false
         end
-
-
-
     end
+            
+        -- put the correct answer into the answerbox
+        answerbox.text = correctAnswer 
+        -- make it possible to click on the answers again
+        answerboxAlreadyTouched = false
+        alternateAnswerBox1AlreadyTouched = false
+        alternateAnswerBox2AlreadyTouched = false
+        alternateAnswerBox3AlreadyTouched = false
+
 end
 
 local function DetermineAlternateAnswers()    
@@ -171,13 +153,8 @@ local function DetermineAlternateAnswers()
     -- generate incorrect answer and set it in the textbox
     alternateAnswer3 = correctAnswer + math.random(9, 15)
     alternateAnswerBox3.text = alternateAnswer3
--------------------------------------------------------------------------------------------
--- RESET ALL X POSITIONS OF ANSWER BOXES (because the x-position is changed when it is
--- placed into the black box)
------------------------------------------------------------------------------------------
     
-    
-    
+  
 end
 
 

@@ -12,7 +12,7 @@ local composer = require( "composer" )
 
 -----------------------------------------------------------------------------------------
 
-composer.gotoScene( "level2_screen" )
+composer.gotoScene( "instructions_screen" )
 
 
 

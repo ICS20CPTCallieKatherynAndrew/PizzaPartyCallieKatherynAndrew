@@ -18,7 +18,7 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "credits_screen"
+sceneName = "instructions_screen"
 
 -- Creating Scene Object
 scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
@@ -63,7 +63,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/InstructionsAndrew.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/InstructionsScreenCallie.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -86,7 +86,7 @@ function scene:create( event )
         x = display.contentWidth*7/8,
         y = display.contentHeight*2/16,
         width = 180,
-        height = 150,
+        height = 120,
 
         -- Setting Visual Properties
         defaultFile = "Images/BackButtonUnpressed.png",

@@ -26,6 +26,11 @@ sceneName = "you_win"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
 
+local function MainMenuTransition( )
+    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
 -----------------------------------------------------------------------------------------
 -- DISPLAY OBJECTS
 -----------------------------------------------------------------------------------------
@@ -42,7 +47,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/YouWinScreenAndrew@2x.png")
+    bkg_image = display.newImage("Images/YouWinScreenAndrew.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -50,6 +55,26 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+
+    -- Creating Back Button
+    MainMenuButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*7/8,
+        y = display.contentHeight*2/16,
+        width = 180,
+        height = 130,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/MainMenuButtonUnpressedCallie.png",
+        overFile = "Images/MainMenuButtonPressedCallie.png",
+
+        -- Setting Functional Properties
+        onRelease = MainMenuTransition
+
+    } )
+
+    sceneGroup:insert( MainMenuButton )
 end
 -----------------------------------------------------------------------------------------
 
