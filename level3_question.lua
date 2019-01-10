@@ -67,17 +67,33 @@ local bkg
 
 -- create variables that will hold the previous x- and y-positions so that 
 -- each answer will return back to its previous position after it is moved
+local answerboxPreviousX
+local alternateAnswerBox1PreviousX
+local alternateAnswerBox2PreviousX
+local alternateAnswerBox3PreviousX
+local alternateAnswerBox4PreviousX
+
 local answerboxPreviousY
 local alternateAnswerBox1PreviousY
 local alternateAnswerBox2PreviousY
 local alternateAnswerBox3PreviousY
 local alternateAnswerBox4PreviousY
 
-local answerboxPreviousX
-local alternateAnswerBox1PreviousX
-local alternateAnswerBox2PreviousX
-local alternateAnswerBox3PreviousX
-local alternateAnswerBox4PreviousX
+local X1 = display.contentWidth * 0.3
+local Y1 = display.contentHeight * 0.4
+
+local X2 = display.contentWidth * 0.5
+local Y2 = display.contentHeight * 0.4
+
+local X3 = display.contentWidth * 0.7
+local Y3 = display.contentHeight *0.4
+
+local X4 = display.contentWidth * 0.4
+local Y4 = display.contentHeight *0.6
+
+local X5 = display.contentWidth *0.6
+local Y5 = display.contentHeight *0.6
+
 
 -- the black box where the user will drag the answer
 local userAnswerBoxPlaceholder
@@ -88,6 +104,7 @@ local randomOperator
 
 local totalSeconds = 7
 local secondsLeft = 7
+
 local clockText
 local countDownTimer
 
@@ -165,13 +182,13 @@ local function DisplayQuestion()
         end
     end
             
-        -- put the correct answer into the answerbox
-        answerbox.text = correctAnswer 
-        -- make it possible to click on the answers again
-        answerboxAlreadyTouched = false
-        alternateAnswerBox1AlreadyTouched = false
-        alternateAnswerBox2AlreadyTouched = false
-        alternateAnswerBox3AlreadyTouched = false
+    -- put the correct answer into the answerbox
+    answerbox.text = correctAnswer 
+    -- make it possible to click on the answers again
+    answerboxAlreadyTouched = false
+    alternateAnswerBox1AlreadyTouched = false
+    alternateAnswerBox2AlreadyTouched = false
+    alternateAnswerBox3AlreadyTouched = false
 
 end
 
@@ -210,128 +227,116 @@ local function PositionAnswers()
     -- random position 1
     if (randomPosition == 1) then
         -- set the new y-positions of each of the answers
-        answerbox.y = display.contentHeight * 0.4
-        answerbox.x = display.contentWidth * 0.6
+        answerbox.y = Y1
+        answerbox.x = X1
     
         --alternateAnswerBox3
-        alternateAnswerBox3.y = display.contentHeight * 0.4
-        alternateAnswerBox3.x = display.contentWidth * 0.4
+        alternateAnswerBox3.y = Y2
+        alternateAnswerBox3.x = X2
 
         --alternateAnswerBox2
-        alternateAnswerBox2.y = display.contentHeight * 0.6
-        alternateAnswerBox2.x = display.contentWidth * 0.6
+        alternateAnswerBox2.y = Y3
+        alternateAnswerBox2.x = X3
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.6
-        alternateAnswerBox1.x = display.contentWidth * 0.4
+        alternateAnswerBox1.y = Y4
+        alternateAnswerBox1.x = X4
         --alternateAnswerBox4
-        alternateAnswerBox4.y = display.contentHeight * 0.7
-        alternateAnswerBox4.x = display.contentWidth * 0.8
-
-        ---------------------------------------------------------
-        --remembering their positions to return the answer in case it's wrong
-        alternateAnswerBox1PreviousY = alternateAnswerBox1.y
-        alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        alternateAnswerBox3PreviousY = alternateAnswerBox3.y
-        alternateAnswerBox4PreviousY = alternateAnswerBox4.y
-        answerboxPreviousY = answerbox.y 
+        alternateAnswerBox4.y = Y5
+        alternateAnswerBox4.x = X5
 
     -- random position 2
     elseif (randomPosition == 2) then
 
-        answerbox.y = display.contentHeight * 0.6
-        answerbox.x = display.contentWidth * 0.4
+        answerbox.y = Y2
+        answerbox.x = X2
     
         --alternateAnswerBox3
-        alternateAnswerBox3.y = display.contentHeight * 0.4
-        alternateAnswerBox3.x = display.contentWidth * 0.4
+        alternateAnswerBox3.y = Y3
+        alternateAnswerBox3.x = X3
 
         --alternateAnswerBox2
-        alternateAnswerBox2.y = display.contentHeight * 0.6
-        alternateAnswerBox2.x = display.contentWidth * 0.6
+        alternateAnswerBox2.y = Y4
+        alternateAnswerBox2.x = X4
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.4
-        alternateAnswerBox1.x = display.contentWidth * 0.6
+        alternateAnswerBox1.y = Y5
+        alternateAnswerBox1.x = X5
         --alternateAnswerBox4
-        alternateAnswerBox4.y = display.contentHeight * 0.8
-        alternateAnswerBox4.x = display.contentWidth * 0.7
-
-        --remembering their positions to return the answer in case it's wrong
-        alternateAnswerBox1PreviousY = alternateAnswerBox1.y
-        alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        alternateAnswerBox3PreviousY = alternateAnswerBox3.y
-        alternateAnswerBox4PreviousY = alternateAnswerBox4.y
-        answerboxPreviousY = answerbox.y 
+        alternateAnswerBox4.y = Y1
+        alternateAnswerBox4.x = X1
 
     -- random position 3
      elseif (randomPosition == 3) then
-        answerbox.y = display.contentHeight * 0.4
-        answerbox.x = display.contentWidth * 0.6
+        answerbox.y = Y3
+        answerbox.x = X3
     
         --alternateAnswerBox3
-        alternateAnswerBox3.y = display.contentHeight * 0.6
-        alternateAnswerBox3.x = display.contentWidth * 0.6
+        alternateAnswerBox3.y = Y4
+        alternateAnswerBox3.x = X4
 
         --alternateAnswerBox2
-        alternateAnswerBox2.y = display.contentHeight * 0.4
-        alternateAnswerBox2.x = display.contentWidth * 0.4
+        alternateAnswerBox2.y = Y5
+        alternateAnswerBox2.x = X5
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.6
-        alternateAnswerBox1.x = display.contentWidth * 0.4
+        alternateAnswerBox1.y = Y1
+        alternateAnswerBox1.x = X1
         --alternateAnswerBox4
-        alternateAnswerBox4.y = display.contentHeight * 0.8
-        alternateAnswerBox4.x = display.contentWidth * 0.7
-
-        --remembering their positions to return the answer in case it's wrong
-        alternateAnswerBox1PreviousY = alternateAnswerBox1.y
-        alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        alternateAnswerBox3PreviousY = alternateAnswerBox3.y
-        alternateAnswerBox4PreviousY = alternateAnswerBox4.y
-        answerboxPreviousY = answerbox.y 
+        alternateAnswerBox4.y = Y2
+        alternateAnswerBox4.x = X2
 
      elseif (randomPosition == 4) then
-        answerbox.y = display.contentHeight * 0.6
-        answerbox.x = display.contentWidth * 0.4
+        answerbox.y = Y4
+        answerbox.x = X4
     
         --alternateAnswerBox3
-        alternateAnswerBox3.y = display.contentHeight * 0.6
-        alternateAnswerBox3.x = display.contentWidth * 0.6
+        alternateAnswerBox3.y = Y5
+        alternateAnswerBox3.x = X5
 
         --alternateAnswerBox2
-        alternateAnswerBox2.y = display.contentHeight * 0.4
-        alternateAnswerBox2.x = display.contentWidth * 0.4
+        alternateAnswerBox2.y = Y1
+        alternateAnswerBox2.x = X1
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.4
-        alternateAnswerBox1.x = display.contentWidth * 0.6
+        alternateAnswerBox1.y = Y2
+        alternateAnswerBox1.x = X2
         --AlternateAnswerBox4 
-        alternateAnswerBox4.y = display.contentHeight * 0.7
-        alternateAnswerBox4.x = display.contentWidth * 0.8
+        alternateAnswerBox4.y = Y3
+        alternateAnswerBox4.x = X3
 
-        --remembering their positions to return the answer in case it's wrong
-        alternateAnswerBox1PreviousY = alternateAnswerBox1.y
-        alternateAnswerBox2PreviousY = alternateAnswerBox2.y
-        alternateAnswerBox3PreviousY = alternateAnswerBox3.y
-        alternateAnswerBox4PreviousY = alternateAnswerBox4.y 
-        answerboxPreviousY = answerbox.y 
+
 
     elseif (randomPosition == 5) then
-        answerbox.y = display.contentHeight * 0.4
-        answerbox.x = display.contentWidth * 0.6
+        answerbox.y = Y5
+        answerbox.x = X5
 
         --alternateAnswerBox3
-        alternateAnswerBox3.y = display.contentHeight * 0.6
-        alternateAnswerBox3.x = display.contentWidth * 0.6
+        alternateAnswerBox3.y = Y1
+        alternateAnswerBox3.x = X1
 
         --alternateAnswerBox2
-        alternateAnswerBox2.y = display.contentHeight * 0.4
-        alternateAnswerBox2.x = display.contentWidth * 0.4
+        alternateAnswerBox2.y = Y2
+        alternateAnswerBox2.x = X2
         --alternateAnswerBox1
-        alternateAnswerBox1.y = display.contentHeight * 0.6
-        alternateAnswerBox1.x = display.contentWidth * 0.4
+        alternateAnswerBox1.y = Y3
+        alternateAnswerBox1.x = X3
         --AlternateAnswerBox4 
-        alternateAnswerBox4.y = display.contentHeight * 0.8
-        alternateAnswerBox4.x = display.contentWidth * 0.7
+        alternateAnswerBox4.y = Y4
+        alternateAnswerBox4.x = X4
 
     end
+    --remembering their positions to return the answer in case it's wrong
+    alternateAnswerBox1PreviousX = alternateAnswerBox1.x
+    alternateAnswerBox1PreviousY = alternateAnswerBox1.y
+
+    alternateAnswerBox2PreviousX = alternateAnswerBox2.x
+    alternateAnswerBox2PreviousY = alternateAnswerBox2.y
+
+    alternateAnswerBox3PreviousX = alternateAnswerBox3.x
+    alternateAnswerBox3PreviousY = alternateAnswerBox3.y
+
+    alternateAnswerBox4PreviousX = alternateAnswerBox4.x
+    alternateAnswerBox4PreviousY = alternateAnswerBox4.y
+
+    answerboxPreviousX = answerbox.x
+    answerboxPreviousY = answerbox.y 
 end
 
 --making transition to next scene
@@ -351,8 +356,8 @@ local function UpdateTime()
     clockText.text = "Time: ".. secondsLeft  
 
     if (secondsLeft == 0 ) then
-        -- reset the number of seconds left
-        secondsLeft = totalSeconds
+        numLives = numLives - 1
+        
 
         timer.performWithDelay(1000, BackToLevel1) 
     end
@@ -734,12 +739,12 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        secondsLeft = 7
         AddAnswerBoxEventListeners() 
         PositionAnswers()
         DisplayQuestion()
         DetermineAlternateAnswers()
         StartTimer()
-        UpdateTime()
 
     end
 end --function scene:show( event )
@@ -765,6 +770,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemoveAnswerBoxEventListeners()
+        timer.cancel(countDownTimer)
        
     end
 

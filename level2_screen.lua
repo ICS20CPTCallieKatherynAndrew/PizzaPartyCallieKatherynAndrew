@@ -100,7 +100,7 @@ end
 local sounds = {}
 sounds["clickSound"] = audio.loadSound("sounds/clickSound.wav")
 sounds["score"] = audio.loadSound("sounds/clickSound.wav")
-G.playSound = function(MuteButton) 
+playSound = function(MuteButton) 
     if sounds[clickSound] ~= nil then 
         audio.play(sounds[clickSound])
     end
