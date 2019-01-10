@@ -1,9 +1,8 @@
 -----------------------------------------------------------------------------------------
--- instructions_screen.lua
+-- level_select.lua
 -- Created by: Callie McWaters
--- Special thanks to Wal Wal for helping in the design of this framework.
--- Date: 11/29/2018
--- Description: This is the instructions page, displaying a back button to the main menu.
+-- Date: 1/10/2018
+-- Description: This is the level select page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
 
 
@@ -18,17 +17,21 @@ local widget = require( "widget" )
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "instructions_screen"
+sceneName = "level_select"
 
 -- Creating Scene Object
 scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
 
+-- set the background colour
+display.setDefault("background", 154/255, 249/255, 199/255)
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
-local bkg_image
 local backButton
-
+local level1Text
+local level2Text
+local level3Text
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
@@ -43,6 +46,22 @@ local function BackTransition( )
     clickSoundChannel = audio.play(clickSound)
 end
 
+local function Level1Transition( )
+    composer.gotoScene( "level1_screen", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
+local function Level2Transition( )
+    composer.gotoScene( "level2_screen", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
+local function Level3Transition( )
+    composer.gotoScene( "level3_screen", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -54,23 +73,26 @@ function scene:create( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
 
-    -----------------------------------------------------------------------------------------
-    -- BACKGROUND AND DISPLAY OBJECTS
-    -----------------------------------------------------------------------------------------
+    
+    level1Text = display.newText( " Level 1 ", 200, 600, nil, 75)
 
-    -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImageRect("Images/InstructionsScreenCallie.png", display.contentWidth, display.contentHeight)
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
+    level1Text:setTextColor(0/255, 128/255, 255/255)
 
-    -- Associating display objects with this scene 
-    sceneGroup:insert( bkg_image )
+    sceneGroup:insert(level1Text)
 
-    -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
 
+    level2Text = display.newText( " Level 2 ", 500, 600, nil, 75 )
+
+    level2Text:setTextColor(0/255, 128/255, 255/255)
+
+    sceneGroup:insert(level2Text)
+
+
+    level3Text = display.newText( " Level 3 ", 850, 600, nil, 75 )
+
+    level3Text:setTextColor(0/255, 128/255, 255/255)
+
+    sceneGroup:insert(level3Text)
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------
@@ -92,11 +114,68 @@ function scene:create( event )
         onRelease = BackTransition
 
     } )
+        -- Creating Back Button
+    level1Button = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*1.5/8,
+        y = display.contentHeight*7/16,
+        width = 300,
+        height = 270,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/Level1ScreenCallie.png",
+        overFile = "Images/Level1ScreenCallie.png",
+
+        -- Setting Functional Properties
+        onRelease = Level1Transition
+
+    } )
+
+    -- Creating Back Button
+    level2Button = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*4/8,
+        y = display.contentHeight*7/16,
+        width = 300,
+        height = 270,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/Level2ScreenCallie.png",
+        overFile = "Images/Level2ScreenCallie.png",
+
+        -- Setting Functional Properties
+        onRelease = Level2Transition
+
+    } )
+
+    -- Creating Back Button
+    level3Button = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*6.5/8,
+        y = display.contentHeight*7/16,
+        width = 300,
+        height = 270,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/level3_screen.png",
+        overFile = "Images/level3_screen.png",
+
+        -- Setting Functional Properties
+        onRelease = Level3Transition
+
+    } )
+
 
     -----------------------------------------------------------------------------------------
 
     -- Associating Buttons with this scene
     sceneGroup:insert( backButton )
+    sceneGroup:insert( level1Button )
+    sceneGroup:insert( level2Button )
+    sceneGroup:insert( level3Button )
     
 end --function scene:create( event )
 
@@ -123,7 +202,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        instructionsBkgSoundChannel = audio.play( instructionsBkgSound)
+
     end
 
 end -- function scene:show( event )
@@ -146,7 +225,7 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-        audio.pause(instructionsBkgSound)
+
 
     -----------------------------------------------------------------------------------------
 

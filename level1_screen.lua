@@ -68,7 +68,7 @@ local rightW
 local topW
 local floor
 
-local pizza1
+local pizza
 
 local topping1
 local topping2
@@ -506,7 +506,6 @@ function scene:create( event )
     
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
-
 
 
 end --function scene:create( event )
