@@ -55,6 +55,9 @@ local bkgMusicLevel2 = audio.loadSound( "Sounds/bkgMusicLevel2.mp3")
 local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
 local whackSound = audio.loadSound( "Sounds/whackSound.mp3")
 local whackSoundChannel
+
+local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -94,7 +97,14 @@ local function UpdateLives()
     end
 end
 
-
+local sounds = {}
+sounds["clickSound"] = audio.loadSound("sounds/clickSound.wav")
+sounds["score"] = audio.loadSound("sounds/clickSound.wav")
+G.playSound = function(MuteButton) 
+    if sounds[clickSound] ~= nil then 
+        audio.play(sounds[clickSound])
+    end
+end
 
 
 
