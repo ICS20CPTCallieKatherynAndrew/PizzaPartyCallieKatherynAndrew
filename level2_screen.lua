@@ -32,6 +32,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 2
+scoreNumber = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -45,17 +46,21 @@ local Pizza
 local live1
 local live2
 local scoreObject
-local scoreNumber = 0
 
-local questionsAnswered = 0
+local PopUpTimer
+
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
 local bkgMusicLevel2 = audio.loadSound( "Sounds/bkgMusicLevel2.mp3")
 local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
-local whackSound = audio.loadSound( "Sounds/whackSound.mp3")
+
+local whackSound = audio.loadSound( "Sounds/whack.mp3")
 local whackSoundChannel
+
+local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -96,13 +101,27 @@ local function UpdateLives()
 end
 
 
-local function YouWin()
-    if (questionsAnswered == 3) then
-        composer.gotoScene( "you_win")
+local sounds = {}
+sounds["clickSound"] = audio.loadSound("sounds/clickSound.wav")
+sounds["score"] = audio.loadSound("sounds/clickSound.wav")
+playSound = function(MuteButton) 
+    if sounds[clickSound] ~= nil then 
+        audio.play(sounds[clickSound])
+
+
+-- transitioning to level 3
+local function GoToLevel3()
+    if (scoreNumber == 3) then
+        composer.gotoScene( "level3_screen")
 
     end
 end
 
+local function YouLose()
+    if (numLives == 0) then
+        composer.gotoScene( "you_lose" )
+    end
+end
 
 
 -----------------------------------------------------------------------------------------
@@ -110,56 +129,59 @@ end
 -----------------------------------------------------------------------------------------
 
 function BackToGame()
-
     -- call a function that updates the hearts
+    PopUpDelay( )
+
+    scoreObject.text = ( "Score = ".. scoreNumber)
     UpdateLives()
+    GoToLevel3()
+    YouLose()
 end
 
 
-
---FUNCTIONS--
 --Creating a function that makes the Pizza appears in random (x,y) positions on the screen  
 function PopUp()
- --Choosing random Position on the screen between 0 and the size of the screen
- Pizza.x = math.random( 0, display.contentWidth)
- Pizza.y = math.random( 0, display.contentHeight)
+    --Choosing random Position on the screen between 0 and the size of the screen
+    Pizza.x = math.random( 0, display.contentWidth)
+    Pizza.y = math.random( 0, display.contentHeight)
 
- --make the Pizza visible
- Pizza.isVisible = true
+    --make the Pizza visible
+    Pizza.isVisible = true
 
- --make the Pizza disapear after 1000 miliseconds
- timer.performWithDelay( 1000, Hide)
+    --make the Pizza disapear after 1000 miliseconds
+    PopUpTimer = timer.performWithDelay( 1000, Hide)
+end
+
+function GameStart( )
+    PopUpDelay()
 end
 
 --This function calls the PopUp function after 1 seconds
 function PopUpDelay( )
- timer.performWithDelay( 1000, PopUp)
+    PopUpTimer = timer.performWithDelay( 1000, PopUp)
 end
 
 --This function makes the Pizza invisible and then calls the PopUpDelay function
 function Hide( )
- --Changing visibility
-  Pizza.isVisible = false
-  PopUpDelay()
+    --Changing visibility
+    Pizza.isVisible = false
+    PopUpDelay()
 end
 
 --this function starts the game
-function GameStart( )
- PopUpDelay()
-end
 
 --this function increments the score only if the Pizza is clicked.It then displays the new score.
 function Whacked( event )
      -- If touch phase just started
     if (event.phase == "began") then
         whackSoundChannel = audio.play(whackSound)
-        scoreNumber = scoreNumber + 1
-        scoreObject.isVisible = true
-        Hide()
-        scoreObject.text = ( "Score = "..scoreNumber)
+        
+        timer.cancel(PopUpTimer)     
         composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
     end
 end
+
+
 
 
 -----------------------------------------------------------------------------------------
@@ -228,8 +250,11 @@ function scene:show( event )
 
     if ( phase == "will" ) then
 
-    --Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
-    Pizza:addEventListener( "touch", Whacked)
+        --Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
+        Pizza:addEventListener( "touch", Whacked)  
+        GameStart()
+        numLives = 2
+        scoreNumber = 0
 
     end-----------------------------------------------------------------------------------------
 end --function scene:show( event )
@@ -250,7 +275,7 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-
+        Pizza:removeEventListener( "touch", Whacked)   
     end
 
 end --function scene:hide( event )
@@ -282,5 +307,4 @@ scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 
 -----------------------------------------------------------------------------------------
-GameStart( )
 return scene
