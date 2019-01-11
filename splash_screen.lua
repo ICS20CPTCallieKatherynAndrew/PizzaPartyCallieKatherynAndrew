@@ -34,7 +34,7 @@ local goinghigherSoundChannel
  
 -- The local variables for this scene
 local AndrewLogo
-local scrollSpeed = 5
+local scrollSpeed = 2
 local pizza
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
