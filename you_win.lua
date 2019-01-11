@@ -57,7 +57,7 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )
 
     -- Creating Back Button
-    MainMenuButton = widget.newButton( 
+    mainMenuButton = widget.newButton( 
     {
         -- Setting Position
         x = display.contentWidth*7/8,
@@ -74,7 +74,7 @@ function scene:create( event )
 
     } )
 
-    sceneGroup:insert( MainMenuButton )
+    sceneGroup:insert( mainMenuButton )
 end
 -----------------------------------------------------------------------------------------
 

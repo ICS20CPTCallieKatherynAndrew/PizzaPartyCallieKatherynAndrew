@@ -31,6 +31,23 @@ local scene = composer.newScene( sceneName ) -- This function doesn't accept a s
 -----------------------------------------------------------------------------------------
 local bkg_image
 
+-----------------------------------------------------------------------------------------
+-- SOUND VARIABLES
+-----------------------------------------------------------------------------------------
+
+local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSoundChannel
+
+-----------------------------------------------------------------------------------------
+-- LOCAL FUNCTIONS
+-----------------------------------------------------------------------------------------
+
+local function MainMenuTransition()
+    composer.gotoScene( "main_menu", {effect = "zoomOutIn", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
+
 -- The function called when the screen doesn't exist
 function scene:create( event )
 
@@ -50,6 +67,24 @@ function scene:create( event )
 
     -- Associating display objects with this scene 
     sceneGroup:insert( bkg_image )
+
+    mainMenuButton = widget.newButton( 
+    {   
+        -- Set its position on the screen relative to the screen size
+        x = display.contentWidth*1/8,
+        y = display.contentHeight*7/8,
+
+        width = 200,
+        height = 100,
+         -- Insert the images here
+        defaultFile = "Images/MainMenuButtonUnpressedCallie.png",
+        overFile = "Images/MainMenuButtonPressedCallie.png",
+
+        -- When the button is released, call the Level1 screen transition function
+        onRelease = MainMenuTransition        
+    } )
+
+    sceneGroup:insert( mainMenuButton )
 end
 -----------------------------------------------------------------------------------------
 

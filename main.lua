@@ -13,7 +13,7 @@ local composer = require( "composer" )
 -----------------------------------------------------------------------------------------
 
 
-composer.gotoScene( "splash_screen" )
+composer.gotoScene( "you_lose" )
 
 
 
