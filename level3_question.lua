@@ -120,7 +120,7 @@ local function DisplayQuestion()
     local randomNumber2
 
     --set random numbers
-    randomOperator = math.random(1,2)
+    randomOperator = math.random(1,3)
     randomNumber1 = math.random(1, 30)
     randomNumber2 = math.random(1, 30)
 
@@ -180,15 +180,27 @@ local function DisplayQuestion()
             alternateAnswerBox3AlreadyTouched = false
             alternateAnswerBox4AlreadyTouched = false
         end
-    end
+        
+    elseif ( randomOperator ==3 ) then 
+            randomNumber1 = math.random( 1, 5)
+            randomNumber2 = math.random( 1, 5)
+         -- calculate correct answer
+        correctAnswer = randomNumber1 * randomNumber2
+
+        questionText.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
+
+        --put the correct answer into the answerbox
+        answerbox.text = correctAnswer
+    
             
-    -- put the correct answer into the answerbox
-    answerbox.text = correctAnswer 
-    -- make it possible to click on the answers again
-    answerboxAlreadyTouched = false
-    alternateAnswerBox1AlreadyTouched = false
-    alternateAnswerBox2AlreadyTouched = false
-    alternateAnswerBox3AlreadyTouched = false
+        -- put the correct answer into the answerbox
+        answerbox.text = correctAnswer 
+        -- make it possible to click on the answers again
+        answerboxAlreadyTouched = false
+        alternateAnswerBox1AlreadyTouched = false
+        alternateAnswerBox2AlreadyTouched = false
+        alternateAnswerBox3AlreadyTouched = false
+    end
 
 end
 

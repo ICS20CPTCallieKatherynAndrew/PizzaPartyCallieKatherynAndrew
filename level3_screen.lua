@@ -73,10 +73,8 @@ local questionsAnswered = 0
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
-local bkgMusic = audio.loadSound( "Sounds/bkgMusicLevel1.mp3")
+local bkgMusic = audio.loadSound( "Sounds/bkgLevel3Sound.mp3")
 local bkgMusicChannel
-local MoMusic = audio.loadSound( "Sounds/Mo.mp3")
-local MoMusicChannel
 local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
 local YouLoseMusicChannel
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
@@ -353,6 +351,7 @@ function scene:create( event )
 
     -- Insert background image into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( bkg_image )    
+    
     
 
     -- Insert the lives
