@@ -14,9 +14,5 @@ local composer = require( "composer" )
 
 
 
-composer.gotoScene( "you_lose" )
-
-
-
-
+composer.gotoScene( "end_screen" )
 
