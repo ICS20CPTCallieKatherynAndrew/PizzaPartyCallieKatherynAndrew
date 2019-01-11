@@ -1,10 +1,10 @@
 -----------------------------------------------------------------------------------------
 --
--- splash_screen.lua
--- Created by: Andrew Jr
--- Date: 2018-11-22
--- Description: This is the splash screen of the game. It displays the 
--- company logo that...
+-- end_screen.lua 
+-- Created by: Callie
+-- Date: 2018-1-11
+-- Description: This is the end screen of the game. It displays the 
+-- pizza man delivering the pizza
 -----------------------------------------------------------------------------------------
 
 
@@ -37,6 +37,7 @@ local pizzaMan
 local scrollSpeed = 2
 local pizza
 local house
+local deliveryText
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
@@ -57,11 +58,6 @@ end
 local function gotoYouWin()
     composer.gotoScene( "you_win" )
 end
-
-local function MoveHouse()
-    house.x = house.x + scrollSpeed
-end
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -75,30 +71,46 @@ function scene:create( event )
     -- set the background to be black
     display.setDefault("background", 100/255, 54/255, 200/255)
 
-    -- Insert the AndrewLogo image
+    -- Insert the pizzaMan image
     pizzaMan = display.newImageRect("Images/PizzaMan.png", 400, 400)
 
 
     --set the initial x and y position of the pizzaMan
     pizzaMan.x = 0
-    pizzaMan.y = display.contentHeight/3
-
-
-   
+    pizzaMan.y = display.contentHeight/1.3
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( pizzaMan )
 
-    -- Insert the AndrewLogo image
+    -- Insert the pizzA image
     pizza = display.newImageRect("Images/Pizza.png", 100, 100)
 
 
     --set the initial x and y position of the pizza
-    pizza.x = display.contentWidth/3
-    pizza.y = display.contentHeight/3
+    pizza.x = display.contentWidth/4
+    pizza.y = display.contentHeight/1.3
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( pizza )
+
+    -- Insert the house image
+    house = display.newImageRect("Images/house.png", 700, 700)
+
+
+    --set the initial x and y position of the house
+    house.x = display.contentWidth/1
+    house.y = display.contentHeight/2
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( house )
+
+    -- create the text
+    deliveryText = display.newText( " Pizza Delivery! ", 530, 100, nil, 100 )
+
+    deliveryText:setTextColor(0/255, 128/255, 255/255)
+
+    sceneGroup:insert(deliveryText)
+
 
 end 
 
