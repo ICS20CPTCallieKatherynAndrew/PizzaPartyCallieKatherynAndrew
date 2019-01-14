@@ -2,7 +2,6 @@
 --
 -- level1_screen.lua
 -- Created by: Callie McWaters
--- Date: Nov. 22nd, 2014
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 

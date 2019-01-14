@@ -1,11 +1,9 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Allison
--- Date: May 16, 2017
--- Description: This is the level 1 screen of the game. the charater can be dragged to move
---If character goes off a certain araea they go back to the start. When a user interactes
---with piant a trivia question will come up. they will have a limided time to click on the answer
+-- level3_question.lua
+-- Created by: Katheryn
+-- Description: This is the level 3 question screen of the game. 
+
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -208,21 +206,21 @@ local function DetermineAlternateAnswers()
 
         
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer1 = correctAnswer + math.random(3, 9)
+    alternateAnswer1 = correctAnswer + math.random(1,6)
     alternateAnswerBox1.text = alternateAnswer1
 
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer2 = correctAnswer - math.random(1, 5)
+    alternateAnswer2 = correctAnswer - math.random(1,3)
     alternateAnswerBox2.text = alternateAnswer2
 
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer3 = correctAnswer + math.random(9, 15)
+    alternateAnswer3 = correctAnswer + math.random(7,12)
     alternateAnswerBox3.text = alternateAnswer3
 
 
     -- generate incorrect answer and set it in the textbox
-    alternateAnswer4 = correctAnswer + math.random(16,20)
-    alternateAnswerBox4.text = alternateAnswer3    
+    alternateAnswer4 = correctAnswer - math.random(4,6)
+    alternateAnswerBox4.text = alternateAnswer4    
     
   
 end
