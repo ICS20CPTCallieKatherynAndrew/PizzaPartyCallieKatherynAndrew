@@ -58,7 +58,7 @@ local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
 local whackSound = audio.loadSound( "Sounds/whack.mp3")
 local whackSoundChannel
 
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -165,7 +165,7 @@ end
 function Whacked( event )
      -- If touch phase just started
     if (event.phase == "began") then
-        whackSoundChannel = audio.play(whackSound)
+        clickSoundChannel = audio.play(clickSound)
         
         timer.cancel(PopUpTimer)     
         composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
