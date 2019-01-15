@@ -586,10 +586,10 @@ local function TouchListenerAnswerBox4(touch)
             alternateAnswerBox4AlreadyTouched = false
 
             -- if the box is in the userAnswerBox Placeholder  go to center of placeholder
-            if (((userAnswerBoxPlaceholder.x - userAnswerBoxPlaceholder.width/2) < alternateAnswerBox3.x ) and 
-                ((userAnswerBoxPlaceholder.x + userAnswerBoxPlaceholder.width/2) > alternateAnswerBox3.x ) and 
-                ((userAnswerBoxPlaceholder.y - userAnswerBoxPlaceholder.height/2) < alternateAnswerBox3.y ) and 
-                ((userAnswerBoxPlaceholder.y + userAnswerBoxPlaceholder.height/2) > alternateAnswerBox3.y ) ) then
+            if (((userAnswerBoxPlaceholder.x - userAnswerBoxPlaceholder.width/2) < alternateAnswerBox4.x ) and 
+                ((userAnswerBoxPlaceholder.x + userAnswerBoxPlaceholder.width/2) > alternateAnswerBox4.x ) and 
+                ((userAnswerBoxPlaceholder.y - userAnswerBoxPlaceholder.height/2) < alternateAnswerBox4.y ) and 
+                ((userAnswerBoxPlaceholder.y + userAnswerBoxPlaceholder.height/2) > alternateAnswerBox4.y ) ) then
 
                 alternateAnswerBox4.x = userAnswerBoxPlaceholder.x
                 alternateAnswerBox4.y = userAnswerBoxPlaceholder.y
@@ -732,6 +732,7 @@ function scene:create( event )
 
 
 
+
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
@@ -742,6 +743,7 @@ function scene:show( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
+
 
     -----------------------------------------------------------------------------------------
 
@@ -763,6 +765,7 @@ function scene:show( event )
 
     end
 end --function scene:show( event )
+
 
 -----------------------------------------------------------------------------------------
 
@@ -822,3 +825,13 @@ scene:addEventListener( "destroy", scene )
 -----------------------------------------------------------------------------------------
 
 return scene
+
+
+
+
+
+
+
+
+
+

@@ -31,6 +31,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 2
+questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -67,7 +68,9 @@ local house4
 local house5
 local theHouse
 
-questionsAnswered = 0
+local numberAnsweredText
+
+
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
@@ -474,6 +477,11 @@ function scene:create( event )
     
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
+
+    numberAnsweredText = display.newText( "Number Answered = ".. questionsAnswered, display.contentWidth/2.1, display.contentHeight/1.1, nil, 50)
+    numberAnsweredText:setTextColor(30/255, 219/255, 188/255)
+
+    sceneGroup:insert(numberAnsweredText)
 
 
 end --function scene:create( event )

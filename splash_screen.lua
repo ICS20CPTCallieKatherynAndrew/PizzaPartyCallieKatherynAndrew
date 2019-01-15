@@ -4,7 +4,7 @@
 -- Created by: Andrew Jr
 -- Date: 2018-11-22
 -- Description: This is the splash screen of the game. It displays the 
--- company logo that...
+-- company logo that moves across the screen
 -----------------------------------------------------------------------------------------
 
 
@@ -25,7 +25,7 @@ local scene = composer.newScene( sceneName )
 --SOUNDS 
 -----------------------------------------------------------------------------------------
 
-local goinghigherSound = audio.loadSound("Sounds/goinghigher.mp3")--Setting a variable to an mp3 file
+local goinghigherSound = audio.loadSound("Sounds/goinghigher.mp3")
 local goinghigherSoundChannel 
 
 ----------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ local pizza
 --------------------------------------------------------------------------------------------
 
 -- Description:This function adds the scroll speed to the x-value of the ship
-local function MoveAndrewLogo(event) 
+local function MoveAndrewLogo() 
     -- add the scroll speed to the x-value of the ship
     AndrewLogo.x = AndrewLogo.x + scrollSpeed  
     AndrewLogo.alpha = AndrewLogo.alpha - 0.003
@@ -49,7 +49,7 @@ local function MoveAndrewLogo(event)
     -- change the transparency of the ship every time it moves so that it fades out   
 end
 
-local function Movepizza(event) 
+local function MovePizza() 
     -- add the scroll speed to the x-value of the ship
     pizza.x = pizza.x + scrollSpeed  
     pizza.alpha = pizza.alpha - 0.003
@@ -127,9 +127,8 @@ function scene:show( event )
 
         -- MoveShip will be called over and over again
         Runtime:addEventListener("enterFrame", MoveAndrewLogo) 
-        Runtime:addEventListener("enterFrame", Movepizza) 
+        Runtime:addEventListener("enterFrame", MovePizza)
            
-
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
         
