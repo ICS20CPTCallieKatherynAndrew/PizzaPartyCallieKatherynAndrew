@@ -34,6 +34,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 2
+questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -74,7 +75,7 @@ local topping2
 local topping3
 local theTopping
 
-local questionsAnswered = 0
+
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
@@ -235,7 +236,7 @@ local function onCollision( self, event )
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
+            
 
         end
     end

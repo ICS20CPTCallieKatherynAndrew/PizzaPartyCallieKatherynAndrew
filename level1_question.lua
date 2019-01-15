@@ -104,8 +104,8 @@ local function DisplayQuestion()
 
     --set random numbers
     randomOperator = math.random(1,2)
-    randomNumber1 = math.random(1, 30)
-    randomNumber2 = math.random(1, 30)
+    randomNumber1 = math.random(1, 20)
+    randomNumber2 = math.random(1, 20)
 
     -- addition
     if ( randomOperator == 1) then
@@ -306,6 +306,7 @@ local function TouchListenerAnswerbox(touch)
             
                         
                 correctText.isVisible = true
+                questionsAnswered = questionsAnswered + 1
 
                 timer.performWithDelay(1000, BackToLevel1)  
             --else make box go back to where it was
@@ -351,6 +352,7 @@ local function TouchListenerAnswerBox1(touch)
                 -- call the function to check if the user's input is correct or not
         
                 numLives = numLives - 1
+                questionsAnswered = questionsAnswered + 1
 
                 incorrectText.isVisible = true
 
@@ -396,6 +398,7 @@ local function TouchListenerAnswerBox2(touch)
                 -- call the function to check if the user's input is correct or not
             
                 numLives = numLives - 1
+                questionsAnswered = questionsAnswered + 1
 
                 incorrectText.isVisible = true
 

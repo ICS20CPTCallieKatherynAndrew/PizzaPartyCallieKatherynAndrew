@@ -1,9 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Callie McWaters
--- Date: Nov. 22nd, 2014
--- Description: This is the level 1 screen of the game.
+-- level3_screen.lua
+-- Created by: Katheryn
+-- Description: This is the level 3 screen of the game.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -68,15 +67,20 @@ local house4
 local house5
 local theHouse
 
-local questionsAnswered = 0
+questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
 local bkgMusic = audio.loadSound( "Sounds/bkgLevel3Sound.mp3")
 local bkgMusicChannel
+
+local youWinSound = audio.loadSound( "Sounds/Mo.mp3")
+local youWinSoundChannel
+
 local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
 local YouLoseMusicChannel
+
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel
 
@@ -191,7 +195,7 @@ local function YouWinTransition()
     composer.gotoScene( "end_screen")
     
     --play you Cheer sound
-    MoSoundChannel = audio.play(MOSound)
+    youWinSoundChannel = audio.play(youWinSound)
 
     --stop cartoon014 music
     audio.stop(clickSoundChannel)
@@ -241,7 +245,6 @@ local function onCollision( self, event )
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
         end
     end
 end
@@ -522,6 +525,9 @@ function scene:show( event )
 
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
+
+        -- you win
+        YouWin()
 
 
 
