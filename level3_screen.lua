@@ -515,7 +515,7 @@ function scene:show( event )
         timer.performWithDelay( 2000, MoveHouse4)
         timer.performWithDelay( 2000, MoveHouse5)
 
-        bkgMusicChannel = audio.play(bkgMusic)
+        bkgMusicChannel = audio.play(bkgMusic, {channel = 3, loops = -1})
 
         numLives = 2
         questionsAnswered = 0
@@ -556,7 +556,7 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        audio.pause(bkgMusic)
+        audio.stop(bkgMusicChannel)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then

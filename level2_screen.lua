@@ -53,7 +53,7 @@ local PopUpTimer
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
 local bkgMusicLevel2 = audio.loadSound( "Sounds/bkgMusicLevel2.mp3")
-local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
+local bkgMusicLevel2Channel 
 
 local whackSound = audio.loadSound( "Sounds/whack.mp3")
 local whackSoundChannel
@@ -243,6 +243,7 @@ function scene:show( event )
 
         --Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
         Pizza:addEventListener( "touch", Whacked)  
+        bkgMusicLevel2Channel = audio.play(bkgMusicLevel2, {channel = 2, loops = -1})
         GameStart()
         numLives = 2
         scoreNumber = 0
@@ -267,6 +268,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         Pizza:removeEventListener( "touch", Whacked)   
+        audio.stop (bkgMusicLevel2Channel)
     end
 
 end --function scene:hide( event )
