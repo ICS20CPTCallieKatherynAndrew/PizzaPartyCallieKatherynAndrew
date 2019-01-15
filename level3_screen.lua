@@ -89,10 +89,7 @@ local clickSoundChannel
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
  
-local function BackTransition( )
-    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
-    clickSoundChannel = audio.play(clickSound)
-end
+
 
 -- When right arrow is touched, move character right
 local function right (touch)
@@ -196,7 +193,7 @@ local function YouLoseTransition()
 end
 
 local function YouWinTransition()
-    composer.gotoScene( "you_win")
+    composer.gotoScene( "end_screen")
     
     --play you Cheer sound
     youWinSoundChannel = audio.play(youWinSound)
