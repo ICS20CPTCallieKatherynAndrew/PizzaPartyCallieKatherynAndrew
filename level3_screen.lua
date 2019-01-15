@@ -1,9 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
--- level1_screen.lua
--- Created by: Callie McWaters
--- Date: Nov. 22nd, 2014
--- Description: This is the level 1 screen of the game.
+-- level3_screen.lua
+-- Created by: Katheryn
+-- Description: This is the level 3 screen of the game.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -68,7 +67,7 @@ local house4
 local house5
 local theHouse
 
-local questionsAnswered = 0
+questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
@@ -241,7 +240,6 @@ local function onCollision( self, event )
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
-            questionsAnswered = questionsAnswered + 1
         end
     end
 end

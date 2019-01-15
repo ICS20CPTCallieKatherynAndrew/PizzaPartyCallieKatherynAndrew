@@ -74,7 +74,7 @@ local topping2
 local topping3
 local theTopping
 
-local questionsAnswered = 0
+questionsAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- SOUND VARIABLES
