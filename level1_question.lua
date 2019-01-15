@@ -104,8 +104,8 @@ local function DisplayQuestion()
 
     --set random numbers
     randomOperator = math.random(1,2)
-    randomNumber1 = math.random(1, 30)
-    randomNumber2 = math.random(1, 30)
+    randomNumber1 = math.random(1, 20)
+    randomNumber2 = math.random(1, 20)
 
     -- addition
     if ( randomOperator == 1) then
