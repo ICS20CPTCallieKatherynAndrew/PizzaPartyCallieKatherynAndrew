@@ -102,7 +102,7 @@ end
 
 -- transitioning to level 3
 local function GoToLevel3()
-    if (scoreNumber == 3) then
+    if (scoreNumber == 4) then
         composer.gotoScene( "level3_screen")
 
     end

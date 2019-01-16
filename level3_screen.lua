@@ -31,7 +31,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 2
-questionsAnswered = 0
+numberAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -225,6 +225,10 @@ local function UpdateLives()
     end
 end
 
+local function UpdateNumberAnswered()
+    numberAnsweredText =  "Number Answered = ".. numberAnswered
+end
+
 local function onCollision( self, event )
 
 
@@ -253,7 +257,7 @@ local function onCollision( self, event )
 end
 
 local function YouWin()
-    if (questionsAnswered == 5) then
+    if (numberAnswered == 5) then
         YouWinTransition()
     end
 end
@@ -322,11 +326,12 @@ function ResumeGame()
 
     -- call a function that updates the hearts
     UpdateLives()
+    UpdateNumberAnswered()
 
     -- make character visible again
     character.isVisible = true
     
-    if (questionsAnswered > 0) then
+    if (numberAnswered > 0) then
         if (theHouse ~= nil) and (theHouse.isBodyActive == true) then
             physics.removeBody(theHouse)
             theHouse.isVisible = false
@@ -478,10 +483,9 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
-    numberAnsweredText = display.newText( "Number Answered = ".. questionsAnswered, display.contentWidth/2.1, display.contentHeight/1.1, nil, 50)
-    numberAnsweredText:setTextColor(30/255, 219/255, 188/255)
+    numberAnsweredText = display.newText( "", display.contentWidth/2.1, display.contentHeight/1.1, nil, 50)
+    sceneGroup:insert(numberAnsweredText) 
 
-    sceneGroup:insert(numberAnsweredText)
 
 
 end --function scene:create( event )
@@ -536,6 +540,8 @@ function scene:show( event )
 
         -- you win
         YouWin()
+
+        UpdateNumberAnswered()
 
 
 
