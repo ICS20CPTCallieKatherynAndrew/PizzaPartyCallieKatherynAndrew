@@ -247,7 +247,7 @@ end
 -- transition back to level 1
 local function BackToLevel1() 
     composer.hideOverlay("crossFade", 400 )
-    ResumeGame()
+    ResumeLevel1()
 end 
 
 

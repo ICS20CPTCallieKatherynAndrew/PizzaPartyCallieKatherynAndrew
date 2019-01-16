@@ -96,12 +96,10 @@ local Y5 = display.contentHeight *0.6
 -- the black box where the user will drag the answer
 local userAnswerBoxPlaceholder
 
-local amountCorrect = 0
-
 local randomOperator
 
-local totalSeconds = 7
-local secondsLeft = 7
+local totalSeconds = 10
+local secondsLeft = 10
 
 local clockText
 local countDownTimer
@@ -352,7 +350,7 @@ end
 --making transition to next scene
 local function BackToLevel3() 
     composer.hideOverlay("crossFade", 400 )
-    ResumeGame()
+    ResumeLevel3()
 end 
 
 
@@ -756,7 +754,6 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        numberAnswered = 0
         secondsLeft = 10
         AddAnswerBoxEventListeners() 
         PositionAnswers()

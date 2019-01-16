@@ -186,24 +186,11 @@ end
 
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
-
-    --play you Cheer sound
-    YouLoseSoundChannel = audio.play(YouLoseSound)
-
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
+    
 end
 
 local function end_screen()
-    if (numberAnswered == 5) then
-        composer.gotoScene( "end_screen")
-    
-        --play you Cheer sound
-        MoSoundChannel = audio.play(MOSound)
-
-        --stop click sound
-        audio.stop(clickSoundChannel)
-    end
+    composer.gotoScene( "end_screen")    
 end
 
 local function UpdateLives()
@@ -223,6 +210,9 @@ local function UpdateLives()
         -- update hearts
         live1.isVisible = false
         live2.isVisible = false
+        --play you Cheer sound
+        YouLoseSoundChannel = audio.play(YouLoseSound)
+
         timer.performWithDelay(200, YouLoseTransition)
     end
 end
@@ -246,6 +236,7 @@ local function onCollision( self, event )
 
             -- make the character invisible
             character.isVisible = false
+
             -- show overlay with math question
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
@@ -316,7 +307,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel3()
 
     -- call a function that updates the hearts
     UpdateLives()
@@ -330,7 +321,14 @@ function ResumeGame()
 
         end
 
+        if (numberAnswered == 5) then
 
+            --play you Cheer sound
+            MoSoundChannel = audio.play(MOSound)
+
+
+            timer.performWithDelay(200, end_screen)
+        end
     end
 
 end
@@ -527,10 +525,7 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
-        -- you win
-        end_screen()
     end
-
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -552,6 +547,8 @@ function scene:hide( event )
         -- Called immediately after scene goes off screen.
         RemovePhysicsBodies()
         RemoveCollisionListeners()
+        --stop cartoon014 music
+        audio.stop(clickSoundChannel)
 
         physics.stop()
         RemoveArrowEventListeners()

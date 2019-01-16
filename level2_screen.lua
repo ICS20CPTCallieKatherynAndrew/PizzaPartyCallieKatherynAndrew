@@ -119,7 +119,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function BackToGame()
+function ResumeLevel2()
     -- call a function that updates the hearts
     PopUpDelay( )
 

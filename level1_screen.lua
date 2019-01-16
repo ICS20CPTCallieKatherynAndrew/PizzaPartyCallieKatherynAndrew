@@ -237,8 +237,6 @@ local function onCollision( self, event )
             character.isVisible = false
             -- show overlay with math question
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
             
 
         end
@@ -343,7 +341,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- call a function that updates the hearts
     UpdateLives()
