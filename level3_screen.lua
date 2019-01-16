@@ -68,7 +68,7 @@ local house4
 local house5
 local theHouse
 
-local numberAnsweredText
+
 
 
 
@@ -194,14 +194,16 @@ local function YouLoseTransition()
     audio.stop(clickSoundChannel)
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "end_screen")
+local function end_screen()
+    if (numberAnswered == 5) then
+        composer.gotoScene( "end_screen")
     
-    --play you Cheer sound
-    youWinSoundChannel = audio.play(youWinSound)
+        --play you Cheer sound
+        MoSoundChannel = audio.play(MOSound)
 
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
+        --stop click sound
+        audio.stop(clickSoundChannel)
+    end
 end
 
 local function UpdateLives()
@@ -223,10 +225,6 @@ local function UpdateLives()
         live2.isVisible = false
         timer.performWithDelay(200, YouLoseTransition)
     end
-end
-
-local function UpdateNumberAnswered()
-    numberAnsweredText =  "Number Answered = ".. numberAnswered
 end
 
 local function onCollision( self, event )
@@ -256,11 +254,7 @@ local function onCollision( self, event )
     end
 end
 
-local function YouWin()
-    if (numberAnswered == 5) then
-        YouWinTransition()
-    end
-end
+
 
 local function AddCollisionListeners()
 
@@ -326,8 +320,6 @@ function ResumeGame()
 
     -- call a function that updates the hearts
     UpdateLives()
-    UpdateNumberAnswered()
-
     -- make character visible again
     character.isVisible = true
     
@@ -337,6 +329,8 @@ function ResumeGame()
             theHouse.isVisible = false
 
         end
+
+
     end
 
 end
@@ -483,11 +477,6 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
-    numberAnsweredText = display.newText( "", display.contentWidth/2.1, display.contentHeight/1.1, nil, 50)
-    sceneGroup:insert(numberAnsweredText) 
-
-
-
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
@@ -522,7 +511,7 @@ function scene:show( event )
         bkgMusicChannel = audio.play(bkgMusic, {channel = 3, loops = -1})
 
         numLives = 2
-        questionsAnswered = 0
+        numberAnswered = 0
         
         -- make all lives visible
         MakeLivesVisible()
@@ -539,13 +528,7 @@ function scene:show( event )
         ReplaceCharacter()
 
         -- you win
-        YouWin()
-
-        UpdateNumberAnswered()
-
-
-
-
+        end_screen()
     end
 
 end --function scene:show( event )

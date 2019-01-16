@@ -245,7 +245,7 @@ local function onCollision( self, event )
     end
 end
 
-function level2_screen()
+local function level2_screen()
     if (questionsAnswered == 3) then
         composer.gotoScene( "level2_screen")
     

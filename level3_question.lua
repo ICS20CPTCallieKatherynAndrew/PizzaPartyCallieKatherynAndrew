@@ -350,7 +350,7 @@ local function PositionAnswers()
 end
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevel3() 
     composer.hideOverlay("crossFade", 400 )
     ResumeGame()
 end 
@@ -369,7 +369,7 @@ local function UpdateTime()
         numLives = numLives - 1
         
 
-        timer.performWithDelay(1000, BackToLevel1) 
+        timer.performWithDelay(1000, BackToLevel3) 
     end
 end
 
@@ -411,7 +411,7 @@ local function TouchListenerAnswerbox(touch)
                 correctText.isVisible = true
                 numberAnswered = numberAnswered + 1
 
-                timer.performWithDelay(1000, BackToLevel1)  
+                timer.performWithDelay(1000, BackToLevel3)  
             --else make box go back to where it was
             else
                 answerbox.x = answerboxPreviousX
@@ -461,7 +461,7 @@ local function TouchListenerAnswerBox1(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -508,7 +508,7 @@ local function TouchListenerAnswerBox2(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -555,7 +555,7 @@ local function TouchListenerAnswerBox3(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -602,7 +602,7 @@ local function TouchListenerAnswerBox4(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -756,7 +756,8 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        secondsLeft = 7
+        numberAnswered = 0
+        secondsLeft = 10
         AddAnswerBoxEventListeners() 
         PositionAnswers()
         DisplayQuestion()

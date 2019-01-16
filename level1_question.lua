@@ -3,9 +3,7 @@
 -- level1_screen.lua
 -- Created by: Allison
 -- Date: May 16, 2017
--- Description: This is the level 1 screen of the game. the charater can be dragged to move
---If character goes off a certain araea they go back to the start. When a user interactes
---with piant a trivia question will come up. they will have a limided time to click on the answer
+-- Description: This is the level 1 question screen of the game. 
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
