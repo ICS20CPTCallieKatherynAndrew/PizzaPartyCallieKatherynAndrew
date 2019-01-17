@@ -89,7 +89,7 @@ local MoMusicChannel
 local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
 local YouLoseMusicChannel
 
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
 
 -----------------------------------------------------------------------------------------
