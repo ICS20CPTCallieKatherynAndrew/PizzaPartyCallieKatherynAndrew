@@ -46,7 +46,7 @@ local appName
 -----------------------------------------------------------------------------------------
 local bkgMusic = audio.loadSound( "Sounds/bkgMusicMainMenu.mp3")
 local bkgMusicChannel
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
 
 -----------------------------------------------------------------------------------------
