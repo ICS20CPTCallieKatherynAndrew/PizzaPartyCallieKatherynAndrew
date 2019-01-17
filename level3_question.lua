@@ -102,12 +102,10 @@ local Y5 = display.contentHeight *0.6
 -- the black box where the user will drag the answer
 local userAnswerBoxPlaceholder
 
-local amountCorrect = 0
-
 local randomOperator
 
-local totalSeconds = 7
-local secondsLeft = 7
+local totalSeconds = 10
+local secondsLeft = 10
 
 local clockText
 local countDownTimer
@@ -356,9 +354,9 @@ local function PositionAnswers()
 end
 
 --making transition to next scene
-local function BackToLevel1() 
+local function BackToLevel3() 
     composer.hideOverlay("crossFade", 400 )
-    ResumeGame()
+    ResumeLevel3()
 end 
 
 
@@ -375,7 +373,7 @@ local function UpdateTime()
         numLives = numLives - 1
         
 
-        timer.performWithDelay(1000, BackToLevel1) 
+        timer.performWithDelay(1000, BackToLevel3) 
     end
 end
 
@@ -415,9 +413,9 @@ local function TouchListenerAnswerbox(touch)
             
                         
                 correctText.isVisible = true
-                questionsAnswered = questionsAnswered + 1
+                numberAnswered = numberAnswered + 1
 
-                timer.performWithDelay(1000, BackToLevel1)  
+                timer.performWithDelay(1000, BackToLevel3)  
             --else make box go back to where it was
             else
                 answerbox.x = answerboxPreviousX
@@ -463,7 +461,7 @@ local function TouchListenerAnswerBox1(touch)
                 -- call the function to check if the user's input is correct or not
         
                 numLives = numLives - 1
-                questionsAnswered = questionsAnswered + 1
+                numberAnswered = numberAnswered + 1
 
                 numberOfPoints = numberOfPoints + 1
 
@@ -471,7 +469,7 @@ local function TouchListenerAnswerBox1(touch)
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -514,11 +512,11 @@ local function TouchListenerAnswerBox2(touch)
                 -- call the function to check if the user's input is correct or not
             
                 numLives = numLives - 1
-                questionsAnswered = questionsAnswered + 1
+                numberAnswered = numberAnswered + 1
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -561,11 +559,11 @@ local function TouchListenerAnswerBox3(touch)
                 -- call the function to check if the user's input is correct or not
              
                 numLives = numLives - 1
-                questionsAnswered = questionsAnswered + 1
+                numberAnswered = numberAnswered + 1
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -608,11 +606,11 @@ local function TouchListenerAnswerBox4(touch)
                 -- call the function to check if the user's input is correct or not
              
                 numLives = numLives - 1
-                questionsAnswered = questionsAnswered + 1
+                numberAnswered = numberAnswered + 1
 
                 incorrectText.isVisible = true
 
-                timer.performWithDelay(1000, BackToLevel1) 
+                timer.performWithDelay(1000, BackToLevel3) 
 
             --else make box go back to where it was
             else
@@ -766,7 +764,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-        secondsLeft = 7
+        secondsLeft = 10
         AddAnswerBoxEventListeners() 
         PositionAnswers()
         DisplayQuestion()

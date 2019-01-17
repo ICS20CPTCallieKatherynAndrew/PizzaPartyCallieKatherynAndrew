@@ -82,10 +82,13 @@ local theTopping
 -----------------------------------------------------------------------------------------
 local bkgMusic = audio.loadSound( "Sounds/bkgMusicLevel1.mp3")
 local bkgMusicChannel
+
 local MoMusic = audio.loadSound( "Sounds/Mo.mp3")
 local MoMusicChannel
+
 local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
 local YouLoseMusicChannel
+
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel
 
@@ -234,15 +237,13 @@ local function onCollision( self, event )
             character.isVisible = false
             -- show overlay with math question
             composer.showOverlay( "level1_question", { isModal = true, effect = "fade", time = 100})
-
-            -- Increment questions answered
             
 
         end
     end
 end
 
-function level2_screen()
+local function level2_screen()
     if (questionsAnswered == 3) then
         composer.gotoScene( "level2_screen")
     
@@ -340,7 +341,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel1()
 
     -- call a function that updates the hearts
     UpdateLives()
@@ -537,7 +538,7 @@ function scene:show( event )
         timer.performWithDelay( 2000, MoveTopping2)
         timer.performWithDelay( 2000, MoveTopping3)
         timer.performWithDelay( 2000, MovePizza)
-        bkgMusicChannel = audio.play(bkgMusic)
+        bkgMusicChannel = audio.play(bkgMusic, {channel = 1, loops = -1})
 
         numLives = 2
         questionsAnswered = 0
@@ -574,7 +575,8 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        audio.pause(bkgMusic)
+        audio.stop(bkgMusicChannelq)
+
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then

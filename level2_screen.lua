@@ -53,12 +53,12 @@ local PopUpTimer
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
 local bkgMusicLevel2 = audio.loadSound( "Sounds/bkgMusicLevel2.mp3")
-local bkgMusicLevel2Channel = audio.play(bkgMusicLevel2)
+local bkgMusicLevel2Channel 
 
 local whackSound = audio.loadSound( "Sounds/whack.mp3")
 local whackSoundChannel
 
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
+local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -102,7 +102,7 @@ end
 
 -- transitioning to level 3
 local function GoToLevel3()
-    if (scoreNumber == 3) then
+    if (scoreNumber == 4) then
         composer.gotoScene( "level3_screen")
 
     end
@@ -119,7 +119,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function BackToGame()
+function ResumeLevel2()
     -- call a function that updates the hearts
     PopUpDelay( )
 
@@ -165,7 +165,7 @@ end
 function Whacked( event )
      -- If touch phase just started
     if (event.phase == "began") then
-        whackSoundChannel = audio.play(whackSound)
+        clickSoundChannel = audio.play(clickSound)
         
         timer.cancel(PopUpTimer)     
         composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
@@ -243,6 +243,7 @@ function scene:show( event )
 
         --Add the event listener to the moles so that if the Pizza is touched, the whacked function is called
         Pizza:addEventListener( "touch", Whacked)  
+        bkgMusicLevel2Channel = audio.play(bkgMusicLevel2, {channel = 2, loops = -1})
         GameStart()
         numLives = 2
         scoreNumber = 0
@@ -267,6 +268,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         Pizza:removeEventListener( "touch", Whacked)   
+        audio.stop (bkgMusicLevel2Channel)
     end
 
 end --function scene:hide( event )

@@ -31,7 +31,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 2
-questionsAnswered = 0
+numberAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -68,7 +68,7 @@ local house4
 local house5
 local theHouse
 
-local numberAnsweredText
+
 
 
 
@@ -186,22 +186,11 @@ end
 
 local function YouLoseTransition()
     composer.gotoScene( "you_lose" )
-
-    --play you Cheer sound
-    YouLoseSoundChannel = audio.play(YouLoseSound)
-
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
+    
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "end_screen")
-    
-    --play you Cheer sound
-    youWinSoundChannel = audio.play(youWinSound)
-
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
+local function end_screen()
+    composer.gotoScene( "end_screen")    
 end
 
 local function UpdateLives()
@@ -221,6 +210,9 @@ local function UpdateLives()
         -- update hearts
         live1.isVisible = false
         live2.isVisible = false
+        --play you Cheer sound
+        YouLoseSoundChannel = audio.play(YouLoseSound)
+
         timer.performWithDelay(200, YouLoseTransition)
     end
 end
@@ -244,6 +236,7 @@ local function onCollision( self, event )
 
             -- make the character invisible
             character.isVisible = false
+
             -- show overlay with math question
             composer.showOverlay( "level3_question", { isModal = true, effect = "fade", time = 100})
 
@@ -252,11 +245,7 @@ local function onCollision( self, event )
     end
 end
 
-local function YouWin()
-    if (questionsAnswered == 5) then
-        YouWinTransition()
-    end
-end
+
 
 local function AddCollisionListeners()
 
@@ -318,19 +307,27 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel3()
 
     -- call a function that updates the hearts
     UpdateLives()
-
     -- make character visible again
     character.isVisible = true
     
-    if (questionsAnswered > 0) then
+    if (numberAnswered > 0) then
         if (theHouse ~= nil) and (theHouse.isBodyActive == true) then
             physics.removeBody(theHouse)
             theHouse.isVisible = false
 
+        end
+
+        if (numberAnswered == 5) then
+
+            --play you Cheer sound
+            MoSoundChannel = audio.play(MOSound)
+
+
+            timer.performWithDelay(200, end_screen)
         end
     end
 
@@ -478,12 +475,6 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
-    numberAnsweredText = display.newText( "Number Answered = ".. questionsAnswered, display.contentWidth/2.1, display.contentHeight/1.1, nil, 50)
-    numberAnsweredText:setTextColor(30/255, 219/255, 188/255)
-
-    sceneGroup:insert(numberAnsweredText)
-
-
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
@@ -515,10 +506,10 @@ function scene:show( event )
         timer.performWithDelay( 2000, MoveHouse4)
         timer.performWithDelay( 2000, MoveHouse5)
 
-        bkgMusicChannel = audio.play(bkgMusic)
+        bkgMusicChannel = audio.play(bkgMusic, {channel = 3, loops = -1})
 
         numLives = 2
-        questionsAnswered = 0
+        numberAnswered = 0
         
         -- make all lives visible
         MakeLivesVisible()
@@ -534,14 +525,7 @@ function scene:show( event )
         -- create the character, add physics bodies and runtime listeners
         ReplaceCharacter()
 
-        -- you win
-        YouWin()
-
-
-
-
     end
-
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -556,13 +540,15 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        audio.pause(bkgMusic)
+        audio.stop(bkgMusicChannel)
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
         RemovePhysicsBodies()
         RemoveCollisionListeners()
+        --stop cartoon014 music
+        audio.stop(clickSoundChannel)
 
         physics.stop()
         RemoveArrowEventListeners()

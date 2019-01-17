@@ -41,18 +41,18 @@ local pizza
 --------------------------------------------------------------------------------------------
 
 -- Description:This function adds the scroll speed to the x-value of the ship
-local function MoveAndrewLogo() 
+local function MoveAndrewLogo(event) 
     -- add the scroll speed to the x-value of the ship
     AndrewLogo.x = AndrewLogo.x + scrollSpeed  
-    AndrewLogo.alpha = AndrewLogo.alpha - 0.003
+    AndrewLogo.alpha = AndrewLogo.alpha - 0.0003
   
     -- change the transparency of the ship every time it moves so that it fades out   
 end
 
-local function MovePizza() 
+local function MovePizza(event) 
     -- add the scroll speed to the x-value of the ship
     pizza.x = pizza.x + scrollSpeed  
-    pizza.alpha = pizza.alpha - 0.003
+    pizza.alpha = pizza.alpha - 0.0003
   
     -- change the transparency of the ship every time it moves so that it fades out
 end

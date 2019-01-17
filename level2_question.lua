@@ -176,7 +176,7 @@ local function DetermineAlternateAnswers()
     alternateAnswerBox2.text = alternateAnswer2
 
     -- create incorrect answers
-    alternateAnswer3 = correctAnswer + math.random(9, 15)
+    alternateAnswer3 = correctAnswer + math.random(10, 15)
     alternateAnswerBox3.text = alternateAnswer3   
 end
 
@@ -263,7 +263,7 @@ end
 -- transition back to level 2
 local function BackToLevel2() 
     composer.hideOverlay("crossFade", 400 )
-    BackToGame()
+    ResumeLevel2()
 end 
 
 
