@@ -63,6 +63,12 @@ local alternateAnswer
 local cover
 local bkg
 
+
+local numberOfPoints = 0
+local pointsObject
+local points
+
+
 -- create variables that will hold the previous x- and y-positions so that 
 -- each answer will return back to its previous position after it is moved
 local answerboxPreviousX
@@ -458,6 +464,10 @@ local function TouchListenerAnswerBox1(touch)
         
                 numLives = numLives - 1
                 questionsAnswered = questionsAnswered + 1
+
+                numberOfPoints = numberOfPoints + 1
+
+                pointsObject.text ="Points = " .. numberOfPoints
 
                 incorrectText.isVisible = true
 
