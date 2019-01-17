@@ -17,5 +17,3 @@ local composer = require( "composer" )
 composer.gotoScene( "youwin")
 
 
-
-
