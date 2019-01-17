@@ -60,6 +60,9 @@ local whackSoundChannel
 
 local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
+
+local YouLose = audio.loadSound( "Sounds/YouLose.mp3")
+local YouLoseChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 

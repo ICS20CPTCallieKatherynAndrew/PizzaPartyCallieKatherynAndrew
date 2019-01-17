@@ -35,8 +35,8 @@ local bkg_image
 -- SOUND VARIABLES
 -----------------------------------------------------------------------------------------
 
-local clickSound = audio.loadSound( "Sounds/clickSound.wav")
-local clickSoundChannel
+local YouLose = audio.loadSound( "Sounds/YouLose.mp3")
+local YouLoseChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS

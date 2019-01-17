@@ -23,6 +23,13 @@ local widget = require( "widget" )
 -- Naming Scene
 sceneName = "you_win"
 
+-----------------------------------------------------------------------------------------
+-- SOUND VARIABLES
+-----------------------------------------------------------------------------------------
+
+local Youwin = audio.loadSound( "Sounds/Youwin.mp3")
+local YouwinChannel
+
 -- Creating Scene Object
 local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
 
