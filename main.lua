@@ -14,6 +14,6 @@ local composer = require( "composer" )
 
 
 
-composer.gotoScene( "you_win")
+composer.gotoScene( "splash_screen")
 
 

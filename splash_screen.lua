@@ -43,7 +43,7 @@ local pizza
 -- Description:This function adds the scroll speed to the x-value of the ship
 local function MoveAndrewLogo(event) 
     -- add the scroll speed to the x-value of the ship
-    AndrewLogo.x = AndrewLogo.x + scrollSpeed  
+    AndrewLogo.x = AndrewLogo.x + scrollSpeed   
     AndrewLogo.alpha = AndrewLogo.alpha - 0.0003
   
     -- change the transparency of the ship every time it moves so that it fades out   
@@ -82,7 +82,7 @@ function scene:create( event )
     pizza = display.newImageRect("Images/Pizza.png", 320, 320)
 
     --set the initial x and y position of AndrewLogo
-    pizza.x = 500
+    pizza.x = 600
     pizza.y = 600
 
     --set the initial x and y position of pizza
