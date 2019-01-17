@@ -14,6 +14,6 @@ local composer = require( "composer" )
 
 
 
-composer.gotoScene( "youwin")
+composer.gotoScene( "you_win")
 
 

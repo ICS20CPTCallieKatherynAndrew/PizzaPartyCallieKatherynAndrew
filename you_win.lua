@@ -28,7 +28,7 @@ sceneName = "you_win"
 -----------------------------------------------------------------------------------------
 
 local Youwin = audio.loadSound( "Sounds/Youwin.mp3")
-local YouwinChannel
+local YouwinChannel = audio.play(Youwin) 
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName ) -- This function doesn't accept a string, only a variable containing a string
@@ -99,7 +99,7 @@ function scene:show( event )
 
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
-
+   
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
