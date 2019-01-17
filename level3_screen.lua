@@ -77,11 +77,11 @@ local numberAnsweredText
 local bkgMusic = audio.loadSound( "Sounds/bkgLevel3Sound.mp3")
 local bkgMusicChannel
 
-local youWinSound = audio.loadSound( "Sounds/Mo.mp3")
+local youWinMusic = audio.loadSound( "Sounds/Mo.mp3")
 local youWinSoundChannel
 
 local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
-local YouLoseMusicChannel
+local YouLoseChannel
 
 local clickSound = audio.loadSound( "Sounds/clickSound.wav")
 local clickSoundChannel

@@ -61,8 +61,8 @@ local whackSoundChannel
 local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
 
-local YouLose = audio.loadSound( "Sounds/YouLose.mp3")
-local YouLoseChannel
+local YouLoseusic = audio.loadSound( "Sounds/YouLose.mp3")
+local YouLoseChannel 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
@@ -114,6 +114,12 @@ end
 local function YouLose()
     if (numLives == 0) then
         composer.gotoScene( "you_lose" )
+
+        --play you Cheer sound
+        youloseSoundChannel = audio.play(youloseSound)
+
+        --stop cartoon014 music
+        audio.stop(bkgMusicLevel2Channel)
     end
 end
 

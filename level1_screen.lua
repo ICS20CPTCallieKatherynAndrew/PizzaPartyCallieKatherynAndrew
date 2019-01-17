@@ -86,8 +86,8 @@ local bkgMusicChannel
 local MoMusic = audio.loadSound( "Sounds/Mo.mp3")
 local MoMusicChannel
 
-local YouLoseMusic = audio.loadSound( "Sounds/YouLose.mp3")
-local YouLoseMusicChannel
+local YouLose = audio.loadSound( "Sounds/YouLose.mp3")
+local YouLoseChannel 
 
 local clickSound = audio.loadSound( "Sounds/clickSound.mp3")
 local clickSoundChannel
@@ -186,15 +186,14 @@ local function MakeToppingsVisible()
 end
 
 local function YouLoseTransition()
-    composer.gotoScene( "you_lose" )
+        --stop cartoon014 music
+        audio.stop()
 
-    --play you Cheer sound
-    YouLoseSoundChannel = audio.play(YouLoseSound)
+        composer.gotoScene( "you_lose" )
 
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
+        --play you youlose sound
+        YouLoseSoundChannel = audio.play(YouLoseSound)
 end
-
 
 
 local function UpdateLives()

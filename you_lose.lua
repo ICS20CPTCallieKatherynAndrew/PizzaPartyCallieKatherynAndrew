@@ -36,7 +36,7 @@ local Youwin
 -----------------------------------------------------------------------------------------
 
 local YouLose = audio.loadSound( "Sounds/YouLose.mp3")
-local YouLoseChannel
+local YouLoseChannel  
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -109,6 +109,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        audio.play(YouLose)
     end
 
 end -- function scene:show( event )
