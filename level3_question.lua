@@ -63,12 +63,6 @@ local alternateAnswer
 local cover
 local bkg
 
-
-local numberOfPoints = 0
-local pointsObject
-local points
-
-
 -- create variables that will hold the previous x- and y-positions so that 
 -- each answer will return back to its previous position after it is moved
 local answerboxPreviousX
@@ -112,6 +106,8 @@ local countDownTimer
 
 local correctText
 local incorrectText
+
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -123,8 +119,8 @@ local function DisplayQuestion()
 
     --set random numbers
     randomOperator = math.random(1,3)
-    randomNumber1 = math.random(1, 30)
-    randomNumber2 = math.random(1, 30)
+    randomNumber1 = math.random(1, 15)
+    randomNumber2 = math.random(1, 15)
 
     if ( randomOperator == 1) then
 
@@ -462,10 +458,6 @@ local function TouchListenerAnswerBox1(touch)
         
                 numLives = numLives - 1
                 numberAnswered = numberAnswered + 1
-
-                numberOfPoints = numberOfPoints + 1
-
-                pointsObject.text ="Points = " .. numberOfPoints
 
                 incorrectText.isVisible = true
 

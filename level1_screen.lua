@@ -587,10 +587,10 @@ function scene:show( event )
         
     elseif ( phase == "did" ) then
 
-        timer.performWithDelay( 2000, MoveTopping1)
-        timer.performWithDelay( 2000, MoveTopping2)
-        timer.performWithDelay( 2000, MoveTopping3)
-        timer.performWithDelay( 2000, MovePizza)
+        timer.performWithDelay( 1000, MoveTopping1)
+        timer.performWithDelay( 1000, MoveTopping2)
+        timer.performWithDelay( 1000, MoveTopping3)
+        timer.performWithDelay( 1000, MovePizza)
         bkgMusicChannel = audio.play(bkgMusic, {channel = 1, loops = -1})
 
         numLives = 2

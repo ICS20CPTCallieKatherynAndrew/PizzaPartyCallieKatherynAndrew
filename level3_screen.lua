@@ -194,15 +194,7 @@ local function YouLoseTransition()
     audio.stop(clickSoundChannel)
 end
 
-local function YouWinTransition()
-    composer.gotoScene( "end_screen")
-    
-    --play you Cheer sound
-    youWinSoundChannel = audio.play(youWinSound)
 
-    --stop cartoon014 music
-    audio.stop(clickSoundChannel)
-end
 
 local function MainMenuTransition( )
     composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
@@ -257,9 +249,13 @@ local function onCollision( self, event )
     end
 end
 
-local function YouWin()
-    if (numberAnswered == 2) then
-        YouWinTransition()
+local function You_Win()
+    if (numberAnswered == 5) then
+
+        composer.gotoScene( "end_screen")
+
+        --play you Cheer sound
+        youWinSoundChannel = audio.play(youWinSound)
     end
 end
 
@@ -337,8 +333,9 @@ function ResumeLevel3()
             theHouse.isVisible = false
 
         end
-    end
 
+        You_Win()
+    end
 end
 
 -----------------------------------------------------------------------------------------
@@ -555,13 +552,8 @@ function scene:show( event )
         ReplaceCharacter()
 
         -- you win
-        YouWin()
-
-
-
-
+        You_Win()
     end
-
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
