@@ -186,13 +186,13 @@ local function MakeToppingsVisible()
 end
 
 local function YouLoseTransition()
-        --stop cartoon014 music
-        audio.stop()
+    --stop cartoon014 music
+    audio.stop()
 
-        composer.gotoScene( "you_lose" )
+    composer.gotoScene( "you_lose" )
 
-        --play you youlose sound
-        YouLoseSoundChannel = audio.play(YouLoseSound)
+    --play you youlose sound
+    YouLoseSoundChannel = audio.play(YouLoseSound)
 end
 
 
@@ -254,6 +254,11 @@ local function level2_screen()
     end
 end
 
+local function MainMenuTransition( )
+    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
 local function AddCollisionListeners()
 
     -- if character collides with ball, onCollision will be called    
@@ -283,6 +288,8 @@ local function MovePizza()
     transition.to( pizza, {x=900, y=50, time=2000})
 end
 
+
+
 local function MoveTopping1()
     -- the logo will move and rotate to the center of the screen
     transition.to( topping1, { rotation = topping1.rotation-360, time=2000, onComplete=spinImage})
@@ -304,6 +311,33 @@ local function MoveTopping3()
     topping3:scale(2,2)
 end
 
+local function MovePizzaBack()
+
+    -- the logo will move and rotate to the center of the screen
+    transition.to( pizza, { rotation = pizza.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( pizza, {x=200, y=660, time=2000})
+end
+
+local function MoveTopping1Back()
+    -- the logo will move and rotate to the center of the screen
+    transition.to( topping1, { rotation = topping1.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( topping1, {x=190, y=690, time=2000})
+    topping1:scale(1/2,1/2)
+end
+
+local function MoveTopping2Back()
+    -- the logo will move and rotate to the center of the screen
+    transition.to( topping2, { rotation = topping2.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( topping2, {x=210, y=650, time=2000})
+    topping2:scale(1/2,1/2)
+end
+
+local function MoveTopping3Back()
+    -- the logo will move and rotate to the center of the screen
+    transition.to( topping3, { rotation = topping3.rotation-360, time=2000, onComplete=spinImage})
+    transition.to( topping3, {x=160, y=660, time=2000})
+    topping3:scale(1/2,1/2)
+end
 
 local function AddPhysicsBodies()
     --add to the physics engine
@@ -507,6 +541,26 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
+        -- Creating Back Button
+    mainMenuButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*4/8,
+        y = display.contentHeight*14/16,
+        width = 180,
+        height = 130,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/MainMenuButtonUnpressedCallie.png",
+        overFile = "Images/MainMenuButtonPressedCallie.png",
+
+        -- Setting Functional Properties
+        onRelease = MainMenuTransition
+
+    } )
+
+    sceneGroup:insert( mainMenuButton )
+
 
 end --function scene:create( event )
 
@@ -574,7 +628,11 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
-        audio.stop(bkgMusicChannelq)
+        audio.stop(bkgMusicChannel)
+        MovePizzaBack()
+        MoveTopping1Back()
+        MoveTopping2Back()
+        MoveTopping3Back()
 
     -----------------------------------------------------------------------------------------
 
@@ -586,8 +644,7 @@ function scene:hide( event )
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
-        display.remove(character)
-        
+        display.remove(character)   
     end
 
 end --function scene:hide( event )

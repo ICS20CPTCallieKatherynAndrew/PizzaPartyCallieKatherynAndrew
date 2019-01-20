@@ -9,6 +9,7 @@
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
+display.setStatusBar(display.HiddenStatusBar)
 
 -- Use Composer Library
 local composer = require( "composer" )

@@ -8,6 +8,7 @@
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
+display.setStatusBar(display.HiddenStatusBar)
 
 -- Use Composer Libraries
 local composer = require( "composer" )
@@ -123,6 +124,11 @@ local function YouLose()
     end
 end
 
+local function MainMenuTransition( )
+    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL FUNCTIONS
@@ -234,6 +240,26 @@ function scene:create( event )
     scoreObject.y = 450
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert(scoreObject)
+
+        -- Creating Back Button
+    mainMenuButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*7/8,
+        y = display.contentHeight*2/16,
+        width = 180,
+        height = 130,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/MainMenuButtonUnpressedCallie.png",
+        overFile = "Images/MainMenuButtonPressedCallie.png",
+
+        -- Setting Functional Properties
+        onRelease = MainMenuTransition
+
+    } )
+
+    sceneGroup:insert( mainMenuButton )
 
 end
 

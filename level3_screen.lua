@@ -8,6 +8,7 @@
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
+display.setStatusBar(display.HiddenStatusBar)
 
 -- Use Composer Libraries
 local composer = require( "composer" )
@@ -31,7 +32,7 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 
 numLives = 2
-questionsAnswered = 0
+numberAnswered = 0
 
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
@@ -67,7 +68,6 @@ local house4
 local house5
 local theHouse
 
-local numberAnsweredText
 
 
 
@@ -204,6 +204,11 @@ local function YouWinTransition()
     audio.stop(clickSoundChannel)
 end
 
+local function MainMenuTransition( )
+    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+    clickSoundChannel = audio.play(clickSound)
+end
+
 local function UpdateLives()
 
     if (numLives == 2) then
@@ -253,7 +258,7 @@ local function onCollision( self, event )
 end
 
 local function YouWin()
-    if (questionsAnswered == 5) then
+    if (numberAnswered == 2) then
         YouWinTransition()
     end
 end
@@ -318,7 +323,7 @@ end
 -- GLOBAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
-function ResumeGame()
+function ResumeLevel3()
 
     -- call a function that updates the hearts
     UpdateLives()
@@ -326,7 +331,7 @@ function ResumeGame()
     -- make character visible again
     character.isVisible = true
     
-    if (questionsAnswered > 0) then
+    if (numberAnswered > 0) then
         if (theHouse ~= nil) and (theHouse.isBodyActive == true) then
             physics.removeBody(theHouse)
             theHouse.isVisible = false
@@ -478,6 +483,26 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
+    -- Creating Back Button
+    mainMenuButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*7.1/8,
+        y = display.contentHeight*1.4/16,
+        width = 180,
+        height = 130,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/MainMenuButtonUnpressedCallie.png",
+        overFile = "Images/MainMenuButtonPressedCallie.png",
+
+        -- Setting Functional Properties
+        onRelease = MainMenuTransition
+
+    } )
+
+    sceneGroup:insert( mainMenuButton )
+
 
 end --function scene:create( event )
 
@@ -513,7 +538,7 @@ function scene:show( event )
         bkgMusicChannel = audio.play(bkgMusic)
 
         numLives = 2
-        questionsAnswered = 0
+        numberAnswered = 0
         
         -- make all lives visible
         MakeLivesVisible()
